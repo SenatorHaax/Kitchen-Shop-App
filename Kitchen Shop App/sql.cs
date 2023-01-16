@@ -115,5 +115,18 @@ namespace Kitchen_staff_app
             return dt;
         }
 
+        public static int insertAndRetrieveId(string query)
+        {
+            //open connection
+            con.Open();
+            //create command
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            //execute command
+            int lastInsertedId = Convert.ToInt32(cmd.ExecuteScalar());
+            //close connection
+            con.Close();
+            return lastInsertedId;
+        }
+
     }
 }

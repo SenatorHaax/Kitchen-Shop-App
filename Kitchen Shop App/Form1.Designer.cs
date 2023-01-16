@@ -35,6 +35,8 @@
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PurchaseButton = new System.Windows.Forms.Button();
             this.RestartButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.sub_total = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +53,8 @@
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(419, 328);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowsAdded);
+            this.dataGridView1.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView1_RowsAdded);
             // 
             // id
             // 
@@ -82,8 +86,9 @@
             this.PurchaseButton.Name = "PurchaseButton";
             this.PurchaseButton.Size = new System.Drawing.Size(120, 43);
             this.PurchaseButton.TabIndex = 1;
-            this.PurchaseButton.Text = "Purchase";
+            this.PurchaseButton.Text = "Order";
             this.PurchaseButton.UseVisualStyleBackColor = true;
+            this.PurchaseButton.Click += new System.EventHandler(this.PurchaseButton_Click);
             // 
             // RestartButton
             // 
@@ -95,19 +100,39 @@
             this.RestartButton.UseVisualStyleBackColor = true;
             this.RestartButton.Click += new System.EventHandler(this.RestartButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(604, 349);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 15);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Sub Total:";
+            // 
+            // sub_total
+            // 
+            this.sub_total.AutoSize = true;
+            this.sub_total.Location = new System.Drawing.Point(668, 349);
+            this.sub_total.Name = "sub_total";
+            this.sub_total.Size = new System.Drawing.Size(0, 15);
+            this.sub_total.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.sub_total);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.RestartButton);
             this.Controls.Add(this.PurchaseButton);
             this.Controls.Add(this.dataGridView1);
-            //this.Name = "Form1";
+            this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -120,5 +145,7 @@
         private DataGridViewTextBoxColumn Quantity;
         private Button PurchaseButton;
         private Button RestartButton;
+        private Label label1;
+        private Label sub_total;
     }
 }
