@@ -182,9 +182,14 @@ namespace Kitchen_Shop_App
 
 
             //todo: add logik for paying before submitting order to database
-            if (total_cost <= 0)
+            if (total_cost == 0)
             {
                 MessageBox.Show("Error: Total cost must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (total_cost < 0)
+            {
+                MessageBox.Show("how the fuck did u manage to steal my money", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             // Insert the order and retrieve the last inserted id
