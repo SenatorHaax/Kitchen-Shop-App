@@ -37,6 +37,7 @@
             this.RestartButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.sub_total = new System.Windows.Forms.Label();
+            this.MenuPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,17 +118,26 @@
             this.sub_total.Size = new System.Drawing.Size(0, 15);
             this.sub_total.TabIndex = 5;
             // 
+            // MenuPanel
+            // 
+            this.MenuPanel.AutoScroll = true;
+            this.MenuPanel.Location = new System.Drawing.Point(12, 12);
+            this.MenuPanel.Name = "MenuPanel";
+            this.MenuPanel.Size = new System.Drawing.Size(351, 426);
+            this.MenuPanel.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.MenuPanel);
             this.Controls.Add(this.sub_total);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RestartButton);
             this.Controls.Add(this.PurchaseButton);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Form1";
+            //this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -147,5 +157,6 @@
         private Button RestartButton;
         private Label label1;
         private Label sub_total;
+        private Panel MenuPanel;
     }
 }

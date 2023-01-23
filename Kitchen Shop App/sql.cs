@@ -95,7 +95,7 @@ namespace Kitchen_staff_app
             //return data table
             return dt;
         }
-        
+
         //fetch product by id
         public static DataTable fetch_product_by_id(string id)
         {
@@ -103,6 +103,63 @@ namespace Kitchen_staff_app
             con.Open();
             //create command
             MySqlCommand cmd = new MySqlCommand("SELECT * FROM Products WHERE id = " + id, con);
+            //create data adapter
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            //create data table
+            DataTable dt = new DataTable();
+            //fill data table
+            da.Fill(dt);
+            //close connection
+            con.Close();
+            //return data table
+            return dt;
+        }
+
+        //fetch product by category id
+        public static DataTable fetch_product_by_category_id(string id)
+        {
+            //open connection
+            con.Open();
+            //create command
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Products WHERE category_id = " + id, con);
+            //create data adapter
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            //create data table
+            DataTable dt = new DataTable();
+            //fill data table
+            da.Fill(dt);
+            //close connection
+            con.Close();
+            //return data table
+            return dt;
+        }
+
+        //fetch category by id
+        public static DataTable fetch_category_by_id(string id)
+        {
+            //open connection
+            con.Open();
+            //create command
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM categories WHERE id = " + id, con);
+            //create data adapter
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            //create data table
+            DataTable dt = new DataTable();
+            //fill data table
+            da.Fill(dt);
+            //close connection
+            con.Close();
+            //return data table
+            return dt;
+        }
+
+        //fetch product by category id
+        public static DataTable fetch_all_categories()
+        {
+            //open connection
+            con.Open();
+            //create command
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM categories", con);
             //create data adapter
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             //create data table
