@@ -9,7 +9,8 @@ namespace Kitchen_Shop_App
     public partial class Form1 : Form
     {
         DataTable products = mysql.fetch_all_products();
-        DataTable categories = mysql.fetch_all_products();
+        
+        DataTable categories = mysql.fetch_all_categories();
 
         public Form1()
         {
@@ -18,6 +19,8 @@ namespace Kitchen_Shop_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            //todo: implement categories 
                 //make dynamic lines of labels from products
                 for (int i = 0; i < products.Rows.Count; i++)
                 {
@@ -182,11 +185,14 @@ namespace Kitchen_Shop_App
 
 
             //todo: add logik for paying before submitting order to database
+
+            // error handeling and fun gag (shoutout mc donalds showing me this error and how fatal it is by making their system able to allow minus orders and therefor making mcdonalds owe you money for your meal)
             if (total_cost == 0)
             {
                 MessageBox.Show("Error: Total cost must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            
             if (total_cost < 0)
             {
                 MessageBox.Show("how the fuck did u manage to steal my money", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
