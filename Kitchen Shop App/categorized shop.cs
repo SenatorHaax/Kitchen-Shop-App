@@ -79,10 +79,12 @@ namespace Kitchen_Shop_App
             foreach (DataRow categorie in categories.Rows)
             {
                 Button btn = new Button();
-                btn.Text = categorie["Name"].ToString();
                 btn.Location = new Point(x, y);
                 btn.Size = new Size(100, 100);
-
+                Label name = new Label();
+                name.Text = categorie["Name"].ToString();
+                name.Location = new Point(x, y + 75);
+                name.BringToFront();
                 string imageFileName = categorie["Image"].ToString();
                 string imagePath = Path.Combine(imageStoragePath, imageFileName);
                 Image image;
@@ -98,6 +100,8 @@ namespace Kitchen_Shop_App
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
 
                 CategoriesMenuPanel.Controls.Add(btn);
+                CategoriesMenuPanel.Controls.Add(name);
+
                 x += 120;
                 if (x > this.ClientSize.Width - 100)
                 {
