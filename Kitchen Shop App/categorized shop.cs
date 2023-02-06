@@ -48,7 +48,7 @@ namespace Kitchen_Shop_App
             this.Controls.Add(cartPanel);
 
             // Add components to display shopping cart information in the cart panel
-            // ...
+            // todo
         }
 
         private void backBtn_Click(object sender, EventArgs e)
