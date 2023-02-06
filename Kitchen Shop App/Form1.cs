@@ -222,5 +222,11 @@ namespace Kitchen_Shop_App
             }
             dataGridView1.Rows.Clear();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            categorized_shop window = new categorized_shop();
+            window.Show();
+        }
     }
 }

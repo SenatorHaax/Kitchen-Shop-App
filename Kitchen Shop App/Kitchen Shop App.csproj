@@ -14,4 +14,8 @@
     <PackageReference Include="PayPalCoreSDK" Version="1.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="images\Products\" />
+  </ItemGroup>
+
 </Project>

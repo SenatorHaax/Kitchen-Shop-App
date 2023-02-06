@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.sub_total = new System.Windows.Forms.Label();
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +127,22 @@
             this.MenuPanel.Size = new System.Drawing.Size(351, 426);
             this.MenuPanel.TabIndex = 6;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(558, 403);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.MenuPanel);
             this.Controls.Add(this.sub_total);
             this.Controls.Add(this.label1);
@@ -158,5 +170,6 @@
         private Label label1;
         private Label sub_total;
         private Panel MenuPanel;
+        private Button button1;
     }
 }
