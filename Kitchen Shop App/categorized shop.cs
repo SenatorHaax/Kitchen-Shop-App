@@ -222,6 +222,7 @@ namespace Kitchen_Shop_App
         }
 
         //when a product is clicked i need to add a label with the name and amount of times it's been clicked to the cart panel
+        //TODO: fix weired bug removing the labes instead of adding 1 to the quantity
         private void ProductButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -323,12 +324,11 @@ namespace Kitchen_Shop_App
 
         private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt && e.KeyCode == Keys.Insert && e.Control)
+            if (e.Alt && e.KeyCode == Keys.Insert)
             {
-                //e.IsInputKey = false;
-                e.Handled = true;
                 string text = "You are Admin congratz";
                 MessageBox.Show(text);
+                //todo add all functionality from admin page to this instead for easier adding pictures (if not using blob on sql)
             }
         }
     }
