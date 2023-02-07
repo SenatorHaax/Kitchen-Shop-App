@@ -228,5 +228,15 @@ namespace Kitchen_Shop_App
             categorized_shop window = new categorized_shop();
             window.Show();
         }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.Insert)
+            {
+                string text = "My text that I want to display";
+                MessageBox.Show(text);
+                this.Hide();
+            }
+        }
     }
 }

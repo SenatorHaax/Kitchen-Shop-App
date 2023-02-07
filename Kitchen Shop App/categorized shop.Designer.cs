@@ -33,9 +33,9 @@
             // 
             // CategoriesMenuPanel
             // 
-            this.CategoriesMenuPanel.Location = new System.Drawing.Point(12, 111);
+            this.CategoriesMenuPanel.Location = new System.Drawing.Point(1, 50);
             this.CategoriesMenuPanel.Name = "CategoriesMenuPanel";
-            this.CategoriesMenuPanel.Size = new System.Drawing.Size(776, 327);
+            this.CategoriesMenuPanel.Size = new System.Drawing.Size(711, 401);
             this.CategoriesMenuPanel.TabIndex = 0;
             // 
             // categorized_shop
@@ -47,6 +47,7 @@
             this.Name = "categorized_shop";
             this.Text = "categorized_shop";
             this.Load += new System.EventHandler(this.categorized_shop_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.categorized_shop_KeyDown);
             this.Resize += new System.EventHandler(this.categorized_shop_Resize);
             this.ResumeLayout(false);
 

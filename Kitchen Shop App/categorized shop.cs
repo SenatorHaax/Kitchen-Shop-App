@@ -17,10 +17,18 @@ namespace Kitchen_Shop_App
         DataTable categories = mysql.fetch_all_categories();
         Button backButton = new Button();
         Panel productPanel = new Panel();
+        Button cartButton = new Button();
+        Panel cartPanel = new Panel();
+
 
         public categorized_shop()
         {
             InitializeComponent();
+
+            KeyPreview = true;
+            KeyDown += categorized_shop_KeyDown;
+            Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
+
             //this.CategoriesMenuPanel.AutoScroll = true;
             //forces the window to be fullscreen no matter what
             this.TopMost = true;
@@ -30,25 +38,47 @@ namespace Kitchen_Shop_App
             // Add a panel at the top of the form for the back button
             Panel topPanel = new Panel();
             topPanel.Dock = DockStyle.Top;
-            topPanel.Size = new Size(this.ClientSize.Width, 50);
+            topPanel.Size = new Size(this.ClientSize.Width-300, 50);
+            topPanel.BackColor = Color.LightGray;
             this.Controls.Add(topPanel);
 
             // Add a back button to the top panel
-            
             backButton.Text = "Back";
             backButton.Tag = "main";
             backButton.Location = new Point(10, 10);
             backButton.Click += new EventHandler(backBtn_Click);
             topPanel.Controls.Add(backButton);
 
+            //add emergency shutdown button todo remove TODO: please for the love of god remember to remove this
+            Button shutdownButton = new Button();
+            shutdownButton.Text = "Shutdown";
+            shutdownButton.Location = new Point(100, 10);
+            shutdownButton.BackColor = Color.Red;
+            shutdownButton.Click += new EventHandler(shutdownBtn_Click);
+            topPanel.Controls.Add(shutdownButton);
+            
+
+            // add a shopping cart button to the top-right panel
+            cartButton = new Button();
+            cartButton.Text = "Shopping Cart";
+            cartButton.Location = new Point(screen.Width - 85, 10);
+            cartButton.Click += new EventHandler(cartBtn_Click);
+            //topPanel.Controls.Add(cartButton);
+
             // Add a panel to the right of the form for the shopping cart
-            Panel cartPanel = new Panel();
+            cartPanel = new Panel();
             cartPanel.Dock = DockStyle.Right;
-            cartPanel.Size = new Size(200, this.ClientSize.Height);
+            cartPanel.Size = new Size(350, this.ClientSize.Height);
+            cartPanel.BackColor = Color.Pink;
             this.Controls.Add(cartPanel);
 
             // Add components to display shopping cart information in the cart panel
             // todo
+        }
+
+        private void shutdownBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void backBtn_Click(object sender, EventArgs e)
@@ -66,6 +96,11 @@ namespace Kitchen_Shop_App
                     btn.Tag = "main";
                     break;
             }
+        }
+
+        private void cartBtn_Click(object sender, EventArgs e)
+        {
+            //todo shopping cart funtionality or order functionality if side panel gets made to work
         }
 
         private void categorized_shop_Load(object sender, EventArgs e)
@@ -103,7 +138,7 @@ namespace Kitchen_Shop_App
                 CategoriesMenuPanel.Controls.Add(name);
 
                 x += 120;
-                if (x > this.ClientSize.Width - 100)
+                if (x > this.ClientSize.Width - 350)
                 {
                     x = 10;
                     y += 120;
@@ -113,7 +148,10 @@ namespace Kitchen_Shop_App
                 btn.Tag = categorie["id"].ToString();
 
             }
-            CategoriesMenuPanel.Size = this.ClientSize;
+            CategoriesMenuPanel.BackColor = Color.Green;
+            CategoriesMenuPanel.AutoScroll = true;
+            CategoriesMenuPanel.Width = this.ClientSize.Width - 350;
+            CategoriesMenuPanel.Height = this.ClientSize.Height;
         }
 
         private void CategoryButton_Click(object sender, EventArgs e)
@@ -140,6 +178,7 @@ namespace Kitchen_Shop_App
             string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Products\");
 
             productPanel.Dock = DockStyle.Fill;
+            productPanel.BackColor = Color.LightBlue;
 
             foreach (DataRow product in productsData.Rows)
             {
@@ -161,10 +200,11 @@ namespace Kitchen_Shop_App
                 }
 
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
-
+                btn.Tag = product["id"].ToString();
+                btn.Click += new EventHandler(ProductButton_Click);
                 productPanel.Controls.Add(btn);
                 x += 120;
-                if (x > parentForm.ClientSize.Width - 100)
+                if (x > parentForm.ClientSize.Width - 300)
                 {
                     x = 10;
                     y += 120;
@@ -179,6 +219,85 @@ namespace Kitchen_Shop_App
             productPanel.BringToFront();
             
 
+        }
+
+        //when a product is clicked i need to add a label with the name and amount of times it's been clicked to the cart panel
+        private void ProductButton_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string productId = btn.Tag.ToString();
+            string productName = btn.Text;
+            int productCount = 1;
+
+            // check if a label for the product already exists
+            Label existingLabel = cartPanel.Controls.OfType<Label>()
+                .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
+            if (existingLabel != null)
+            {
+                // increment the count for the product
+                int count = int.Parse(existingLabel.Text.Split(' ')[0]);
+                productCount = count + 1;
+
+                // remove the existing label and its associated decrement button
+                cartPanel.Controls.Remove(existingLabel);
+                Button existingDecrementButton = cartPanel.Controls.OfType<Button>()
+                    .FirstOrDefault(button => button.Tag != null && button.Tag.ToString() == productId);
+                cartPanel.Controls.Remove(existingDecrementButton);
+            }
+
+            // add a new label for the product
+            Label lbl = new Label();
+            lbl.Text = productCount + " x " + productName;
+            lbl.Tag = productId;
+            lbl.Location = new Point(10, 10 + (cartPanel.Controls.Count * 20));
+            cartPanel.Controls.Add(lbl);
+
+            // add a new decrement button for the product
+            Button decrementButton = new Button();
+            decrementButton.Text = "-";
+            decrementButton.Tag = productId;
+            decrementButton.Click += DecrementButton_Click;
+            decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
+            //cartPanel.Controls.Add(decrementButton);
+        }
+
+        private void DecrementButton_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            string productId = btn.Tag.ToString();
+
+            // find the associated label for the product
+            Label lbl = cartPanel.Controls.OfType<Label>()
+                .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
+            if (lbl != null)
+            {
+                // decrement the count for the product
+                int count = int.Parse(lbl.Text.Split(' ')[0]);
+                if (count > 1)
+                {
+                    count--;
+                    lbl.Text = count + " x " + lbl.Text.Split(' ')[2];
+                }
+                else
+                {
+                    // remove the label and its associated decrement button if the count is 1
+                    cartPanel.Controls.Remove(lbl);
+                    cartPanel.Controls.Remove(btn);
+
+                    // update the locations of the other labels and decrement buttons
+                    foreach (Control control in cartPanel.Controls)
+                    {
+                        if (control is Label label && label.Location.Y > lbl.Location.Y)
+                        {
+                            label.Location = new Point(label.Location.X, label.Location.Y - 40);
+                        }
+                        else if (control is Button button && button.Location.Y > btn.Location.Y)
+                        {
+                            button.Location = new Point(button.Location.X, button.Location.Y - 40);
+                        }
+                    }
+                }
+            }
         }
 
         private void categorized_shop_Resize(object sender, EventArgs e)
@@ -199,6 +318,17 @@ namespace Kitchen_Shop_App
                         y += 120;
                     }
                 }
+            }
+        }
+
+        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.Insert && e.Control)
+            {
+                //e.IsInputKey = false;
+                e.Handled = true;
+                string text = "You are Admin congratz";
+                MessageBox.Show(text);
             }
         }
     }
