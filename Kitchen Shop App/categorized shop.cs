@@ -19,6 +19,7 @@ namespace Kitchen_Shop_App
         Panel productPanel = new Panel();
         Button cartButton = new Button();
         Panel cartPanel = new Panel();
+        public static bool hasExecuted = false;
 
 
         public categorized_shop()
@@ -324,10 +325,15 @@ namespace Kitchen_Shop_App
 
         private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt && e.KeyCode == Keys.Insert)
+            if (e.Alt && e.KeyCode == Keys.Insert && !hasExecuted)
             {
+                hasExecuted = true;
                 string text = "You are Admin congratz";
                 MessageBox.Show(text);
+                Main main = new Main();
+                this.Hide();
+                main.Show();
+                main.BringToFront();
                 //todo add all functionality from admin page to this instead for easier adding pictures (if not using blob on sql)
             }
         }

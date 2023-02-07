@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="MySqlConnector" Version="2.2.5" />
     <PackageReference Include="PayPalCoreSDK" Version="1.7.1" />
+    <PackageReference Include="WinForms.DataVisualization" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
