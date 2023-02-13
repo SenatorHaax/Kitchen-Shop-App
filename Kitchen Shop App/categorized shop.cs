@@ -1,4 +1,5 @@
 ﻿using Kitchen_staff_app;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -110,7 +111,7 @@ namespace Kitchen_Shop_App
             int y = 10;
             string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
             Image defaultImage = Image.FromFile(defaultImagePath);
-            string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Categories\");
+            //string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Categories\");
 
             foreach (DataRow categorie in categories.Rows)
             {
@@ -119,19 +120,44 @@ namespace Kitchen_Shop_App
                 btn.Size = new Size(100, 100);
                 Label name = new Label();
                 name.Text = categorie["Name"].ToString();
-                name.Location = new Point(x, y + 75);
+                name.Location = new Point(x, y + btn.Height);
+                name.Font = new Font("Arial", 12);
+                name.TextAlign = ContentAlignment.MiddleCenter;
                 name.BringToFront();
-                string imageFileName = categorie["Image"].ToString();
-                string imagePath = Path.Combine(imageStoragePath, imageFileName);
+
+                string imageQuery = "SELECT Image FROM Categories WHERE id = " + categorie["id"].ToString();
+                DataTable imageData = mysql.select(imageQuery);
                 Image image;
-                try
+                if (imageData.Rows[0]["Image"] != DBNull.Value)
                 {
-                    image = Image.FromFile(imagePath);
+                    byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
+                    try
+                    {
+                        //byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
+                        if (imageData.Rows.Count > 0 && imageData.Rows[0]["Image"] != DBNull.Value)
+                        {
+                            using (MemoryStream ms = new MemoryStream(imageBytes))
+                            {
+                                image = Image.FromStream(ms);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error loading image: wtf");
+                            image = defaultImage;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error loading image: " + ex.Message);
+                        image = defaultImage;
+                    }
                 }
-                catch (FileNotFoundException)
+                else
                 {
                     image = defaultImage;
                 }
+
 
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
 
@@ -184,25 +210,36 @@ namespace Kitchen_Shop_App
             foreach (DataRow product in productsData.Rows)
             {
                 Button btn = new Button();
-                btn.Text = product["Name"].ToString();
+                btn.Text = "";
                 btn.Location = new Point(x, y);
                 btn.Size = new Size(100, 100);
+                Label name = new Label();
+                name.Text = product["Name"].ToString();
+                name.Location = new Point(x, y + btn.Height);
+                name.Font = new Font("Arial", 12);
+                name.TextAlign = ContentAlignment.MiddleCenter;
+                name.BringToFront();
+                byte[] imageBytes = (byte[])product["Image"];
 
-                string imageFileName = product["Image"].ToString();
-                string imagePath = Path.Combine(imageStoragePath, imageFileName);
                 Image image;
                 try
                 {
-                    image = Image.FromFile(imagePath);
+                    using (var ms = new MemoryStream(imageBytes))
+                    {
+                        image = Image.FromStream(ms);
+                    }
                 }
-                catch (FileNotFoundException)
+                catch (Exception ex)
                 {
+                    Console.WriteLine("Error loading image: " + ex.Message);
                     image = defaultImage;
                 }
 
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 btn.Tag = product["id"].ToString();
                 btn.Click += new EventHandler(ProductButton_Click);
+                productPanel.Controls.Add(name);
+
                 productPanel.Controls.Add(btn);
                 x += 120;
                 if (x > parentForm.ClientSize.Width - 300)

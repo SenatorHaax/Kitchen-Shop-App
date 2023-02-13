@@ -16,7 +16,7 @@ namespace Kitchen_staff_app
     class mysql
     {
         //create connection 
-        static MySqlConnection con = new MySqlConnection("server=localhost;user id=root;database=resturant");
+        public static MySqlConnection con = new MySqlConnection("server=localhost;user id=root;database=resturant");
         //dynamic insert
         
         //create method to insert data into database

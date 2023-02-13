@@ -31,11 +31,14 @@
             this.Product_name = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnUpload = new System.Windows.Forms.Button();
+            this.Product_cost = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.Finalize_prod = new System.Windows.Forms.Button();
             this.Product_price = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.Product_cost = new System.Windows.Forms.TextBox();
+            this.categoryBox = new System.Windows.Forms.ComboBox();
+            this.categoryLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +60,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.categoryLabel);
+            this.panel1.Controls.Add(this.categoryBox);
+            this.panel1.Controls.Add(this.btnUpload);
             this.panel1.Controls.Add(this.Product_cost);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.Finalize_prod);
@@ -68,6 +74,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 393);
             this.panel1.TabIndex = 2;
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.Location = new System.Drawing.Point(47, 175);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(123, 23);
+            this.btnUpload.TabIndex = 7;
+            this.btnUpload.Text = "Upload image";
+            this.btnUpload.UseVisualStyleBackColor = true;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            // 
+            // Product_cost
+            // 
+            this.Product_cost.Location = new System.Drawing.Point(100, 84);
+            this.Product_cost.Name = "Product_cost";
+            this.Product_cost.Size = new System.Drawing.Size(100, 23);
+            this.Product_cost.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Product Cost";
             // 
             // Finalize_prod
             // 
@@ -95,21 +127,22 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Product Pris";
             // 
-            // label3
+            // categoryBox
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 87);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Product Cost";
+            this.categoryBox.FormattingEnabled = true;
+            this.categoryBox.Location = new System.Drawing.Point(99, 113);
+            this.categoryBox.Name = "categoryBox";
+            this.categoryBox.Size = new System.Drawing.Size(121, 23);
+            this.categoryBox.TabIndex = 8;
             // 
-            // Product_cost
+            // categoryLabel
             // 
-            this.Product_cost.Location = new System.Drawing.Point(100, 84);
-            this.Product_cost.Name = "Product_cost";
-            this.Product_cost.Size = new System.Drawing.Size(100, 23);
-            this.Product_cost.TabIndex = 6;
+            this.categoryLabel.AutoSize = true;
+            this.categoryLabel.Location = new System.Drawing.Point(14, 116);
+            this.categoryLabel.Name = "categoryLabel";
+            this.categoryLabel.Size = new System.Drawing.Size(55, 15);
+            this.categoryLabel.TabIndex = 9;
+            this.categoryLabel.Text = "Category";
             // 
             // create_prod
             // 
@@ -135,5 +168,8 @@
         private Button Finalize_prod;
         private TextBox Product_cost;
         private Label label3;
+        private Button btnUpload;
+        private Label categoryLabel;
+        private ComboBox categoryBox;
     }
 }

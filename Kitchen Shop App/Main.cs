@@ -86,5 +86,12 @@ namespace Kitchen_staff_app
             statWindow.Show();
             this.Hide();
         }
+
+        private void Create_Category_Click(object sender, EventArgs e)
+        {
+            create_cat Ccat = new create_cat();
+            Ccat.Show();
+            this.Hide();
+        }
     }
 }

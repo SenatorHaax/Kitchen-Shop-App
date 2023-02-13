@@ -160,7 +160,6 @@
             // 
             this.groupBox3.Controls.Add(this.Create_Category);
             this.groupBox3.Controls.Add(this.Remove_Category);
-            this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(173, 233);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(336, 100);
@@ -176,9 +175,11 @@
             this.Create_Category.TabIndex = 2;
             this.Create_Category.Text = "Create Category";
             this.Create_Category.UseVisualStyleBackColor = true;
+            this.Create_Category.Click += new System.EventHandler(this.Create_Category_Click);
             // 
             // Remove_Category
             // 
+            this.Remove_Category.Enabled = false;
             this.Remove_Category.Location = new System.Drawing.Point(6, 22);
             this.Remove_Category.Name = "Remove_Category";
             this.Remove_Category.Size = new System.Drawing.Size(95, 59);
