@@ -30,21 +30,21 @@ namespace Kitchen_staff_app
         {
             create_prod test = new create_prod();
             test.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void Remove_Product_Click(object sender, EventArgs e)
         {
             remove_prod Rprod = new remove_prod();
             Rprod.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void Edit_Product_Click(object sender, EventArgs e)
         {
             edit_prod Eprod = new edit_prod();
             Eprod.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void soldStatBtn_Click(object sender, EventArgs e)
@@ -57,7 +57,7 @@ namespace Kitchen_staff_app
             stats statWindow = new stats();
             statWindow.Show();
             statWindow.pickStat(1);
-            this.Hide();
+            this.Close();
         }
 
         private void busyHoursBtn_Click(object sender, EventArgs e)
@@ -72,11 +72,11 @@ namespace Kitchen_staff_app
             edit_prod Eprod = new edit_prod();
             create_prod Cprod = new create_prod();
             remove_prod Rprod = new remove_prod();
-            Eprod.Hide();
-            Cprod.Hide();
-            Rprod.Hide();
+            Eprod.Close();
+            Cprod.Close();
+            Rprod.Close();
             
-            this.Hide();
+            this.Close();
         }
 
         private void genStats_Click(object sender, EventArgs e)
@@ -84,21 +84,20 @@ namespace Kitchen_staff_app
             stats statWindow = new stats();
             statWindow.pickStat(0);
             statWindow.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void Create_Category_Click(object sender, EventArgs e)
         {
             create_cat Ccat = new create_cat();
             Ccat.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void donebtn_Click(object sender, EventArgs e)
         {
             this.Close();
             categorized_shop.ShowForm();
-
         }
     }
 }
