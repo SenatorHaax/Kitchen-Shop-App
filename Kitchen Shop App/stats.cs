@@ -38,6 +38,7 @@ namespace Kitchen_staff_app
             switch (statistic)
             {
                 case 0:
+                    //generalStatBtn_Click
                     popularorder = mysql.select(
                         "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
                         "FROM order_items " +
@@ -92,6 +93,7 @@ namespace Kitchen_staff_app
                     break;
 
                 case 1:
+                    //monthlyProfitBtn_Click
                     panel1.Visible = true;
                     monthlyprofit = mysql.select(
                         "SELECT DATE_FORMAT(order_datetime, '%Y-%m') as month, " +
@@ -119,11 +121,13 @@ namespace Kitchen_staff_app
                     chart1.DataBind();
                     break;
                 case 2:
+                    //popularProductBtn_Click
                     MessageBox.Show("Not implemented yet.");
                     this.Close();
                     main.Show();
                     break;
                 case 3:
+                    //busyHoursBtn_Click
                     MessageBox.Show("Not implemented yet.");
                     this.Close();
                     main.Show();

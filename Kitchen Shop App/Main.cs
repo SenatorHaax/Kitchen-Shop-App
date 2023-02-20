@@ -49,7 +49,10 @@ namespace Kitchen_staff_app
 
         private void soldStatBtn_Click(object sender, EventArgs e)
         {
-
+            stats statWindow = new stats();
+            statWindow.Show();
+            statWindow.pickStat(2);
+            this.Close();
         }
 
         private void profChartBtn_Click(object sender, EventArgs e)
@@ -62,7 +65,10 @@ namespace Kitchen_staff_app
 
         private void busyHoursBtn_Click(object sender, EventArgs e)
         {
-
+            stats statWindow = new stats();
+            statWindow.Show();
+            statWindow.pickStat(3);
+            this.Close();
         }
 
         private void button7_Click(object sender, EventArgs e)

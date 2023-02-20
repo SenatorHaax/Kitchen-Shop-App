@@ -116,7 +116,6 @@
             // 
             // busyHoursBtn
             // 
-            this.busyHoursBtn.Enabled = false;
             this.busyHoursBtn.Location = new System.Drawing.Point(235, 22);
             this.busyHoursBtn.Name = "busyHoursBtn";
             this.busyHoursBtn.Size = new System.Drawing.Size(95, 23);
@@ -137,7 +136,6 @@
             // 
             // soldStatBtn
             // 
-            this.soldStatBtn.Enabled = false;
             this.soldStatBtn.Location = new System.Drawing.Point(6, 22);
             this.soldStatBtn.Name = "soldStatBtn";
             this.soldStatBtn.Size = new System.Drawing.Size(95, 23);
