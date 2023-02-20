@@ -259,45 +259,63 @@ namespace Kitchen_Shop_App
 
         }
 
+        
         //when a product is clicked i need to add a label with the name and amount of times it's been clicked to the cart panel
         //TODO: fix weired bug removing the labes instead of adding 1 to the quantity
         private void ProductButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             string productId = btn.Tag.ToString();
-            string productName = btn.Text;
+            string productName = mysql.fetch_product_by_id(productId).Rows[0]["Name"].ToString();
             int productCount = 1;
+            Label lbl = new Label();
+            Button decrementButton = new Button();
+
 
             // check if a label for the product already exists
             Label existingLabel = cartPanel.Controls.OfType<Label>()
-                .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
+    .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
             if (existingLabel != null)
             {
                 // increment the count for the product
                 int count = int.Parse(existingLabel.Text.Split(' ')[0]);
                 productCount = count + 1;
 
-                // remove the existing label and its associated decrement button
-                cartPanel.Controls.Remove(existingLabel);
-                Button existingDecrementButton = cartPanel.Controls.OfType<Button>()
-                    .FirstOrDefault(button => button.Tag != null && button.Tag.ToString() == productId);
-                cartPanel.Controls.Remove(existingDecrementButton);
+                if (productCount > 1)
+                {
+                    // update the existing label text to reflect the new count
+                    existingLabel.Text = productCount + " x " + productName;
+                }
+                else
+                {
+                    // remove the existing label and its associated decrement button
+                    int existingLabelIndex = cartPanel.Controls.IndexOf(existingLabel);
+                    int existingDecrementButtonIndex = existingLabelIndex + 1;
+                    cartPanel.Controls.RemoveAt(existingLabelIndex);
+                    if (existingDecrementButtonIndex < cartPanel.Controls.Count)
+                    {
+                        cartPanel.Controls.RemoveAt(existingDecrementButtonIndex);
+                    }
+                }
+            }
+            else
+            {
+                // add a new label for the product
+                
+                lbl.Text = productCount + " x " + productName;
+                lbl.Tag = productId;
+                lbl.Location = new Point(10, 10 + (cartPanel.Controls.Count * 20));
+                cartPanel.Controls.Add(lbl);
+
+                // add a new decrement button for the product
+                decrementButton.Text = "-";
+                decrementButton.Tag = productId;
+                decrementButton.Click += DecrementButton_Click;
+                decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
+                cartPanel.Controls.Add(decrementButton);
             }
 
-            // add a new label for the product
-            Label lbl = new Label();
-            lbl.Text = productCount + " x " + productName;
-            lbl.Tag = productId;
-            lbl.Location = new Point(10, 10 + (cartPanel.Controls.Count * 20));
-            cartPanel.Controls.Add(lbl);
-
-            // add a new decrement button for the product
-            Button decrementButton = new Button();
-            decrementButton.Text = "-";
-            decrementButton.Tag = productId;
-            decrementButton.Click += DecrementButton_Click;
-            decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
-            //cartPanel.Controls.Add(decrementButton);
+            
         }
 
         private void DecrementButton_Click(object sender, EventArgs e)
