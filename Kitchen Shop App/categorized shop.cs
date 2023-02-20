@@ -20,8 +20,11 @@ namespace Kitchen_Shop_App
         Panel productPanel = new Panel();
         Button cartButton = new Button();
         Panel cartPanel = new Panel();
+
+        //used for checking if the admin keybind has been executed so it dosent run twice
         public static bool hasExecuted = false;
-        private static categorized_shop instance;
+        //used for later instancing of this window
+        public static categorized_shop instance;
 
 
         public categorized_shop()
@@ -72,7 +75,7 @@ namespace Kitchen_Shop_App
             cartPanel = new Panel();
             cartPanel.Dock = DockStyle.Right;
             cartPanel.Size = new Size(350, this.ClientSize.Height);
-            cartPanel.BackColor = Color.Pink;
+            //cartPanel.BackColor = Color.Pink;
             this.Controls.Add(cartPanel);
 
             // Add components to display shopping cart information in the cart panel
@@ -176,7 +179,7 @@ namespace Kitchen_Shop_App
                 btn.Tag = categorie["id"].ToString();
 
             }
-            CategoriesMenuPanel.BackColor = Color.Green;
+            //CategoriesMenuPanel.BackColor = Color.Green;
             CategoriesMenuPanel.AutoScroll = true;
             CategoriesMenuPanel.Width = this.ClientSize.Width - 350;
             CategoriesMenuPanel.Height = this.ClientSize.Height;
@@ -206,7 +209,7 @@ namespace Kitchen_Shop_App
             //string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Products\");
 
             productPanel.Dock = DockStyle.Fill;
-            productPanel.BackColor = Color.LightBlue;
+            //productPanel.BackColor = Color.LightBlue;
 
             foreach (DataRow product in productsData.Rows)
             {
@@ -376,7 +379,7 @@ namespace Kitchen_Shop_App
                 }
             }
         }
-
+        //funbction to later open the same shop window you had open before you opened the admin page
         public static void ShowForm()
         {
             instance.Show();

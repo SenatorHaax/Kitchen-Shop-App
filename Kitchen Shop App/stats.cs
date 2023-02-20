@@ -27,6 +27,8 @@ namespace Kitchen_staff_app
         /// <param name="statistic">integer value for what stat to show</param>
         public void pickStat(int statistic)
         {
+            Main main = new Main();
+
             DataTable monthlyprofit;
             DataTable popularorder;
             DataTable totalOrders;
@@ -37,12 +39,12 @@ namespace Kitchen_staff_app
             {
                 case 0:
                     popularorder = mysql.select(
-                "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
-                "FROM order_items " +
-                "JOIN products ON order_items.product_id = products.id " +
-                "GROUP BY products.name " +
-                "ORDER BY total_quantity DESC " +
-                "LIMIT 1;");
+                        "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
+                        "FROM order_items " +
+                        "JOIN products ON order_items.product_id = products.id " +
+                        "GROUP BY products.name " +
+                        "ORDER BY total_quantity DESC " +
+                        "LIMIT 1;");
 
                     totalOrders = mysql.select(
                         "SELECT COUNT(*) as 'Total Orders'" +
@@ -72,6 +74,14 @@ namespace Kitchen_staff_app
                         "WHERE o.order_datetime >= DATE_SUB(NOW(), INTERVAL 30 DAY) " +
                         "AND o.delivered = 1;");
 
+                    if (popularorder.Rows.Count == 0 || totalOrders.Rows.Count == 0 || avgPrice.Rows.Count == 0 || popularCat.Rows.Count == 0 || monthProfit.Rows.Count == 0)
+                    {
+                        MessageBox.Show("No data available.");
+                        this.Close();
+                        main.Show();
+                        break;
+                    }
+
                     popularProductValue.Text = popularorder.Rows[0]["name"].ToString();
                     totalOrderValue.Text = totalOrders.Rows[0]["Total Orders"].ToString();
                     averageOrderValue.Text = avgPrice.Rows[0]["Avg Order Price"].ToString() + "$";
@@ -80,18 +90,26 @@ namespace Kitchen_staff_app
                     generalStatPanel.Visible = true;
                     generalStatPanel.BringToFront();
                     break;
-                    
+
                 case 1:
                     panel1.Visible = true;
                     monthlyprofit = mysql.select(
-                "SELECT DATE_FORMAT(order_datetime, '%Y-%m') as month, " +
-                "SUM(total_cost - (oi.quantity * p.cost_price)) AS profit " +
-                "FROM orders o " +
-                "JOIN order_items oi ON oi.order_id = o.id " +
-                "JOIN products p ON p.id = oi.product_id " +
-                "WHERE o.delivered = 1 " +
-                "GROUP BY month " +
-                "ORDER BY month;");
+                        "SELECT DATE_FORMAT(order_datetime, '%Y-%m') as month, " +
+                        "SUM(total_cost - (oi.quantity * p.cost_price)) AS profit " +
+                        "FROM orders o " +
+                        "JOIN order_items oi ON oi.order_id = o.id " +
+                        "JOIN products p ON p.id = oi.product_id " +
+                        "WHERE o.delivered = 1 " +
+                        "GROUP BY month " +
+                        "ORDER BY month;");
+
+                    if (monthlyprofit.Rows.Count == 0)
+                    {
+                        MessageBox.Show("No data available.");
+                        this.Close();
+                        main.Show();
+                        break;
+                    }
 
                     chart1.DataSource = monthlyprofit;
                     chart1.Series.Add("Profit");
@@ -100,12 +118,22 @@ namespace Kitchen_staff_app
                     chart1.Series["Profit"].YValueMembers = "profit";
                     chart1.DataBind();
                     break;
+                case 2:
+                    MessageBox.Show("Not implemented yet.");
+                    this.Close();
+                    main.Show();
+                    break;
+                case 3:
+                    MessageBox.Show("Not implemented yet.");
+                    this.Close();
+                    main.Show();
+                    break;
             } 
         }
 
         private void Back_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             generalStatPanel.Visible = false;
             panel1.Visible = false;
 

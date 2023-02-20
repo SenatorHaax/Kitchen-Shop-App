@@ -75,15 +75,15 @@ namespace Kitchen_staff_app
             Eprod.Close();
             Cprod.Close();
             Rprod.Close();
-            
+            categorized_shop.instance.Close();
             this.Close();
         }
 
         private void genStats_Click(object sender, EventArgs e)
         {
             stats statWindow = new stats();
-            statWindow.pickStat(0);
             statWindow.Show();
+            statWindow.pickStat(0);
             this.Close();
         }
 
@@ -97,6 +97,7 @@ namespace Kitchen_staff_app
         private void donebtn_Click(object sender, EventArgs e)
         {
             this.Close();
+            categorized_shop.hasExecuted = false;
             categorized_shop.ShowForm();
         }
     }
