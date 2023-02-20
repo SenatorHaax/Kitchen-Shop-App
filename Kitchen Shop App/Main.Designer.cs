@@ -41,6 +41,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Create_Category = new System.Windows.Forms.Button();
             this.Remove_Category = new System.Windows.Forms.Button();
+            this.donebtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -187,11 +188,23 @@
             this.Remove_Category.Text = "Remove Category";
             this.Remove_Category.UseVisualStyleBackColor = true;
             // 
+            // donebtn
+            // 
+            this.donebtn.BackColor = System.Drawing.Color.Green;
+            this.donebtn.Location = new System.Drawing.Point(693, 379);
+            this.donebtn.Name = "donebtn";
+            this.donebtn.Size = new System.Drawing.Size(95, 59);
+            this.donebtn.TabIndex = 4;
+            this.donebtn.Text = "Done";
+            this.donebtn.UseVisualStyleBackColor = false;
+            this.donebtn.Click += new System.EventHandler(this.donebtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.donebtn);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.groupBox2);
@@ -221,5 +234,6 @@
         private Button Create_Category;
         private Button Remove_Category;
         private Button genStats;
+        private Button donebtn;
     }
 }

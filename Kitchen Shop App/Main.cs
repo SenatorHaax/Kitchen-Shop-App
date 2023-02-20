@@ -93,5 +93,12 @@ namespace Kitchen_staff_app
             Ccat.Show();
             this.Hide();
         }
+
+        private void donebtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            categorized_shop.ShowForm();
+
+        }
     }
 }

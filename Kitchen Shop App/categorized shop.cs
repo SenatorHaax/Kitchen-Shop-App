@@ -21,12 +21,13 @@ namespace Kitchen_Shop_App
         Button cartButton = new Button();
         Panel cartPanel = new Panel();
         public static bool hasExecuted = false;
+        private static categorized_shop instance;
 
 
         public categorized_shop()
         {
             InitializeComponent();
-
+            instance = this;
             KeyPreview = true;
             KeyDown += categorized_shop_KeyDown;
             Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
@@ -374,6 +375,11 @@ namespace Kitchen_Shop_App
                     }
                 }
             }
+        }
+
+        public static void ShowForm()
+        {
+            instance.Show();
         }
 
         private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
