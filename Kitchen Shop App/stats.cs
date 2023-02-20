@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Kitchen_staff_app
@@ -39,6 +31,7 @@ namespace Kitchen_staff_app
             {
                 case 0:
                     //generalStatBtn_Click
+                    #region general stats
                     popularorder = mysql.select(
                         "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
                         "FROM order_items " +
@@ -91,9 +84,10 @@ namespace Kitchen_staff_app
                     generalStatPanel.Visible = true;
                     generalStatPanel.BringToFront();
                     break;
-
+                #endregion
                 case 1:
                     //monthlyProfitBtn_Click
+                    #region monthly profit
                     panel1.Visible = true;
                     monthlyprofit = mysql.select(
                         "SELECT DATE_FORMAT(order_datetime, '%Y-%m') as month, " +
@@ -120,19 +114,25 @@ namespace Kitchen_staff_app
                     chart1.Series["Profit"].YValueMembers = "profit";
                     chart1.DataBind();
                     break;
+#endregion
                 case 2:
                     //popularProductBtn_Click
+                    //most sold product
+                    #region most sold product
                     MessageBox.Show("Not implemented yet.");
                     this.Close();
                     main.Show();
                     break;
+                #endregion
                 case 3:
                     //busyHoursBtn_Click
+                    #region busy hours
                     MessageBox.Show("Not implemented yet.");
                     this.Close();
                     main.Show();
                     break;
-            } 
+                    #endregion
+            }
         }
 
         private void Back_Click(object sender, EventArgs e)
