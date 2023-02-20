@@ -41,17 +41,15 @@ namespace Kitchen_Shop_App
             this.Hide();
             string name = Category_name.Text;
 
-            using (MySqlConnection con = new MySqlConnection(mysql.con.ConnectionString))
+            // create dictionary with data to insert
+            var data = new Dictionary<string, object>
             {
-                con.Open();
-                string query = "INSERT INTO categories (Name, image) VALUES (@name, @image)";
-                using (MySqlCommand cmd = new MySqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@image", imageData);
-                    cmd.ExecuteNonQuery();
-                }
-            }
+                { "Name", name },
+                { "image", imageData }
+            };
+
+            // insert data into the table
+            mysql.insert("categories", data);
 
             Main main = new Main();
             main.Show();

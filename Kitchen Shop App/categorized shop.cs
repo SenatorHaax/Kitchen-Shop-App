@@ -130,7 +130,7 @@ namespace Kitchen_Shop_App
                 name.BringToFront();
 
                 string imageQuery = "SELECT Image FROM Categories WHERE id = " + categorie["id"].ToString();
-                DataTable imageData = mysql.select(imageQuery);
+                DataTable imageData = mysql.select(imageQuery, new Dictionary<string, object>());
                 Image image;
                 if (imageData.Rows[0]["Image"] != DBNull.Value)
                 {

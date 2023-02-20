@@ -40,7 +40,14 @@ namespace Kitchen_staff_app
             string cost = ProdCost.Text;
             string id = comboBox1.SelectedValue.ToString();
 
-            mysql.update("UPDATE Products SET name = '" + name + "', price = '" + price + "', cost_price = '" + cost + "' WHERE id = " + id);
+            Dictionary<string, object> fields = new Dictionary<string, object>
+{
+    { "name", name },
+    { "price", price },
+    { "cost_price", cost }
+};
+
+            mysql.update("Products", $"id = {id}", fields);
         }
 
         private void UpdateButton_Update(object sender, EventArgs e)

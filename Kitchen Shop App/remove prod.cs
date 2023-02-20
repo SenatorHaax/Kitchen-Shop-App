@@ -29,7 +29,15 @@ namespace Kitchen_staff_app
         private void confirm_rem_Click(object sender, EventArgs e)
         {
             string id = comboBox1.SelectedValue.ToString();
-            mysql.delete("DELETE FROM Products WHERE id = " + id);
+            //mysql.delete("DELETE FROM Products WHERE id = " + id);
+            // create a list of parameters
+            List<MySqlParameter> parameters = new List<MySqlParameter>
+            {
+                new MySqlParameter("@id", id)
+            };
+
+            // call the delete function
+            mysql.delete("Products", "id = @id", parameters);
             this.Hide();
             Main main = new Main();
             main.Show();

@@ -33,22 +33,22 @@ namespace Kitchen_staff_app
                     //generalStatBtn_Click
                     #region general stats
                     popularorder = mysql.select(
-                        "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
-                        "FROM order_items " +
-                        "JOIN products ON order_items.product_id = products.id " +
-                        "GROUP BY products.name " +
-                        "ORDER BY total_quantity DESC " +
-                        "LIMIT 1;");
+    "SELECT products.name, SUM(order_items.quantity) as total_quantity " +
+    "FROM order_items " +
+    "JOIN products ON order_items.product_id = products.id " +
+    "GROUP BY products.name " +
+    "ORDER BY total_quantity DESC " +
+    "LIMIT 1;", new Dictionary<string, object>());
 
                     totalOrders = mysql.select(
-                        "SELECT COUNT(*) as 'Total Orders'" +
-                        "FROM orders " +
-                        "WHERE delivered = 1;");
+    "SELECT COUNT(*) as 'Total Orders' " +
+    "FROM orders " +
+    "WHERE delivered = 1;", new Dictionary<string, object>());
 
                     avgPrice = mysql.select(
-                        "SELECT AVG(total_cost) as 'Avg Order Price'" +
+                        "SELECT AVG(total_cost) as 'Avg Order Price' " +
                         "FROM orders " +
-                        "WHERE delivered = 1;");
+                        "WHERE delivered = 1;", new Dictionary<string, object>());
 
                     popularCat = mysql.select(
                         "SELECT c.name as category_name, " +
@@ -58,7 +58,7 @@ namespace Kitchen_staff_app
                         "JOIN order_items oi ON p.id = oi.product_id " +
                         "GROUP BY c.name " +
                         "ORDER BY total_quantity DESC " +
-                        "LIMIT 1;");
+                        "LIMIT 1;", new Dictionary<string, object>());
 
                     monthProfit = mysql.select(
                         "SELECT SUM(o.total_cost - (oi.quantity * p.cost_price)) AS profit " +
@@ -66,7 +66,7 @@ namespace Kitchen_staff_app
                         "JOIN order_items oi ON oi.order_id = o.id " +
                         "JOIN products p ON p.id = oi.product_id " +
                         "WHERE o.order_datetime >= DATE_SUB(NOW(), INTERVAL 30 DAY) " +
-                        "AND o.delivered = 1;");
+                        "AND o.delivered = 1;", new Dictionary<string, object>());
 
                     if (popularorder.Rows.Count == 0 || totalOrders.Rows.Count == 0 || avgPrice.Rows.Count == 0 || popularCat.Rows.Count == 0 || monthProfit.Rows.Count == 0)
                     {
@@ -97,7 +97,7 @@ namespace Kitchen_staff_app
                         "JOIN products p ON p.id = oi.product_id " +
                         "WHERE o.delivered = 1 " +
                         "GROUP BY month " +
-                        "ORDER BY month;");
+                        "ORDER BY month;", new Dictionary<string, object>());
 
                     if (monthlyprofit.Rows.Count == 0)
                     {

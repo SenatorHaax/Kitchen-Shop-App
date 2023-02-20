@@ -38,22 +38,18 @@ namespace Kitchen_staff_app
             string name = Product_name.Text;
             string price = Product_price.Text;
             string cost = Product_cost.Text;
-            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];//explain this pls
+            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
 
-
-            
-            string query = "INSERT INTO Products (Name, sale_price, cost_price, image,category_id) VALUES (@name, @price, @cost, @imageData, @categoryId)";
-            using (MySqlCommand cmd = new MySqlCommand(query, mysql.con))
+            Dictionary<string, object> data = new Dictionary<string, object>
             {
-                mysql.con.Open();
-                cmd.Parameters.AddWithValue("@name", name);
-                cmd.Parameters.AddWithValue("@price", price);
-                cmd.Parameters.AddWithValue("@cost", cost);
-                cmd.Parameters.AddWithValue("@imageData", imageData);
-                cmd.Parameters.AddWithValue("@categoryId", categoryId);
-                cmd.ExecuteNonQuery();
-                mysql.con.Close();
-            }
+                { "Name", name },
+                { "sale_price", price },
+                { "cost_price", cost },
+                { "image", imageData },
+                { "category_id", categoryId }
+            };
+
+            mysql.insert("Products", data);
 
             Main main = new Main();
             main.Show();

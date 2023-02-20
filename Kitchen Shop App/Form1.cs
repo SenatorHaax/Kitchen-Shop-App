@@ -234,8 +234,13 @@ namespace Kitchen_Shop_App
                 decimal price = Convert.ToDecimal(row.Cells["price"].Value);
 
                 total_cost += price * quantity;
-                string query2 = $"INSERT INTO order_items (order_id, product_id, quantity) VALUES ( {order_id}, {product_id}, {quantity})";
-                mysql.insert(query2);
+                    Dictionary<string, object> data = new Dictionary<string, object>()
+{
+    { "order_id", order_id },
+    { "product_id", product_id },
+    { "quantity", quantity }
+};
+                    mysql.insert("order_items", data);
                 }
                 
             }
