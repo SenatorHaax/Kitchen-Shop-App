@@ -202,7 +202,7 @@ namespace Kitchen_Shop_App
             int y = 10;
             string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
             Image defaultImage = Image.FromFile(defaultImagePath);
-            string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Products\");
+            //string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Products\");
 
             productPanel.Dock = DockStyle.Fill;
             productPanel.BackColor = Color.LightBlue;
@@ -261,7 +261,6 @@ namespace Kitchen_Shop_App
 
         
         //when a product is clicked i need to add a label with the name and amount of times it's been clicked to the cart panel
-        //TODO: fix weired bug removing the labes instead of adding 1 to the quantity
         private void ProductButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -301,7 +300,6 @@ namespace Kitchen_Shop_App
             else
             {
                 // add a new label for the product
-                
                 lbl.Text = productCount + " x " + productName;
                 lbl.Tag = productId;
                 lbl.Location = new Point(10, 10 + (cartPanel.Controls.Count * 20));
