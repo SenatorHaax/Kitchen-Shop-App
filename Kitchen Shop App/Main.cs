@@ -104,7 +104,7 @@ namespace Kitchen_staff_app
         {
             this.Close();
             categorized_shop.hasExecuted = false;
-            categorized_shop.ShowForm();
+            categorized_shop.show_form();
         }
     }
 }

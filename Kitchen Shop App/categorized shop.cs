@@ -20,11 +20,13 @@ namespace Kitchen_Shop_App
         Panel productPanel = new Panel();
         Button cartButton = new Button();
         Panel cartPanel = new Panel();
+        Button purchaseButton = new Button();
+
 
         //used for checking if the admin keybind has been executed so it dosent run twice
         public static bool hasExecuted = false;
         //used for later instancing of this window
-        public static categorized_shop instance;
+        public static categorized_shop? instance;
 
 
         public categorized_shop()
@@ -36,7 +38,7 @@ namespace Kitchen_Shop_App
             Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
 
             //this.CategoriesMenuPanel.AutoScroll = true;
-            //forces the window to be fullscreen no matter what
+            //forces the window to be fullscreen no matter what to stop shenanigans
             this.TopMost = true;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -52,76 +54,48 @@ namespace Kitchen_Shop_App
             backButton.Text = "Back";
             backButton.Tag = "main";
             backButton.Location = new Point(10, 10);
-            backButton.Click += new EventHandler(backBtn_Click);
+            backButton.Click += new EventHandler(back_button_click);
             topPanel.Controls.Add(backButton);
 
-            //add emergency shutdown button todo remove TODO: please for the love of god remember to remove this
+            //add emergency shutdown button todo remove TODO: please for the love of god remember to remove this before delivery
             Button shutdownButton = new Button();
             shutdownButton.Text = "Shutdown";
             shutdownButton.Location = new Point(100, 10);
             shutdownButton.BackColor = Color.Red;
-            shutdownButton.Click += new EventHandler(shutdownBtn_Click);
+            shutdownButton.Click += new EventHandler(shutdown_button_Click);
             topPanel.Controls.Add(shutdownButton);
-            
-
-            // add a shopping cart button to the top-right panel
-            cartButton = new Button();
-            cartButton.Text = "Shopping Cart";
-            cartButton.Location = new Point(screen.Width - 85, 10);
-            cartButton.Click += new EventHandler(cartBtn_Click);
-            //topPanel.Controls.Add(cartButton);
 
             // Add a panel to the right of the form for the shopping cart
             cartPanel = new Panel();
             cartPanel.Dock = DockStyle.Right;
-            cartPanel.Size = new Size(350, this.ClientSize.Height);
-            //cartPanel.BackColor = Color.Pink;
+            cartPanel.Size = new Size(350, 10);
+            cartPanel.BackColor = Color.Green;
             this.Controls.Add(cartPanel);
 
-            // Add components to display shopping cart information in the cart panel
-            // todo
-        }
-
-        private void shutdownBtn_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void backBtn_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            switch (btn.Tag)
-            {
-                case "main":
-                    this.Close();
-                    break;
-                case "products":
-                    CategoriesMenuPanel.Show();
-                    CategoriesMenuPanel.BringToFront();
-                    productPanel.Hide();
-                    btn.Tag = "main";
-                    break;
-            }
-        }
-
-        private void cartBtn_Click(object sender, EventArgs e)
-        {
-            //todo shopping cart funtionality or order functionality if side panel gets made to work
+            purchaseButton.Text = "Purchase";
+            purchaseButton.Location = new Point(100, cartPanel.ClientSize.Height - 100);
+            purchaseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            purchaseButton.Size = new Size(150, 50);
+            purchaseButton.Click += new EventHandler(purchase_button_click);
+            cartPanel.Controls.Add(purchaseButton);
         }
 
         private void categorized_shop_Load(object sender, EventArgs e)
         {
-            int x = 10;
-            int y = 10;
+            int x = 10; // Starting x coordinate of the first button
+            int y = 10; // Starting y coordinate of the first button
+
+            // Load the default image from file
             string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
             Image defaultImage = Image.FromFile(defaultImagePath);
-            //string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Categories\");
 
+            // Loop through each category and create a button and label for it
             foreach (DataRow categorie in categories.Rows)
             {
                 Button btn = new Button();
                 btn.Location = new Point(x, y);
                 btn.Size = new Size(100, 100);
+
                 Label name = new Label();
                 name.Text = categorie["Name"].ToString();
                 name.Location = new Point(x, y + btn.Height);
@@ -129,143 +103,148 @@ namespace Kitchen_Shop_App
                 name.TextAlign = ContentAlignment.MiddleCenter;
                 name.BringToFront();
 
+                // Query the database for the category's image and load it
                 string imageQuery = "SELECT Image FROM Categories WHERE id = " + categorie["id"].ToString();
                 DataTable imageData = mysql.select(imageQuery, new Dictionary<string, object>());
-                Image image;
-                if (imageData.Rows[0]["Image"] != DBNull.Value)
-                {
-                    byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
-                    try
-                    {
-                        //byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
-                        if (imageData.Rows.Count > 0 && imageData.Rows[0]["Image"] != DBNull.Value)
-                        {
-                            using (MemoryStream ms = new MemoryStream(imageBytes))
-                            {
-                                image = Image.FromStream(ms);
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error loading image: wtf");
-                            image = defaultImage;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error loading image: " + ex.Message);
-                        image = defaultImage;
-                    }
-                }
-                else
-                {
-                    image = defaultImage;
-                }
+                Image image = load_image_from_database(imageData, defaultImage);
 
-
+                // Set the button's image to the loaded image
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
 
+                // Add the button and label to the CategoriesMenuPanel
                 CategoriesMenuPanel.Controls.Add(btn);
                 CategoriesMenuPanel.Controls.Add(name);
 
+                // Increment the x coordinate to the next button position
                 x += 120;
                 if (x > this.ClientSize.Width - 350)
                 {
+                    // If the buttons have reached the end of the form's width, move to the next row
                     x = 10;
                     y += 120;
                 }
 
-                btn.Click += new EventHandler(CategoryButton_Click);
+                // Add's an event handler to the button's click event and set its tag to the category's ID
+                btn.Click += new EventHandler(category_button_click);
                 btn.Tag = categorie["id"].ToString();
-
             }
-            //CategoriesMenuPanel.BackColor = Color.Green;
+
+            // Set the CategoriesMenuPanel to auto-scroll and adjust its size to fit the form
             CategoriesMenuPanel.AutoScroll = true;
             CategoriesMenuPanel.Width = this.ClientSize.Width - 350;
             CategoriesMenuPanel.Height = this.ClientSize.Height;
         }
 
-        private void CategoryButton_Click(object sender, EventArgs e)
+        // This method generates a panel of products based on a DataTable of product data and adds it to a parent form
+        private void generate_product_panel(Form parentForm, DataTable productsData)
         {
-            Button clickedButton = (Button)sender;
-            string id = clickedButton.Tag.ToString();
-            DataTable categoryData = new DataTable();
-            categoryData.Clear();
-            categoryData = mysql.fetch_product_by_category_id(id);
-            backButton.Tag = "products";
-            productPanel.Show();
-            CategoriesMenuPanel.Hide();
-            // code to open the new panel with all products from the selected category
-            GenerateProductPanel(this, categoryData);
-        }
-        
-        private void GenerateProductPanel(Form parentForm, DataTable productsData)
-        {
+            // Clear any existing controls from the product panel
             productPanel.Controls.Clear();
+
+            // Set initial coordinates for the buttons and labels to be added to the panel
             int x = 10;
             int y = 10;
+
+            // Define a default image to use if a product has no image data
             string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
             Image defaultImage = Image.FromFile(defaultImagePath);
-            //string imageStoragePath = Path.Combine(Application.StartupPath, @"images\Products\");
 
+            // Set the dock style of the product panel to fill the parent form
             productPanel.Dock = DockStyle.Fill;
-            //productPanel.BackColor = Color.LightBlue;
 
+            // Loop through each row of product data in the DataTable
             foreach (DataRow product in productsData.Rows)
             {
+                // Create a new button to represent the product
                 Button btn = new Button();
                 btn.Text = "";
                 btn.Location = new Point(x, y);
                 btn.Size = new Size(100, 100);
+
+                // Create a label to display the name of the product
                 Label name = new Label();
                 name.Text = product["Name"].ToString();
                 name.Location = new Point(x, y + btn.Height);
                 name.Font = new Font("Arial", 12);
                 name.TextAlign = ContentAlignment.MiddleCenter;
                 name.BringToFront();
-                byte[] imageBytes = (byte[])product["Image"];
 
-                Image image;
-                try
-                {
-                    using (var ms = new MemoryStream(imageBytes))
-                    {
-                        image = Image.FromStream(ms);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error loading image: " + ex.Message);
-                    image = defaultImage;
-                }
+                // Retrieve image data for the product from the database
+                DataTable imageData = mysql.select("SELECT Image FROM Products WHERE id = " + product["id"].ToString(), new Dictionary<string, object>());
 
+                // Load the image data into an Image object and set it as the button's thumbnail image
+                Image image = load_image_from_database(imageData, defaultImage);
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
-                btn.Tag = product["id"].ToString();
-                btn.Click += new EventHandler(ProductButton_Click);
-                productPanel.Controls.Add(name);
+                btn.Click += new EventHandler(product_button_click);
 
+
+                // Set the button's tag to the ID of the product
+                btn.Tag = product["id"].ToString();
+
+                // Add the label and button to the product panel
+                productPanel.Controls.Add(name);
                 productPanel.Controls.Add(btn);
+
+                // Increment the x coordinate for the next button
                 x += 120;
+
+                // If the x coordinate has reached the edge of the parent form, reset it and increment the y coordinate
                 if (x > parentForm.ClientSize.Width - 300)
                 {
                     x = 10;
                     y += 120;
                 }
             }
-            productsData.Clear();
-            productPanel.Size = parentForm.ClientSize;
-            // add the product panel to the form controls
-            parentForm.Controls.Add(productPanel);
-            
-            // bring the product panel to the front
-            productPanel.BringToFront();
-            
 
+            // Clear the product data from the DataTable
+            productsData.Clear();
+
+            // Set the size of the product panel to match the size of the parent form
+            productPanel.Size = parentForm.ClientSize;
+
+            // Add the product panel to the parent form's controls
+            parentForm.Controls.Add(productPanel);
+
+            // Bring the product panel to the front
+            productPanel.BringToFront();
         }
 
-        
-        //when a product is clicked i need to add a label with the name and amount of times it's been clicked to the cart panel
-        private void ProductButton_Click(object sender, EventArgs e)
+        private void categorized_shop_Resize(object sender, EventArgs e)
+        {
+            int x = 10;
+            int y = 10;
+            int maxX = this.ClientSize.Width - 110;
+
+            foreach (Control control in CategoriesMenuPanel.Controls)
+            {
+                if (control is Button btn)
+                {
+                    btn.Location = new Point(x, y);
+                    x += 120;
+                    if (x > maxX)
+                    {
+                        x = 10;
+                        y += 120;
+                    }
+                }
+            }
+        }
+
+        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.Insert && !hasExecuted)
+            {
+                hasExecuted = true;
+                string text = "You are Admin congratz";
+                MessageBox.Show(text);
+                Main main = new Main();
+                this.Hide();
+                main.Show();
+                main.BringToFront();
+            }
+        }
+
+        private void product_button_click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             string productId = btn.Tag.ToString();
@@ -312,15 +291,15 @@ namespace Kitchen_Shop_App
                 // add a new decrement button for the product
                 decrementButton.Text = "-";
                 decrementButton.Tag = productId;
-                decrementButton.Click += DecrementButton_Click;
+                decrementButton.Click += decrement_button_click;
                 decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
                 cartPanel.Controls.Add(decrementButton);
             }
 
-            
+
         }
 
-        private void DecrementButton_Click(object sender, EventArgs e)
+        private void decrement_button_click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
             string productId = btn.Tag.ToString();
@@ -359,45 +338,87 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void categorized_shop_Resize(object sender, EventArgs e)
+        private void shutdown_button_Click(object sender, EventArgs e)
         {
-            int x = 10;
-            int y = 10;
-            int maxX = this.ClientSize.Width - 110;
+            Application.Exit();
+        }
 
-            foreach (Control control in CategoriesMenuPanel.Controls)
+        private void back_button_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            switch (btn.Tag)
             {
-                if (control is Button btn)
+                case "main":
+                    this.Close();
+                    break;
+                case "products":
+                    CategoriesMenuPanel.Show();
+                    CategoriesMenuPanel.BringToFront();
+                    productPanel.Hide();
+                    btn.Tag = "main";
+                    break;
+            }
+        }
+
+        private void category_button_click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            string id = clickedButton.Tag.ToString();
+            DataTable categoryData = new DataTable();
+            categoryData.Clear();
+            categoryData = mysql.fetch_product_by_category_id(id);
+            backButton.Tag = "products";
+            productPanel.Show();
+            CategoriesMenuPanel.Hide();
+            // code to open the new panel with all products from the selected category
+            generate_product_panel(this, categoryData);
+        }
+
+        private void purchase_button_click(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private Image load_image_from_database(DataTable imageData, Image defaultImage)
+        {
+            Image image;
+            if (imageData.Rows[0]["Image"] != DBNull.Value)
+            {
+                byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
+                try
                 {
-                    btn.Location = new Point(x, y);
-                    x += 120;
-                    if (x > maxX)
+                    //byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
+                    if (imageData.Rows.Count > 0 && imageData.Rows[0]["Image"] != DBNull.Value)
                     {
-                        x = 10;
-                        y += 120;
+                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        {
+                            image = Image.FromStream(ms);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error loading image: wtf");
+                        image = defaultImage;
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error loading image: " + ex.Message);
+                    image = defaultImage;
+                }
             }
+            else
+            {
+                image = defaultImage;
+            }
+
+            return image;
         }
+        
         //funbction to later open the same shop window you had open before you opened the admin page
-        public static void ShowForm()
+        public static void show_form()
         {
             instance.Show();
-        }
-
-        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Alt && e.KeyCode == Keys.Insert && !hasExecuted)
-            {
-                hasExecuted = true;
-                string text = "You are Admin congratz";
-                MessageBox.Show(text);
-                Main main = new Main();
-                this.Hide();
-                main.Show();
-                main.BringToFront();
-                //todo add all functionality from admin page to this instead for easier adding pictures (if not using blob on sql)
-            }
         }
     }
 }

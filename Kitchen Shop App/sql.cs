@@ -3,7 +3,6 @@ using MySqlConnector;
 
 namespace Kitchen_staff_app
 {
-    //todo reconfigure to dynamic prepared statements
     //class mysql
     class mysql
     {
@@ -261,11 +260,11 @@ namespace Kitchen_staff_app
         }
         
         /// <summary>
-/// Executes the specified SQL query, which is expected to be an INSERT statement that adds a record to a table.
-/// Returns the ID of the last inserted record.
-/// </summary>
-/// <param name="query">The SQL query to execute.</param>
-/// <returns>The ID of the last inserted record.</returns>
+        /// Executes the specified SQL query, which is expected to be an INSERT statement that adds a record to a table.
+        /// Returns the ID of the last inserted record.
+        /// </summary>
+        /// <param name="query">The SQL query to execute.</param>
+        /// <returns>The ID of the last inserted record.</returns>
         public static int insertAndRetrieveId(string query)
         {
             //open connection
