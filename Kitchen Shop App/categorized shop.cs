@@ -14,6 +14,7 @@ namespace Kitchen_Shop_App
 {
     public partial class categorized_shop : Form
     {
+        #region variables
         DataTable products = mysql.fetch_all_products();
         DataTable categories = mysql.fetch_all_categories();
         Button backButton = new Button();
@@ -25,7 +26,7 @@ namespace Kitchen_Shop_App
 
         public static bool hasExecuted = false;
         public static categorized_shop? instance;
-
+        #endregion
 
         public categorized_shop()
         {
@@ -76,7 +77,7 @@ namespace Kitchen_Shop_App
             purchaseButton.Click += new EventHandler(purchase_button_click);
             cartPanel.Controls.Add(purchaseButton);
         }
-
+        #region main methods
         private void categorized_shop_Load(object sender, EventArgs e)
         {
             int x = 10; // Starting x coordinate of the first button
@@ -131,7 +132,6 @@ namespace Kitchen_Shop_App
             CategoriesMenuPanel.Width = this.ClientSize.Width - 350;
             CategoriesMenuPanel.Height = this.ClientSize.Height;
         }
-
         // This method generates a panel of products based on a DataTable of product data and adds it to a parent form
         private void generate_product_panel(Form parentForm, DataTable productsData)
         {
@@ -205,6 +205,8 @@ namespace Kitchen_Shop_App
             // Bring the product panel to the front
             productPanel.BringToFront();
         }
+        #endregion
+        #region Event Handlers
 
         private void categorized_shop_Resize(object sender, EventArgs e)
         {
@@ -376,7 +378,8 @@ namespace Kitchen_Shop_App
             throw new NotImplementedException();
             //todo make purchase logic preferably with paypal/stripe
         }
-
+        #endregion
+        #region custom methods
         private Image load_image_from_database(DataTable imageData, Image defaultImage)
         {
             Image image;
@@ -418,5 +421,6 @@ namespace Kitchen_Shop_App
         {
             instance.Show();
         }
+        #endregion
     }
 }
