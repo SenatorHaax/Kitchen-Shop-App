@@ -278,5 +278,20 @@ namespace Kitchen_staff_app
             return lastInsertedId;
         }
 
+        public static DataTable fetch_all_order_items_with_product_name(string order_id)
+        {
+            string query = "SELECT order_items.quantity, products.name as product_name FROM order_items JOIN products ON order_items.product_id = products.id WHERE order_items.order_id = @order_id";
+            using (var command = new MySqlCommand(query, con))
+            {
+                command.Parameters.AddWithValue("@order_id", order_id);
+                using (var adapter = new MySqlDataAdapter(command))
+                {
+                    var result = new DataTable();
+                    adapter.Fill(result);
+                    return result;
+                }
+            }
+        }
+
     }
 }

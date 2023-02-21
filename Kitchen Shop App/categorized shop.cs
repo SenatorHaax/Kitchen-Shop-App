@@ -1,14 +1,5 @@
 ﻿using Kitchen_staff_app;
-using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Kitchen_Shop_App
 {
@@ -27,7 +18,7 @@ namespace Kitchen_Shop_App
         public static bool hasExecuted = false;
         public static categorized_shop? instance;
         #endregion
-
+        #region main window gen
         public categorized_shop()
         {
             InitializeComponent();
@@ -77,6 +68,7 @@ namespace Kitchen_Shop_App
             purchaseButton.Click += new EventHandler(purchase_button_click);
             cartPanel.Controls.Add(purchaseButton);
         }
+        #endregion
         #region main methods
         private void categorized_shop_Load(object sender, EventArgs e)
         {
