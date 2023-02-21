@@ -23,9 +23,7 @@ namespace Kitchen_Shop_App
         Button purchaseButton = new Button();
 
 
-        //used for checking if the admin keybind has been executed so it dosent run twice
         public static bool hasExecuted = false;
-        //used for later instancing of this window
         public static categorized_shop? instance;
 
 
@@ -69,7 +67,6 @@ namespace Kitchen_Shop_App
             cartPanel = new Panel();
             cartPanel.Dock = DockStyle.Right;
             cartPanel.Size = new Size(350, 10);
-            cartPanel.BackColor = Color.Green;
             this.Controls.Add(cartPanel);
 
             purchaseButton.Text = "Purchase";
@@ -377,6 +374,7 @@ namespace Kitchen_Shop_App
         private void purchase_button_click(object? sender, EventArgs e)
         {
             throw new NotImplementedException();
+            //todo make purchase logic preferably with paypal/stripe
         }
 
         private Image load_image_from_database(DataTable imageData, Image defaultImage)
