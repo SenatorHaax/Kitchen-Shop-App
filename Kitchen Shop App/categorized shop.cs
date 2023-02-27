@@ -414,7 +414,6 @@ namespace Kitchen_Shop_App
 
         private void purchase_button_click(object? sender, EventArgs e)
         {
-            //throw new NotImplementedException();
             //todo make purchase logic preferably with paypal/stripe
 
 
@@ -449,10 +448,10 @@ namespace Kitchen_Shop_App
             }
 
             cartTable.Rows.Clear();
-
-
-            //cartPanel.Controls.Clear();
+            
             //cant use clear but need te reomve all the labels and buttons
+            //this was a pain in the ass to make for some reason it would always leave a single label or button left in the panel and it confused me alot
+            //can show with a foreach on cartPanel.Controls it should remove everything but does not have to make a list and remove from that
             List<Control> controlsToRemove = new List<Control>();
             foreach (Control c in cartPanel.Controls)
             {
