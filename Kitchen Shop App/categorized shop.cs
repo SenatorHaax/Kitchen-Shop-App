@@ -1,18 +1,19 @@
 ﻿using Kitchen_staff_app;
 using System.Data;
+using System.Windows.Forms;
 
 namespace Kitchen_Shop_App
 {
     public partial class categorized_shop : Form
     {
         #region variables
-        DataTable products = mysql.fetch_all_products();
         DataTable categories = mysql.fetch_all_categories();
         Button backButton = new Button();
         Panel productPanel = new Panel();
-        Button cartButton = new Button();
         Panel cartPanel = new Panel();
         Button purchaseButton = new Button();
+        DataTable cartTable = new DataTable();
+
 
 
         public static bool hasExecuted = false;
@@ -26,6 +27,10 @@ namespace Kitchen_Shop_App
             KeyPreview = true;
             KeyDown += categorized_shop_KeyDown;
             Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
+
+            cartTable.Columns.Add("ProductId", typeof(string));
+            cartTable.Columns.Add("ProductName", typeof(string));
+            cartTable.Columns.Add("ProductCount", typeof(int));
 
             //this.CategoriesMenuPanel.AutoScroll = true;
             //forces the window to be fullscreen no matter what to stop shenanigans
@@ -66,6 +71,7 @@ namespace Kitchen_Shop_App
             purchaseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             purchaseButton.Size = new Size(150, 50);
             purchaseButton.Click += new EventHandler(purchase_button_click);
+            purchaseButton.Enabled = false;
             cartPanel.Controls.Add(purchaseButton);
         }
         #endregion
@@ -243,36 +249,39 @@ namespace Kitchen_Shop_App
             int productCount = 1;
             Label lbl = new Label();
             Button decrementButton = new Button();
+            
 
 
             // check if a label for the product already exists
-            Label existingLabel = cartPanel.Controls.OfType<Label>()
-    .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
-            if (existingLabel != null)
+            // check if a row for the product already exists in the DataTable
+            DataRow existingRow = cartTable.AsEnumerable()
+                .FirstOrDefault(row => row["ProductId"].ToString() == productId);
+            if (existingRow != null)
             {
                 // increment the count for the product
-                int count = int.Parse(existingLabel.Text.Split(' ')[0]);
+                int count = int.Parse(existingRow["ProductCount"].ToString());
                 productCount = count + 1;
 
-                if (productCount > 1)
+                // update the existing row to reflect the new count
+                existingRow["ProductCount"] = productCount;
+
+                // update the existing label text to reflect the new count
+                Label existingLabel = cartPanel.Controls.OfType<Label>()
+                    .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
+                if (existingLabel != null)
                 {
-                    // update the existing label text to reflect the new count
                     existingLabel.Text = productCount + " x " + productName;
-                }
-                else
-                {
-                    // remove the existing label and its associated decrement button
-                    int existingLabelIndex = cartPanel.Controls.IndexOf(existingLabel);
-                    int existingDecrementButtonIndex = existingLabelIndex + 1;
-                    cartPanel.Controls.RemoveAt(existingLabelIndex);
-                    if (existingDecrementButtonIndex < cartPanel.Controls.Count)
-                    {
-                        cartPanel.Controls.RemoveAt(existingDecrementButtonIndex);
-                    }
                 }
             }
             else
             {
+                // add a new row for the product
+                DataRow newRow = cartTable.NewRow();
+                newRow["ProductId"] = productId;
+                newRow["ProductName"] = productName;
+                newRow["ProductCount"] = productCount;
+                cartTable.Rows.Add(newRow);
+
                 // add a new label for the product
                 lbl.Text = productCount + " x " + productName;
                 lbl.Tag = productId;
@@ -286,7 +295,16 @@ namespace Kitchen_Shop_App
                 decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
                 cartPanel.Controls.Add(decrementButton);
             }
-
+            
+            // check if there are any products in the cart
+            if (cartTable.Rows.Count > 0)
+            {
+                purchaseButton.Enabled = true;
+            }
+            else
+            {
+                purchaseButton.Enabled = false;
+            }
 
         }
 
@@ -306,6 +324,18 @@ namespace Kitchen_Shop_App
                 {
                     count--;
                     lbl.Text = count + " x " + lbl.Text.Split(' ')[2];
+                    //remove 1 from the amount in cartTable that has the smae product id and if the amount is 0 remove the row
+                    DataRow existingRow = cartTable.AsEnumerable()
+    .FirstOrDefault(row => row["ProductId"].ToString() == productId);
+                    if (existingRow != null)
+                    {
+                        // decrement the count for the product
+                        int productCount = int.Parse(existingRow["ProductCount"].ToString());
+                        productCount = productCount - 1;
+                        // update the existing row to reflect the new count
+                        existingRow["ProductCount"] = productCount;
+                    }
+
                 }
                 else
                 {
@@ -325,7 +355,24 @@ namespace Kitchen_Shop_App
                             button.Location = new Point(button.Location.X, button.Location.Y - 40);
                         }
                     }
+
+                    // remove the row from the cartTable if the count is 1
+                    DataRow existingRow = cartTable.AsEnumerable()
+                        .FirstOrDefault(row => row["ProductId"].ToString() == productId);
+                    if (existingRow != null)
+                    {
+                        cartTable.Rows.Remove(existingRow);
+                    }
                 }
+            }
+            // check if there are any products in the cart
+            if (cartTable.Rows.Count > 0)
+            {
+                purchaseButton.Enabled = true;
+            }
+            else
+            {
+                purchaseButton.Enabled = false;
             }
         }
 
@@ -367,9 +414,67 @@ namespace Kitchen_Shop_App
 
         private void purchase_button_click(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             //todo make purchase logic preferably with paypal/stripe
+
+
+            // insert order record into 'orders' table
+            Dictionary<string, object> orderData = new Dictionary<string, object>
+            {
+                {"stand_id", 1}, // replace with the actual stand ID
+                {"order_datetime", DateTime.Now},
+                {"total_cost", 123.45}, // replace with the actual total cost
+                {"created_at", DateTime.Now},
+                {"ready", false},
+                {"suspended", false},
+                {"delivered", false}
+            };
+            int orderId = mysql.insert("orders", orderData);
+
+            // get the ID of the newly inserted order record
+            //int orderId = (int)mysql.getLastInsertedId("orders");
+
+            // insert order items into 'order_items' table
+            foreach (DataRow row in cartTable.Rows)
+            {
+                string productId = row["ProductId"].ToString();
+                int quantity = int.Parse(row["ProductCount"].ToString());
+                Dictionary<string, object> itemData = new Dictionary<string, object>
+                {
+                    {"order_id", orderId},
+                    {"product_id", productId},
+                    {"quantity", quantity}
+                };
+                mysql.insert("order_items", itemData);
+            }
+
+            cartTable.Rows.Clear();
+
+
+            //cartPanel.Controls.Clear();
+            //cant use clear but need te reomve all the labels and buttons
+            List<Control> controlsToRemove = new List<Control>();
+            foreach (Control c in cartPanel.Controls)
+            {
+                if (c is Button && c.Text == "-")
+                {
+                    controlsToRemove.Add(c);
+                }
+                else if (c is Label)
+                {
+                    controlsToRemove.Add(c);
+                }
+            }
+            foreach (Control c in controlsToRemove)
+            {
+                cartPanel.Controls.Remove(c);
+                c.Dispose();
+            }
+            purchaseButton.Enabled = false;
+
         }
+
+
         #endregion
         #region custom methods
         private Image load_image_from_database(DataTable imageData, Image defaultImage)

@@ -16,7 +16,7 @@ namespace Kitchen_staff_app
         /// </summary>
         /// <param name="tableName">The name of the table to insert the data into.</param>
         /// <param name="data">A dictionary containing the column names and values to insert.</param>
-        public static void insert(string tableName, Dictionary<string, object> data)
+        public static int insert(string tableName, Dictionary<string, object> data)
         {
             // construct the parameterized query
             string columns = string.Join(", ", data.Keys);
@@ -35,11 +35,15 @@ namespace Kitchen_staff_app
                 cmd.Parameters.AddWithValue($"@{kvp.Key}", kvp.Value);
             }
 
-            // execute command
+            // execute command and fetches id
             cmd.ExecuteNonQuery();
+            int id = (int)cmd.LastInsertedId;
+            
 
             // close connection
             con.Close();
+
+            return id;
         }
 
         /// <summary>
@@ -258,23 +262,21 @@ namespace Kitchen_staff_app
             //return data table
             return dt;
         }
-        
-        /// <summary>
-        /// Executes the specified SQL query, which is expected to be an INSERT statement that adds a record to a table.
-        /// Returns the ID of the last inserted record.
-        /// </summary>
-        /// <param name="query">The SQL query to execute.</param>
-        /// <returns>The ID of the last inserted record.</returns>
-        public static int insertAndRetrieveId(string query)
+
+        public static int getLastInsertedId()
         {
-            //open connection
+            // open connection
             con.Open();
-            //create command
-            MySqlCommand cmd = new MySqlCommand(query, con);
-            //execute command
+
+            // create command to get the last inserted id
+            MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", con);
+
+            // execute command and get the last inserted id
             int lastInsertedId = Convert.ToInt32(cmd.ExecuteScalar());
-            //close connection
+
+            // close connection
             con.Close();
+
             return lastInsertedId;
         }
 
