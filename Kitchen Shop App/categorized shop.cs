@@ -182,15 +182,16 @@ namespace Kitchen_Shop_App
 
             // Clear the product data from the DataTable
             productsData.Clear();
-            productPanel.BackColor = Color.Red;
+            //productPanel.BackColor = Color.Red;
+            //styling the product panel
             productPanel.Location = new Point(0, 50);
-
             productPanel.Width = this.ClientSize.Width - 350;
             productPanel.Height = this.ClientSize.Height - 200;
+
+            
             // Add the product panel to the parent form's controls
             parentForm.Controls.Add(productPanel);
 
-            //todo fix wtf is goingo n here it wont resize
             // Bring the product panel to the front
             productPanel.BringToFront();
         }
