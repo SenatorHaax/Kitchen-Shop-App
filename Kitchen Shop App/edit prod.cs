@@ -71,11 +71,12 @@ namespace Kitchen_staff_app
 
             if (textBox != null)
             {
-                if (textBox.Text == "-")
+                if (button.Text == "-")
                 {
                     textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
                 }
-                else {
+                else
+                {
                     textBox.Text += button.Text;
                 }
                 lastFocusedControl.Focus();
@@ -96,7 +97,7 @@ namespace Kitchen_staff_app
 
             // The starting position of the touch keyboard buttons
             int startX = 10;
-            int startY = 250;
+            int startY = 410;
 
             // Create a touch keyboard button for each character
             foreach (char c in characters)

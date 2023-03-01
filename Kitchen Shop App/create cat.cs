@@ -64,7 +64,14 @@ namespace Kitchen_Shop_App
 
             if (textBox != null)
             {
-                textBox.Text += button.Text;
+                if (button.Text == "-")
+                {
+                    textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
+                }
+                else
+                {
+                    textBox.Text += button.Text;
+                }
                 lastFocusedControl.Focus();
             }
         }
@@ -72,7 +79,7 @@ namespace Kitchen_Shop_App
         private void CreateTouchKeyboard()
         {
             // The characters to include in the touch keyboard
-            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-";
 
             // The width and height of the touch keyboard buttons
             int buttonWidth = 20;
@@ -83,7 +90,7 @@ namespace Kitchen_Shop_App
 
             // The starting position of the touch keyboard buttons
             int startX = 10;
-            int startY = 275;
+            int startY = 410;
 
             // Create a touch keyboard button for each character
             foreach (char c in characters)
