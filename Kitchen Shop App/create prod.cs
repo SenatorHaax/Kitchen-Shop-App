@@ -15,6 +15,8 @@ namespace Kitchen_staff_app
     public partial class create_prod : Form
     {
         private byte[] imageData;
+        private Control lastFocusedControl;
+
         //explain this FFS its important
         private Dictionary<string, int> categoriesDictionary;
         public create_prod()
@@ -29,6 +31,7 @@ namespace Kitchen_staff_app
                 categoryBox.Items.Add(name);
                 categoriesDictionary.Add(name, id);
             }
+            CreateTouchKeyboard();
         }
 
         private void Finalize_prod_Click(object sender, EventArgs e)
@@ -38,7 +41,7 @@ namespace Kitchen_staff_app
             string name = Product_name.Text;
             string price = Product_price.Text;
             string cost = Product_cost.Text;
-            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
+            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem]; //todo fix create prod with no ifno
 
             Dictionary<string, object> data = new Dictionary<string, object>
             {
@@ -64,6 +67,94 @@ namespace Kitchen_staff_app
             {
                 imageData = File.ReadAllBytes(openFileDialog.FileName);
             }
+        }
+
+        private void TouchKeyboardButton_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var textBox = lastFocusedControl;
+
+            if (textBox != null)
+            {
+                if (button.Text == "-")
+                {
+                    textBox.Text = textBox.Text.Substring(0, textBox.Text.Length - 1);
+                }
+                else
+                {
+                    textBox.Text += button.Text;
+                }
+                lastFocusedControl.Focus();
+            }
+        }
+
+        private void CreateTouchKeyboard()
+        {
+            // The characters to include in the touch keyboard
+            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-";
+
+            // The width and height of the touch keyboard buttons
+            int buttonWidth = 20;
+            int buttonHeight = 20;
+
+            // The spacing between the touch keyboard buttons
+            int spacing = 5;
+
+            // The starting position of the touch keyboard buttons
+            int startX = 10;
+            int startY = 410;
+
+            // Create a touch keyboard button for each character
+            foreach (char c in characters)
+            {
+                Button button = new Button();
+                button.Text = c.ToString();
+                button.Width = buttonWidth;
+                button.Height = buttonHeight;
+                button.Location = new Point(startX, startY);
+                button.Click += TouchKeyboardButton_Click;
+                this.Controls.Add(button);
+
+                startX += buttonWidth + spacing;
+
+                // If the keyboard buttons exceed the form width, move to the next row
+                if (startX + buttonWidth > this.ClientSize.Width)
+                {
+                    startX = 10;
+                    startY += buttonHeight + spacing;
+                }
+
+                // If the keyboard buttons exceed the form height, stop creating buttons
+                if (startY + buttonHeight > this.ClientSize.Height - 25)
+                {
+                    break;
+                }
+            }
+
+            // Subscribe to the Enter and Leave events of all text boxes and rich text boxes on the form
+            SubscribeToEnterAndLeaveEvents(this);
+        }
+
+        private void SubscribeToEnterAndLeaveEvents(Control control)
+        {
+            // Subscribe to the Enter and Leave events of text boxes and rich text boxes
+            if (control is TextBoxBase textBox)
+            {
+                textBox.Enter += TextBox_Enter;
+                //textBox.Leave += TextBox_Leave;
+            }
+
+            // Recursively loop through all child controls
+            foreach (Control childControl in control.Controls)
+            {
+                SubscribeToEnterAndLeaveEvents(childControl);
+            }
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            // Store the currently focused control in the lastFocusedControl variable
+            lastFocusedControl = (Control)sender;
         }
     }
 }

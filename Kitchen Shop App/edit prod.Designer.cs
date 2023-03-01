@@ -71,12 +71,12 @@
             this.ProductPanel.Controls.Add(this.label1);
             this.ProductPanel.Location = new System.Drawing.Point(12, 41);
             this.ProductPanel.Name = "ProductPanel";
-            this.ProductPanel.Size = new System.Drawing.Size(204, 397);
+            this.ProductPanel.Size = new System.Drawing.Size(204, 210);
             this.ProductPanel.TabIndex = 4;
             // 
             // UpdateButton
             // 
-            this.UpdateButton.Location = new System.Drawing.Point(64, 371);
+            this.UpdateButton.Location = new System.Drawing.Point(61, 163);
             this.UpdateButton.Name = "UpdateButton";
             this.UpdateButton.Size = new System.Drawing.Size(75, 23);
             this.UpdateButton.TabIndex = 5;
@@ -136,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(230, 450);
+            this.ClientSize = new System.Drawing.Size(230, 354);
             this.Controls.Add(this.ProductPanel);
             this.Controls.Add(this.Cancel_button);
             this.Controls.Add(this.comboBox1);

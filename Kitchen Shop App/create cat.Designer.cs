@@ -99,7 +99,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 284);
+            this.ClientSize = new System.Drawing.Size(248, 385);
             this.Controls.Add(this.panel1);
             this.Name = "create_cat";
             this.Text = "create_cat";

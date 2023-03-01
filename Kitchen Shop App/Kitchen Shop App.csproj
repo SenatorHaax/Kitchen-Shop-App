@@ -15,8 +15,4 @@
     <PackageReference Include="WinForms.DataVisualization" Version="1.7.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="images\Products\" />
-  </ItemGroup>
-
 </Project>

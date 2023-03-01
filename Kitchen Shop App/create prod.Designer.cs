@@ -31,14 +31,14 @@
             this.Product_name = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.categoryLabel = new System.Windows.Forms.Label();
+            this.categoryBox = new System.Windows.Forms.ComboBox();
             this.btnUpload = new System.Windows.Forms.Button();
             this.Product_cost = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.Finalize_prod = new System.Windows.Forms.Button();
             this.Product_price = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.categoryBox = new System.Windows.Forms.ComboBox();
-            this.categoryLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,6 +74,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 393);
             this.panel1.TabIndex = 2;
+            // 
+            // categoryLabel
+            // 
+            this.categoryLabel.AutoSize = true;
+            this.categoryLabel.Location = new System.Drawing.Point(14, 116);
+            this.categoryLabel.Name = "categoryLabel";
+            this.categoryLabel.Size = new System.Drawing.Size(55, 15);
+            this.categoryLabel.TabIndex = 9;
+            this.categoryLabel.Text = "Category";
+            // 
+            // categoryBox
+            // 
+            this.categoryBox.FormattingEnabled = true;
+            this.categoryBox.Location = new System.Drawing.Point(99, 113);
+            this.categoryBox.Name = "categoryBox";
+            this.categoryBox.Size = new System.Drawing.Size(121, 23);
+            this.categoryBox.TabIndex = 8;
             // 
             // btnUpload
             // 
@@ -126,23 +143,6 @@
             this.label2.Size = new System.Drawing.Size(71, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Product Pris";
-            // 
-            // categoryBox
-            // 
-            this.categoryBox.FormattingEnabled = true;
-            this.categoryBox.Location = new System.Drawing.Point(99, 113);
-            this.categoryBox.Name = "categoryBox";
-            this.categoryBox.Size = new System.Drawing.Size(121, 23);
-            this.categoryBox.TabIndex = 8;
-            // 
-            // categoryLabel
-            // 
-            this.categoryLabel.AutoSize = true;
-            this.categoryLabel.Location = new System.Drawing.Point(14, 116);
-            this.categoryLabel.Name = "categoryLabel";
-            this.categoryLabel.Size = new System.Drawing.Size(55, 15);
-            this.categoryLabel.TabIndex = 9;
-            this.categoryLabel.Text = "Category";
             // 
             // create_prod
             // 
