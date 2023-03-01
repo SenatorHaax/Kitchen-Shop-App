@@ -30,7 +30,10 @@ namespace Kitchen_staff_app
                 string name = (string)row["Name"];
                 categoryBox.Items.Add(name);
                 categoriesDictionary.Add(name, id);
+                
             }
+            //use image from resources named default
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
             CreateTouchKeyboard();
         }
 
@@ -49,7 +52,9 @@ namespace Kitchen_staff_app
                 { "sale_price", price },
                 { "cost_price", cost },
                 { "image", imageData },
-                { "category_id", categoryId }
+                { "expiry_date", exp_date.Value },
+                { "category_id", categoryId },
+                { "is_promotional", is_promotional.Checked }
             };
 
             mysql.insert("Products", data);
@@ -66,6 +71,10 @@ namespace Kitchen_staff_app
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 imageData = File.ReadAllBytes(openFileDialog.FileName);
+                using (MemoryStream memoryStream = new MemoryStream(imageData))
+                {
+                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
             }
         }
 
@@ -91,7 +100,7 @@ namespace Kitchen_staff_app
         private void CreateTouchKeyboard()
         {
             // The characters to include in the touch keyboard
-            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-";
+            string characters = "abcdefghijklmnopqrstuvwxyz-";
 
             // The width and height of the touch keyboard buttons
             int buttonWidth = 20;
@@ -155,6 +164,13 @@ namespace Kitchen_staff_app
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Main main = new Main();
+            main.Show();
         }
     }
 }

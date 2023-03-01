@@ -43,11 +43,13 @@ namespace Kitchen_staff_app
             string id = comboBox1.SelectedValue.ToString();
 
             Dictionary<string, object> fields = new Dictionary<string, object>
-{
-    { "name", name },
-    { "price", price },
-    { "cost_price", cost }
-};
+            {
+                { "name", name },
+                { "price", price },
+                { "cost_price", cost },
+                { "expiry_date", expiry_date.Value },
+                {  "is_promotional", is_promotional.Checked }
+            };
 
             mysql.update("Products", $"id = {id}", fields);
         }
@@ -60,10 +62,34 @@ namespace Kitchen_staff_app
                 ProdName.Text = dt.Rows[0]["name"].ToString();
                 ProdPrice.Text = dt.Rows[0]["sale_price"].ToString();
                 ProdCost.Text = dt.Rows[0]["Cost_price"].ToString();
+                expiry_date.Value = (dt.Rows[0]["expiry_date"] != DBNull.Value)
+                    ? (DateTime)dt.Rows[0]["expiry_date"]
+                    : DateTime.Now;
+                is_promotional.Checked = (dt.Rows[0]["is_promotional"] != DBNull.Value) ? (bool)dt.Rows[0]["is_promotional"] : false;
+                try
+                {
+                    if (dt.Rows[0]["image"] != DBNull.Value)
+                    {
+                        // convert the blob data to an image object
+                        byte[] imageBytes = (byte[])dt.Rows[0]["image"];
+                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        {
+                            Image img = Image.FromStream(ms);
+
+                            // display the image in the picture box
+                            previewPictureBox.Image = img.GetThumbnailImage(previewPictureBox.Width, previewPictureBox.Height, null, IntPtr.Zero);
+                        }
+                    }
+                }
+                catch
+                {
+                    previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+
             }
             
         }
-
+        #region keyboard
         private void TouchKeyboardButton_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
@@ -86,7 +112,7 @@ namespace Kitchen_staff_app
         private void CreateTouchKeyboard()
         {
             // The characters to include in the touch keyboard
-            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-";
+            string characters = "abcdefghijklmnopqrstuvwxyz-";
 
             // The width and height of the touch keyboard buttons
             int buttonWidth = 20;
@@ -97,7 +123,7 @@ namespace Kitchen_staff_app
 
             // The starting position of the touch keyboard buttons
             int startX = 10;
-            int startY = 410;
+            int startY = 315;
 
             // Create a touch keyboard button for each character
             foreach (char c in characters)
@@ -120,7 +146,7 @@ namespace Kitchen_staff_app
                 }
 
                 // If the keyboard buttons exceed the form height, stop creating buttons
-                if (startY + buttonHeight > this.ClientSize.Height - 25)
+                if (startY + buttonHeight > this.ClientSize.Height - 5)
                 {
                     break;
                 }
@@ -138,6 +164,11 @@ namespace Kitchen_staff_app
                 textBox.Enter += TextBox_Enter;
                 //textBox.Leave += TextBox_Leave;
             }
+            else if (control is ComboBox comboBox)
+            {
+                comboBox.Enter += TextBox_Enter;
+                //comboBox.Leave += ComboBox_Leave;
+            }
 
             // Recursively loop through all child controls
             foreach (Control childControl in control.Controls)
@@ -151,5 +182,6 @@ namespace Kitchen_staff_app
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
         }
+        #endregion
     }
 }

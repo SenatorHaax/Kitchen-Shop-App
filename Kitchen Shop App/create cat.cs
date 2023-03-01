@@ -19,6 +19,7 @@ namespace Kitchen_Shop_App
         public create_cat()
         {
             InitializeComponent();
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
             CreateTouchKeyboard();
         }
         
@@ -32,7 +33,7 @@ namespace Kitchen_Shop_App
                 imageData = File.ReadAllBytes(openFileDialog.FileName);
                 using (MemoryStream memoryStream = new MemoryStream(imageData))
                 {
-                    previewPictureBox.Image = Image.FromStream(memoryStream);
+                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 }
             }
         }
@@ -79,7 +80,7 @@ namespace Kitchen_Shop_App
         private void CreateTouchKeyboard()
         {
             // The characters to include in the touch keyboard
-            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-";
+            string characters = "abcdefghijklmnopqrstuvwxyz-";
 
             // The width and height of the touch keyboard buttons
             int buttonWidth = 20;
@@ -90,7 +91,7 @@ namespace Kitchen_Shop_App
 
             // The starting position of the touch keyboard buttons
             int startX = 10;
-            int startY = 410;
+            int startY = 275;
 
             // Create a touch keyboard button for each character
             foreach (char c in characters)
@@ -131,7 +132,12 @@ namespace Kitchen_Shop_App
                 textBox.Enter += TextBox_Enter;
                 //textBox.Leave += TextBox_Leave;
             }
-
+            else if (control is ComboBox comboBox)
+            {
+                comboBox.Enter += TextBox_Enter;
+                //comboBox.Leave += ComboBox_Leave;
+            }
+            
             // Recursively loop through all child controls
             foreach (Control childControl in control.Controls)
             {
@@ -143,6 +149,13 @@ namespace Kitchen_Shop_App
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Main main = new Main();
+            main.Show();
         }
     }
 }

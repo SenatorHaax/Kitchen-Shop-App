@@ -32,7 +32,6 @@ namespace Kitchen_Shop_App
             cartTable.Columns.Add("ProductName", typeof(string));
             cartTable.Columns.Add("ProductCount", typeof(int));
 
-            //this.CategoriesMenuPanel.AutoScroll = true;
             //forces the window to be fullscreen no matter what to stop shenanigans
             this.TopMost = true;
             this.FormBorderStyle = FormBorderStyle.None;
@@ -81,10 +80,6 @@ namespace Kitchen_Shop_App
             int x = 10; // Starting x coordinate of the first button
             int y = 10; // Starting y coordinate of the first button
 
-            // Load the default image from file
-            string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
-            Image defaultImage = Image.FromFile(defaultImagePath);
-
             // Loop through each category and create a button and label for it
             foreach (DataRow categorie in categories.Rows)
             {
@@ -102,7 +97,7 @@ namespace Kitchen_Shop_App
                 // Query the database for the category's image and load it
                 string imageQuery = "SELECT Image FROM Categories WHERE id = " + categorie["id"].ToString();
                 DataTable imageData = mysql.select(imageQuery, new Dictionary<string, object>());
-                Image image = load_image_from_database(imageData, defaultImage);
+                Image image = load_image_from_database(imageData, Properties.Resources.default_img);
 
                 // Set the button's image to the loaded image
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
@@ -128,7 +123,8 @@ namespace Kitchen_Shop_App
             // Set the CategoriesMenuPanel to auto-scroll and adjust its size to fit the form
             CategoriesMenuPanel.AutoScroll = true;
             CategoriesMenuPanel.Width = this.ClientSize.Width - 350;
-            CategoriesMenuPanel.Height = this.ClientSize.Height;
+            CategoriesMenuPanel.Height = this.ClientSize.Height - 200;
+            CategoriesMenuPanel.BackColor = Color.Green;
         }
         // This method generates a panel of products based on a DataTable of product data and adds it to a parent form
         private void generate_product_panel(Form parentForm, DataTable productsData)
@@ -139,13 +135,6 @@ namespace Kitchen_Shop_App
             // Set initial coordinates for the buttons and labels to be added to the panel
             int x = 10;
             int y = 10;
-
-            // Define a default image to use if a product has no image data
-            string defaultImagePath = Path.Combine(Application.StartupPath, @"images\etc\no_img.jpg");
-            Image defaultImage = Image.FromFile(defaultImagePath);
-
-            // Set the dock style of the product panel to fill the parent form
-            productPanel.Dock = DockStyle.Fill;
 
             // Loop through each row of product data in the DataTable
             foreach (DataRow product in productsData.Rows)
@@ -168,7 +157,7 @@ namespace Kitchen_Shop_App
                 DataTable imageData = mysql.select("SELECT Image FROM Products WHERE id = " + product["id"].ToString(), new Dictionary<string, object>());
 
                 // Load the image data into an Image object and set it as the button's thumbnail image
-                Image image = load_image_from_database(imageData, defaultImage);
+                Image image = load_image_from_database(imageData, Properties.Resources.default_img);
                 btn.Image = image.GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 btn.Click += new EventHandler(product_button_click);
 
@@ -193,13 +182,15 @@ namespace Kitchen_Shop_App
 
             // Clear the product data from the DataTable
             productsData.Clear();
+            productPanel.BackColor = Color.Red;
+            productPanel.Location = new Point(0, 50);
 
-            // Set the size of the product panel to match the size of the parent form
-            productPanel.Size = parentForm.ClientSize;
-
+            productPanel.Width = this.ClientSize.Width - 350;
+            productPanel.Height = this.ClientSize.Height - 200;
             // Add the product panel to the parent form's controls
             parentForm.Controls.Add(productPanel);
 
+            //todo fix wtf is goingo n here it wont resize
             // Bring the product panel to the front
             productPanel.BringToFront();
         }
