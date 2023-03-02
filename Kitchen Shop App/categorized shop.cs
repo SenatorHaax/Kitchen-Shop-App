@@ -13,9 +13,10 @@ namespace Kitchen_Shop_App
         Panel cartPanel = new Panel();
         Button purchaseButton = new Button();
         DataTable cartTable = new DataTable();
+        Label price = new Label();
 
 
-
+        public static float total_price;
         public static bool hasExecuted = false;
         public static categorized_shop? instance;
         #endregion
@@ -64,6 +65,11 @@ namespace Kitchen_Shop_App
             cartPanel.Dock = DockStyle.Right;
             cartPanel.Size = new Size(350, 10);
             this.Controls.Add(cartPanel);
+            
+            price.Text = $"Price: {total_price}";
+            price.Location = new Point(145, cartPanel.ClientSize.Height-125);
+            price.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cartPanel.Controls.Add(price);
 
             purchaseButton.Text = "Purchase";
             purchaseButton.Location = new Point(100, cartPanel.ClientSize.Height - 100);
@@ -263,6 +269,8 @@ namespace Kitchen_Shop_App
                 if (existingLabel != null)
                 {
                     existingLabel.Text = productCount + " x " + productName;
+                    total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
+                    price.Text = "price: $"+total_price.ToString();
                 }
             }
             else
@@ -286,8 +294,12 @@ namespace Kitchen_Shop_App
                 decrementButton.Click += decrement_button_click;
                 decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
                 cartPanel.Controls.Add(decrementButton);
+                total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
+                price.Text = "price: $" + total_price.ToString();
+
+
             }
-            
+
             // check if there are any products in the cart
             if (cartTable.Rows.Count > 0)
             {
@@ -326,6 +338,9 @@ namespace Kitchen_Shop_App
                         productCount = productCount - 1;
                         // update the existing row to reflect the new count
                         existingRow["ProductCount"] = productCount;
+                        total_price -= float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
+                        price.Text = "price: $" + total_price.ToString();
+
                     }
 
                 }
@@ -354,6 +369,9 @@ namespace Kitchen_Shop_App
                     if (existingRow != null)
                     {
                         cartTable.Rows.Remove(existingRow);
+                        total_price -= float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
+                        price.Text = "price: $" + total_price.ToString();
+
                     }
                 }
             }
