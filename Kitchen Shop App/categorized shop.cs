@@ -32,6 +32,7 @@ namespace Kitchen_Shop_App
             cartTable.Columns.Add("ProductId", typeof(string));
             cartTable.Columns.Add("ProductName", typeof(string));
             cartTable.Columns.Add("ProductCount", typeof(int));
+            cartTable.Columns.Add("ProductPrice", typeof(float));
 
             //forces the window to be fullscreen no matter what to stop shenanigans
             this.TopMost = true;
@@ -268,7 +269,7 @@ namespace Kitchen_Shop_App
                     .FirstOrDefault(label => label.Tag != null && label.Tag.ToString() == productId);
                 if (existingLabel != null)
                 {
-                    existingLabel.Text = productCount + " x " + productName;
+                    existingLabel.Text = productCount + " x " + productName + " total: $" + (productCount * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
                     total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
                     price.Text = "price: $"+total_price.ToString();
                 }
@@ -280,19 +281,21 @@ namespace Kitchen_Shop_App
                 newRow["ProductId"] = productId;
                 newRow["ProductName"] = productName;
                 newRow["ProductCount"] = productCount;
+                newRow["ProductPrice"] = float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())*productCount;
                 cartTable.Rows.Add(newRow);
 
                 // add a new label for the product
-                lbl.Text = productCount + " x " + productName;
+                lbl.Text = productCount + " x " + productName + " total: $" + (productCount * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
                 lbl.Tag = productId;
                 lbl.Location = new Point(10, 10 + (cartPanel.Controls.Count * 20));
+                lbl.Size = new Size(175, 20);
                 cartPanel.Controls.Add(lbl);
 
                 // add a new decrement button for the product
                 decrementButton.Text = "-";
                 decrementButton.Tag = productId;
                 decrementButton.Click += decrement_button_click;
-                decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 10, lbl.Location.Y);
+                decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 75, lbl.Location.Y);
                 cartPanel.Controls.Add(decrementButton);
                 total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
                 price.Text = "price: $" + total_price.ToString();
@@ -327,7 +330,7 @@ namespace Kitchen_Shop_App
                 if (count > 1)
                 {
                     count--;
-                    lbl.Text = count + " x " + lbl.Text.Split(' ')[2];
+                    lbl.Text = count + " x " + mysql.fetch_product_by_id(productId).Rows[0]["name"].ToString() + " total: $" + (count * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
                     //remove 1 from the amount in cartTable that has the smae product id and if the amount is 0 remove the row
                     DataRow existingRow = cartTable.AsEnumerable()
     .FirstOrDefault(row => row["ProductId"].ToString() == productId);
