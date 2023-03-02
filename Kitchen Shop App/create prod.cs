@@ -44,7 +44,7 @@ namespace Kitchen_staff_app
             string name = Product_name.Text;
             string price = Product_price.Text;
             string cost = Product_cost.Text;
-            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem]; //todo fix create prod with no ifno
+            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
 
             Dictionary<string, object> data = new Dictionary<string, object>
             {

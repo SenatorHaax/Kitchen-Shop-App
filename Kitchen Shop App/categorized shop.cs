@@ -53,7 +53,12 @@ namespace Kitchen_Shop_App
             backButton.Click += new EventHandler(back_button_click);
             topPanel.Controls.Add(backButton);
 
-            //add emergency shutdown button todo remove TODO: please for the love of god remember to remove this before delivery
+            //TODO: please for the love of god remember to remove this before delivery
+            //TODO: please for the love of god remember to remove this before delivery
+            //TODO: please for the love of god remember to remove this before delivery
+            //TODO: please for the love of god remember to remove this before delivery
+            //TODO: please for the love of god remember to remove this before delivery
+            
             Button shutdownButton = new Button();
             shutdownButton.Text = "Shutdown";
             shutdownButton.Location = new Point(100, 10);
@@ -331,7 +336,7 @@ namespace Kitchen_Shop_App
                 {
                     count--;
                     lbl.Text = count + " x " + mysql.fetch_product_by_id(productId).Rows[0]["name"].ToString() + " total: $" + (count * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
-                    //remove 1 from the amount in cartTable that has the smae product id and if the amount is 0 remove the row
+                    //remove 1 from the amount in cartTable that has the same product id and if the amount is 0 remove the row
                     DataRow existingRow = cartTable.AsEnumerable()
     .FirstOrDefault(row => row["ProductId"].ToString() == productId);
                     if (existingRow != null)
@@ -433,18 +438,15 @@ namespace Kitchen_Shop_App
             // insert order record into 'orders' table
             Dictionary<string, object> orderData = new Dictionary<string, object>
             {
-                {"stand_id", 1}, // replace with the actual stand ID
+                {"stand_id", 1}, //todo replace with the actual stand ID
                 {"order_datetime", DateTime.Now},
-                {"total_cost", 123.45}, // replace with the actual total cost
+                {"total_cost", 123.45}, //todo replace with the actual total cost
                 {"created_at", DateTime.Now},
                 {"ready", false},
                 {"suspended", false},
                 {"delivered", false}
             };
             int orderId = mysql.insert("orders", orderData);
-
-            // get the ID of the newly inserted order record
-            //int orderId = (int)mysql.getLastInsertedId("orders");
 
             // insert order items into 'order_items' table
             foreach (DataRow row in cartTable.Rows)
@@ -462,7 +464,7 @@ namespace Kitchen_Shop_App
 
             cartTable.Rows.Clear();
             
-            //cant use clear but need te reomve all the labels and buttons
+            //imp cant use clear but need te reomve all the labels and buttons
             //this was a pain in the ass to make for some reason it would always leave a single label or button left in the panel and it confused me alot
             //can show with a foreach on cartPanel.Controls it should remove everything but does not have to make a list and remove from that
             List<Control> controlsToRemove = new List<Control>();
