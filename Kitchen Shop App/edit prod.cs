@@ -123,7 +123,7 @@ namespace Kitchen_staff_app
 
             // The starting position of the touch keyboard buttons
             int startX = 10;
-            int startY = 315;
+            int startY = 335;
 
             // Create a touch keyboard button for each character
             foreach (char c in characters)

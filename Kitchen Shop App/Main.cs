@@ -11,21 +11,6 @@ namespace Kitchen_staff_app
             InitializeComponent();
         }
 
-        private void Main_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void Create_Prod_button(object sender, EventArgs e)
         {
             create_prod test = new create_prod();
@@ -104,6 +89,7 @@ namespace Kitchen_staff_app
         {
             this.Close();
             categorized_shop.hasExecuted = false;
+            categorized_shop.reload();
             categorized_shop.show_form();
         }
     }

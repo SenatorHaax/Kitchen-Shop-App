@@ -7,7 +7,7 @@ namespace Kitchen_Shop_App
     public partial class categorized_shop : Form
     {
         #region variables
-        DataTable categories = mysql.fetch_all_categories();
+        public static DataTable categories = mysql.fetch_all_categories();
         Button backButton = new Button();
         Panel productPanel = new Panel();
         Panel cartPanel = new Panel();
@@ -532,6 +532,13 @@ namespace Kitchen_Shop_App
         public static void show_form()
         {
             instance.Show();
+        }
+
+        internal static void reload()
+        {
+            //run categorized_shop_Load
+            categories = mysql.fetch_all_categories();
+            instance.categorized_shop_Load(instance, EventArgs.Empty);
         }
         #endregion
     }

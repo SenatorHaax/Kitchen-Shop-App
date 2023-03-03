@@ -52,13 +52,12 @@
             this.groupBox1.Controls.Add(this.Create_Product);
             this.groupBox1.Controls.Add(this.Remove_Product);
             this.groupBox1.Controls.Add(this.Edit_Product);
-            this.groupBox1.Location = new System.Drawing.Point(173, 127);
+            this.groupBox1.Location = new System.Drawing.Point(3, 136);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(336, 100);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Products";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // Create_Product
             // 
@@ -96,17 +95,16 @@
             this.groupBox2.Controls.Add(this.busyHoursBtn);
             this.groupBox2.Controls.Add(this.profChartBtn);
             this.groupBox2.Controls.Add(this.soldStatBtn);
-            this.groupBox2.Location = new System.Drawing.Point(173, 339);
+            this.groupBox2.Location = new System.Drawing.Point(3, 348);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 100);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Statistics";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // genStats
             // 
-            this.genStats.Location = new System.Drawing.Point(6, 51);
+            this.genStats.Location = new System.Drawing.Point(6, 71);
             this.genStats.Name = "genStats";
             this.genStats.Size = new System.Drawing.Size(95, 23);
             this.genStats.TabIndex = 3;
@@ -159,7 +157,7 @@
             // 
             this.groupBox3.Controls.Add(this.Create_Category);
             this.groupBox3.Controls.Add(this.Remove_Category);
-            this.groupBox3.Location = new System.Drawing.Point(173, 233);
+            this.groupBox3.Location = new System.Drawing.Point(3, 242);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(336, 100);
             this.groupBox3.TabIndex = 3;
@@ -210,7 +208,6 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "Main";
             this.Text = "Main";
-            this.Load += new System.EventHandler(this.Main_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
