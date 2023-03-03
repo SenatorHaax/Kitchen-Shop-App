@@ -79,7 +79,7 @@ namespace Kitchen_Shop_App
 
             purchaseButton.Text = "Purchase";
             purchaseButton.Location = new Point(100, cartPanel.ClientSize.Height - 100);
-            purchaseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            purchaseButton.Anchor = AnchorStyles.Bottom;
             purchaseButton.Size = new Size(150, 50);
             purchaseButton.Click += new EventHandler(purchase_button_click);
             purchaseButton.Enabled = false;
@@ -276,7 +276,7 @@ namespace Kitchen_Shop_App
                 {
                     existingLabel.Text = productCount + " x " + productName + " total: $" + (productCount * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
                     total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
-                    price.Text = "price: $"+total_price.ToString();
+                    price.Text = "Price: $"+total_price.ToString();
                 }
             }
             else
@@ -303,7 +303,7 @@ namespace Kitchen_Shop_App
                 decrementButton.Location = new Point(lbl.Location.X + lbl.Width + 75, lbl.Location.Y);
                 cartPanel.Controls.Add(decrementButton);
                 total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
-                price.Text = "price: $" + total_price.ToString();
+                price.Text = "Price: $" + total_price.ToString();
 
 
             }
@@ -347,7 +347,7 @@ namespace Kitchen_Shop_App
                         // update the existing row to reflect the new count
                         existingRow["ProductCount"] = productCount;
                         total_price -= float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
-                        price.Text = "price: $" + total_price.ToString();
+                        price.Text = "Price: $" + total_price.ToString();
 
                     }
 
@@ -361,11 +361,12 @@ namespace Kitchen_Shop_App
                     // update the locations of the other labels and decrement buttons
                     foreach (Control control in cartPanel.Controls)
                     {
-                        if (control is Label label && label.Location.Y > lbl.Location.Y)
+                        //contains case sensetive keep in mind this is probably not the best way to proceed
+                        if (control is Label label && label.Location.Y > lbl.Location.Y && !label.Text.Contains("Price"))
                         {
                             label.Location = new Point(label.Location.X, label.Location.Y - 40);
                         }
-                        else if (control is Button button && button.Location.Y > btn.Location.Y)
+                        else if (control is Button button && button.Location.Y > btn.Location.Y && button.Text != "Purchase")
                         {
                             button.Location = new Point(button.Location.X, button.Location.Y - 40);
                         }
@@ -378,7 +379,7 @@ namespace Kitchen_Shop_App
                     {
                         cartTable.Rows.Remove(existingRow);
                         total_price -= float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
-                        price.Text = "price: $" + total_price.ToString();
+                        price.Text = "Price: $" + total_price.ToString();
 
                     }
                 }
