@@ -31,6 +31,8 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.Cancel_button = new System.Windows.Forms.Button();
             this.ProductPanel = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.is_promotional = new System.Windows.Forms.CheckBox();
             this.previewPictureBox = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.expiry_date = new System.Windows.Forms.DateTimePicker();
@@ -41,8 +43,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ProdName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.is_promotional = new System.Windows.Forms.CheckBox();
             this.ProductPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -84,6 +84,24 @@
             this.ProductPanel.Name = "ProductPanel";
             this.ProductPanel.Size = new System.Drawing.Size(264, 290);
             this.ProductPanel.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 130);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(132, 15);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Is Product Promotional:";
+            // 
+            // is_promotional
+            // 
+            this.is_promotional.AutoSize = true;
+            this.is_promotional.Location = new System.Drawing.Point(223, 130);
+            this.is_promotional.Name = "is_promotional";
+            this.is_promotional.Size = new System.Drawing.Size(15, 14);
+            this.is_promotional.TabIndex = 14;
+            this.is_promotional.UseVisualStyleBackColor = true;
             // 
             // previewPictureBox
             // 
@@ -168,24 +186,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Product Name:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 130);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(132, 15);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Is Product Promotional:";
-            // 
-            // is_promotional
-            // 
-            this.is_promotional.AutoSize = true;
-            this.is_promotional.Location = new System.Drawing.Point(223, 130);
-            this.is_promotional.Name = "is_promotional";
-            this.is_promotional.Size = new System.Drawing.Size(15, 14);
-            this.is_promotional.TabIndex = 14;
-            this.is_promotional.UseVisualStyleBackColor = true;
-            // 
             // edit_prod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -196,7 +196,6 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "edit_prod";
             this.Text = "edit_prod";
-            this.Load += new System.EventHandler(this.edit_prod_Load);
             this.ProductPanel.ResumeLayout(false);
             this.ProductPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();

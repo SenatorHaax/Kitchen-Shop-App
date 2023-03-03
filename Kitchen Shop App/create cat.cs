@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,14 @@ namespace Kitchen_Shop_App
             this.Hide();
             string name = Category_name.Text;
 
+            
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("name has to be filled to create a category.");
+                return;
+            }
+
+            
             // create dictionary with data to insert
             var data = new Dictionary<string, object>
             {

@@ -46,6 +46,14 @@ namespace Kitchen_staff_app
             string cost = Product_cost.Text;
             int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
 
+            
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
+            {
+                MessageBox.Show("name, price and cost has to be filled to createa product.");
+                return;
+            }
+
+            
             Dictionary<string, object> data = new Dictionary<string, object>
             {
                 { "Name", name },
@@ -56,14 +64,13 @@ namespace Kitchen_staff_app
                 { "category_id", categoryId },
                 { "is_promotional", is_promotional.Checked }
             };
-
             mysql.insert("Products", data);
 
             Main main = new Main();
             main.Show();
         }
-
-        private void btnUpload_Click(object sender, EventArgs e)
+        #region event handlers
+private void btnUpload_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
@@ -77,7 +84,16 @@ namespace Kitchen_staff_app
                 }
             }
         }
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Main main = new Main();
+            main.Show();
+        }
 
+        #endregion
+
+        #region keyboard
         private void TouchKeyboardButton_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
@@ -141,10 +157,10 @@ namespace Kitchen_staff_app
             }
 
             // Subscribe to the Enter and Leave events of all text boxes and rich text boxes on the form
-            SubscribeToEnterAndLeaveEvents(this);
+            SubscribeToEnterEvents(this);
         }
 
-        private void SubscribeToEnterAndLeaveEvents(Control control)
+        private void SubscribeToEnterEvents(Control control)
         {
             // Subscribe to the Enter and Leave events of text boxes and rich text boxes
             if (control is TextBoxBase textBox)
@@ -156,21 +172,15 @@ namespace Kitchen_staff_app
             // Recursively loop through all child controls
             foreach (Control childControl in control.Controls)
             {
-                SubscribeToEnterAndLeaveEvents(childControl);
+                SubscribeToEnterEvents(childControl);
             }
         }
-
+        
         private void TextBox_Enter(object sender, EventArgs e)
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
         }
-
-        private void Cancel_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            Main main = new Main();
-            main.Show();
-        }
+        #endregion
     }
 }

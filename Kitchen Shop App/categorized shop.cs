@@ -556,6 +556,5 @@ namespace Kitchen_Shop_App
         }
 
         #endregion
-
     }
 }

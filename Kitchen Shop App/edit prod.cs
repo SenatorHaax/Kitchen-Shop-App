@@ -23,11 +23,6 @@ namespace Kitchen_staff_app
             CreateTouchKeyboard();
         }
 
-        private void edit_prod_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void Cancel_button_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -42,6 +37,14 @@ namespace Kitchen_staff_app
             string cost = ProdCost.Text;
             string id = comboBox1.SelectedValue.ToString();
 
+            
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
+            {
+                MessageBox.Show("name, price and cost has to be filled to update a product.");
+                return;
+            }
+
+            
             Dictionary<string, object> fields = new Dictionary<string, object>
             {
                 { "name", name },
@@ -53,7 +56,7 @@ namespace Kitchen_staff_app
 
             mysql.update("Products", $"id = {id}", fields);
         }
-
+        //todo: rename this pls wtf it is combobox not button
         private void UpdateButton_Update(object sender, EventArgs e)
         {
             if (comboBox1.DisplayMember != "")
