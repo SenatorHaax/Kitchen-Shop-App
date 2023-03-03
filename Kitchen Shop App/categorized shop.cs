@@ -1,6 +1,7 @@
 ﻿using Kitchen_staff_app;
 using System.Data;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Kitchen_Shop_App
 {
@@ -27,7 +28,7 @@ namespace Kitchen_Shop_App
             instance = this;
             KeyPreview = true;
             KeyDown += categorized_shop_KeyDown;
-            Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
+            //Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
 
             cartTable.Columns.Add("ProductId", typeof(string));
             cartTable.Columns.Add("ProductName", typeof(string));
@@ -233,16 +234,12 @@ namespace Kitchen_Shop_App
 
         private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt && e.KeyCode == Keys.Insert && !hasExecuted)
+            if (e.Alt && e.KeyCode == Keys.P && e.Control && !hasExecuted)
             {
-                hasExecuted = true;
-                string text = "You are Admin congratz";
-                MessageBox.Show(text);
-                Main main = new Main();
-                this.Hide();
-                main.Show();
-                main.BringToFront();
+                //unhide textbox to write in admin password to open amdin menu
+                textBox1.Visible = true;
             }
+
         }
 
         private void product_button_click(object sender, EventArgs e)
@@ -488,6 +485,23 @@ namespace Kitchen_Shop_App
             purchaseButton.Enabled = false;
 
         }
+        private void adminPass_TextChanged(object sender, EventArgs e)
+        {
+            //should probably move this pass having hardcoded directly here not be safe but for now ok
+            if (textBox1.Text == "ihazadmin")
+            {
+                hasExecuted = true;
+                string text = "You are Admin congratz";
+                //MessageBox.Show(text);
+                Main main = new Main();
+                this.Hide();
+                main.Show();
+                main.BringToFront();
+                textBox1.Visible = false;
+                textBox1.Text = "";
+
+            }
+        }
 
 
         #endregion
@@ -540,6 +554,8 @@ namespace Kitchen_Shop_App
             categories = mysql.fetch_all_categories();
             instance.categorized_shop_Load(instance, EventArgs.Empty);
         }
+
         #endregion
+
     }
 }

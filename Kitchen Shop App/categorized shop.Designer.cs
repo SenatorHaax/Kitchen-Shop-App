@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.CategoriesMenuPanel = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // CategoriesMenuPanel
@@ -38,11 +39,21 @@
             this.CategoriesMenuPanel.Size = new System.Drawing.Size(711, 336);
             this.CategoriesMenuPanel.TabIndex = 0;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(700, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Visible = false;
+            this.textBox1.TextChanged += new System.EventHandler(this.adminPass_TextChanged);
+            // 
             // categorized_shop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.CategoriesMenuPanel);
             this.Name = "categorized_shop";
             this.Text = "categorized_shop";
@@ -50,11 +61,13 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.categorized_shop_KeyDown);
             this.Resize += new System.EventHandler(this.categorized_shop_Resize);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private Panel CategoriesMenuPanel;
+        private TextBox textBox1;
     }
 }
