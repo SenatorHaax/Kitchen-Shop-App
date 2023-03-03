@@ -528,7 +528,7 @@ namespace Kitchen_Shop_App
             return image;
         }
         
-        //funbction to later open the same shop window you had open before you opened the admin page
+        //function to later open the same shop window you had open before you opened the admin page
         public static void show_form()
         {
             instance.Show();
@@ -536,8 +536,9 @@ namespace Kitchen_Shop_App
 
         internal static void reload()
         {
-            //run categorized_shop_Load
+            //reloads categories just in case new onces were made
             categories = mysql.fetch_all_categories();
+            instance.categorized_shop_Load(instance, EventArgs.Empty);
         }
         #endregion
     }
