@@ -538,7 +538,6 @@ namespace Kitchen_Shop_App
         {
             //run categorized_shop_Load
             categories = mysql.fetch_all_categories();
-            instance.categorized_shop_Load(instance, EventArgs.Empty);
         }
         #endregion
     }
