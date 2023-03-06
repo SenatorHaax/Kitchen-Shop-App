@@ -31,6 +31,8 @@
             this.Product_name = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.is_promotional = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.exp_date = new System.Windows.Forms.DateTimePicker();
             this.Cancel = new System.Windows.Forms.Button();
@@ -43,8 +45,6 @@
             this.Finalize_prod = new System.Windows.Forms.Button();
             this.Product_price = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.is_promotional = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -87,6 +87,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(223, 393);
             this.panel1.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 171);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 15);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Is Product Promotional";
+            // 
+            // is_promotional
+            // 
+            this.is_promotional.AutoSize = true;
+            this.is_promotional.Location = new System.Drawing.Point(185, 172);
+            this.is_promotional.Name = "is_promotional";
+            this.is_promotional.Size = new System.Drawing.Size(15, 14);
+            this.is_promotional.TabIndex = 12;
+            this.is_promotional.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -191,24 +209,6 @@
             this.label2.Size = new System.Drawing.Size(71, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Product Pris";
-            // 
-            // is_promotional
-            // 
-            this.is_promotional.AutoSize = true;
-            this.is_promotional.Location = new System.Drawing.Point(185, 172);
-            this.is_promotional.Name = "is_promotional";
-            this.is_promotional.Size = new System.Drawing.Size(15, 14);
-            this.is_promotional.TabIndex = 12;
-            this.is_promotional.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(14, 171);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 15);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Is Product Promotional";
             // 
             // create_prod
             // 

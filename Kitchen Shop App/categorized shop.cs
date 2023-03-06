@@ -232,16 +232,6 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Alt && e.KeyCode == Keys.P && e.Control && !hasExecuted)
-            {
-                //unhide textbox to write in admin password to open amdin menu
-                textBox1.Visible = true;
-            }
-
-        }
-
         private void product_button_click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -501,6 +491,17 @@ namespace Kitchen_Shop_App
                 textBox1.Text = "";
 
             }
+        }
+
+        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.P && e.Control && !hasExecuted)
+            {
+                //unhide textbox to write in admin password to open amdin menu
+                textBox1.Visible = true;
+                textBox1.Focus();
+            }
+
         }
 
 

@@ -13,9 +13,11 @@ namespace Kitchen_staff_app
 
         private void Create_Prod_button(object sender, EventArgs e)
         {
-            create_prod test = new create_prod();
-            test.Show();
-            this.Close();
+            create_prod();
+            panel1.Visible = true;
+            //create_prod test = new create_prod();
+            //test.Show();
+            //this.Close();
         }
 
         private void Remove_Product_Click(object sender, EventArgs e)
@@ -92,5 +94,83 @@ namespace Kitchen_staff_app
             categorized_shop.reload();
             categorized_shop.show_form();
         }
+
+        #region create prod
+        private byte[] imageData;
+        private Control lastFocusedControl;
+
+        //explain this FFS its important
+        private Dictionary<string, int> categoriesDictionary;
+        public void create_prod()
+        {
+            //InitializeComponent();
+            DataTable categories = mysql.fetch_all_categories();
+            categoriesDictionary = new Dictionary<string, int>();
+            //todo fix bug with reading db twice
+            foreach (DataRow row in categories.Rows)
+            {
+                int id = (int)row["id"];
+                string name = (string)row["Name"];
+                categoryBox.Items.Add(name);
+                //todo: cannot have 2 of the same names in database fix this scenario
+                categoriesDictionary.Add(name, id);
+
+            }
+            //use image from resources named default
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+            //CreateTouchKeyboard();
+        }
+
+        private void Finalize_prod_Click(object sender, EventArgs e)
+        {
+            mysql mysql = new mysql();
+            //this.Hide();
+            string name = Product_name.Text;
+            string price = Product_price.Text.Replace(',', '.');
+            string cost = Product_cost.Text.Replace(',', '.'); ;
+            int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
+
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
+            {
+                MessageBox.Show("name, price and cost has to be filled to createa product.");
+                return;
+            }
+
+
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                { "Name", name },
+                { "sale_price", price },
+                { "cost_price", cost },
+                { "image", imageData },
+                { "expiry_date", exp_date.Value },
+                { "category_id", categoryId },
+                { "is_promotional", is_promotional.Checked }
+            };
+            mysql.insert("Products", data);
+
+            //Main main = new Main();
+            // main.Show();
+        }
+        #endregion
+        #region event handlers
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                imageData = File.ReadAllBytes(openFileDialog.FileName);
+                using (MemoryStream memoryStream = new MemoryStream(imageData))
+                {
+                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+            }
+        }
+
+        #endregion
+
     }
 }
