@@ -106,7 +106,6 @@ namespace Kitchen_staff_app
             //InitializeComponent();
             DataTable categories = mysql.fetch_all_categories();
             categoriesDictionary = new Dictionary<string, int>();
-            //todo fix bug with reading db twice
             foreach (DataRow row in categories.Rows)
             {
                 int id = (int)row["id"];
