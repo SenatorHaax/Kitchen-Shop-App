@@ -5,6 +5,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Kitchen_Shop_App
 {
+    //partial class due to the design also being the same class (you live and you learn(done automaticaly when generating form))
     public partial class categorized_shop : Form
     {
         #region variables
@@ -28,7 +29,6 @@ namespace Kitchen_Shop_App
             instance = this;
             KeyPreview = true;
             KeyDown += categorized_shop_KeyDown;
-            //Rectangle screen = Screen.FromPoint(Cursor.Position).WorkingArea;
 
             cartTable.Columns.Add("ProductId", typeof(string));
             cartTable.Columns.Add("ProductName", typeof(string));
@@ -43,7 +43,7 @@ namespace Kitchen_Shop_App
             // Add a panel at the top of the form for the back button
             Panel topPanel = new Panel();
             topPanel.Dock = DockStyle.Top;
-            topPanel.Size = new Size(this.ClientSize.Width-300, 50);
+            topPanel.Size = new Size(this.ClientSize.Width - 300, 50);
             topPanel.BackColor = Color.LightGray;
             this.Controls.Add(topPanel);
 
@@ -59,7 +59,7 @@ namespace Kitchen_Shop_App
             //TODO: please for the love of god remember to remove this before delivery
             //TODO: please for the love of god remember to remove this before delivery
             //TODO: please for the love of god remember to remove this before delivery
-            
+
             Button shutdownButton = new Button();
             shutdownButton.Text = "Shutdown";
             shutdownButton.Location = new Point(100, 10);
@@ -72,9 +72,9 @@ namespace Kitchen_Shop_App
             cartPanel.Dock = DockStyle.Right;
             cartPanel.Size = new Size(350, 10);
             this.Controls.Add(cartPanel);
-            
+
             price.Text = $"Price: {total_price}";
-            price.Location = new Point(145, cartPanel.ClientSize.Height-125);
+            price.Location = new Point(145, cartPanel.ClientSize.Height - 125);
             price.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             cartPanel.Controls.Add(price);
 
@@ -195,13 +195,13 @@ namespace Kitchen_Shop_App
 
             // Clear the product data from the DataTable
             productsData.Clear();
-            //productPanel.BackColor = Color.Red;
+            
             //styling the product panel
             productPanel.Location = new Point(0, 50);
             productPanel.Width = this.ClientSize.Width - 350;
             productPanel.Height = this.ClientSize.Height - 200;
 
-            
+
             // Add the product panel to the parent form's controls
             parentForm.Controls.Add(productPanel);
 
@@ -235,12 +235,12 @@ namespace Kitchen_Shop_App
         private void product_button_click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            string productId = btn.Tag.ToString();
-            string productName = mysql.fetch_product_by_id(productId).Rows[0]["Name"].ToString();
+            string? productId = btn.Tag.ToString();
+            string? productName = mysql.fetch_product_by_id(productId).Rows[0]["Name"].ToString();
             int productCount = 1;
             Label lbl = new Label();
             Button decrementButton = new Button();
-            
+
 
 
             // check if a label for the product already exists
@@ -263,7 +263,7 @@ namespace Kitchen_Shop_App
                 {
                     existingLabel.Text = productCount + " x " + productName + " total: $" + (productCount * float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())).ToString();
                     total_price += float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString());
-                    price.Text = "Price: $"+total_price.ToString();
+                    price.Text = "Price: $" + total_price.ToString();
                 }
             }
             else
@@ -273,7 +273,7 @@ namespace Kitchen_Shop_App
                 newRow["ProductId"] = productId;
                 newRow["ProductName"] = productName;
                 newRow["ProductCount"] = productCount;
-                newRow["ProductPrice"] = float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString())*productCount;
+                newRow["ProductPrice"] = float.Parse(mysql.fetch_product_by_id(productId).Rows[0]["sale_price"].ToString()) * productCount;
                 cartTable.Rows.Add(newRow);
 
                 // add a new label for the product
@@ -407,7 +407,7 @@ namespace Kitchen_Shop_App
         private void category_button_click(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
-            string id = clickedButton.Tag.ToString();
+            string? id = clickedButton.Tag.ToString();
             DataTable categoryData = new DataTable();
             categoryData.Clear();
             categoryData = mysql.fetch_product_by_category_id(id);
@@ -439,8 +439,8 @@ namespace Kitchen_Shop_App
             // insert order items into 'order_items' table
             foreach (DataRow row in cartTable.Rows)
             {
-                string productId = row["ProductId"].ToString();
-                int quantity = int.Parse(row["ProductCount"].ToString());
+                string? productId = row["ProductId"].ToString();
+                int? quantity = int.Parse(row["ProductCount"].ToString());
                 Dictionary<string, object> itemData = new Dictionary<string, object>
                 {
                     {"order_id", orderId},
@@ -451,7 +451,7 @@ namespace Kitchen_Shop_App
             }
 
             cartTable.Rows.Clear();
-            
+
             //imp cant use clear but need te reomve all the labels and buttons
             //this was a pain in the ass to make for some reason it would always leave a single label or button left in the panel and it confused me alot
             //can show with a foreach on cartPanel.Controls it should remove everything but does not have to make a list and remove from that
@@ -481,8 +481,6 @@ namespace Kitchen_Shop_App
             if (textBox1.Text == "ihazadmin")
             {
                 hasExecuted = true;
-                string text = "You are Admin congratz";
-                //MessageBox.Show(text);
                 Main main = new Main();
                 this.Hide();
                 main.Show();
@@ -500,6 +498,15 @@ namespace Kitchen_Shop_App
                 //unhide textbox to write in admin password to open amdin menu
                 textBox1.Visible = true;
                 textBox1.Focus();
+            } else if (e.Alt && e.KeyCode == Keys.O && !hasExecuted) {
+                hasExecuted = true;
+                Main main = new Main();
+                this.Hide();
+                main.Show();
+                main.BringToFront();
+
+                textBox1.Visible = false;
+                textBox1.Text = "";
             }
 
         }
@@ -515,7 +522,6 @@ namespace Kitchen_Shop_App
                 byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
                 try
                 {
-                    //byte[] imageBytes = (byte[])imageData.Rows[0]["Image"];
                     if (imageData.Rows.Count > 0 && imageData.Rows[0]["Image"] != DBNull.Value)
                     {
                         using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -542,7 +548,7 @@ namespace Kitchen_Shop_App
 
             return image;
         }
-        
+
         //function to later open the same shop window you had open before you opened the admin page
         public static void show_form()
         {

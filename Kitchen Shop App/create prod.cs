@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Kitchen_staff_app
 {
-    //todo obfuscate
+    
     public partial class create_prod : Form
     {
         private byte[] imageData;
@@ -39,7 +39,6 @@ namespace Kitchen_staff_app
 
         private void Finalize_prod_Click(object sender, EventArgs e)
         {
-            mysql mysql = new mysql();
             this.Hide();
             string name = Product_name.Text;
             string price = Product_price.Text;
@@ -166,7 +165,7 @@ private void btnUpload_Click(object sender, EventArgs e)
             if (control is TextBoxBase textBox)
             {
                 textBox.Enter += TextBox_Enter;
-                //textBox.Leave += TextBox_Leave;
+                
             }
 
             // Recursively loop through all child controls

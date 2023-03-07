@@ -5,7 +5,7 @@ namespace Kitchen_staff_app
 {
     public partial class stats : Form
     {
-        //todo obfuscate
+        
         public stats()
         {
             InitializeComponent();

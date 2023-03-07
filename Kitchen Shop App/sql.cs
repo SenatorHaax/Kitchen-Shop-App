@@ -7,8 +7,7 @@ namespace Kitchen_staff_app
     class mysql
     {
         //create connection 
-        private static readonly MySqlConnection con = new MySqlConnection("server=localhost;user id=root;database=resturant");
-        //dynamic insert
+        private protected static readonly MySqlConnection con = new MySqlConnection("server=localhost;user id=root;database=resturant");
 
         //create method to insert data into database
         /// <summary>
@@ -171,7 +170,7 @@ namespace Kitchen_staff_app
         /// </summary>
         /// <param name="id">The ID of the product to fetch.</param>
         /// <returns>A DataTable containing the product with the specified ID.</returns>
-        public static DataTable fetch_product_by_id(string id)
+        public static DataTable fetch_product_by_id(string? id)
         {
             //open connection
             con.Open();
@@ -196,7 +195,7 @@ namespace Kitchen_staff_app
         /// </summary>
         /// <param name="id">The ID of the category to fetch products from.</param>
         /// <returns>A DataTable containing all products in the specified category.</returns>
-        public static DataTable fetch_product_by_category_id(string id)
+        public static DataTable fetch_product_by_category_id(string? id)
         {
             //open connection
             con.Open();
@@ -221,7 +220,7 @@ namespace Kitchen_staff_app
         /// </summary>
         /// <param name="id">The ID of the category to fetch.</param>
         /// <returns>A DataTable containing the category with the specified ID.</returns>
-        public static DataTable fetch_category_by_id(string id)
+        public static DataTable fetch_category_by_id(string? id)
         {
             //open connection
             con.Open();
@@ -280,7 +279,7 @@ namespace Kitchen_staff_app
             return lastInsertedId;
         }
 
-        public static DataTable fetch_all_order_items_with_product_name(string order_id)
+        public static DataTable fetch_all_order_items_with_product_name(string? order_id)
         {
             string query = "SELECT order_items.quantity, products.name as product_name FROM order_items JOIN products ON order_items.product_id = products.id WHERE order_items.order_id = @order_id";
             using (var command = new MySqlCommand(query, con))

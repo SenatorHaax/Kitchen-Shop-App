@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Kitchen_staff_app
 {
-    //todo obfuscate
+    
     public partial class Main : Form
     {
         public Main()
@@ -15,9 +15,6 @@ namespace Kitchen_staff_app
         {
             create_prod();
             panel1.Visible = true;
-            //create_prod test = new create_prod();
-            //test.Show();
-            //this.Close();
         }
 
         private void Remove_Product_Click(object sender, EventArgs e)
@@ -30,7 +27,7 @@ namespace Kitchen_staff_app
         private void Edit_Product_Click(object sender, EventArgs e)
         {
             edit_prod Eprod = new edit_prod();
-            Eprod.Show();
+            Eprod.Show();//wutdafuq
             this.Close();
         }
 
@@ -96,14 +93,13 @@ namespace Kitchen_staff_app
         }
 
         #region create prod
-        private byte[] imageData;
-        private Control lastFocusedControl;
+        private byte[] ?imageData;
+        private Control ?lastFocusedControl;
 
-        //explain this FFS its important
+        //explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
         private Dictionary<string, int> categoriesDictionary;
         public void create_prod()
         {
-            //InitializeComponent();
             DataTable categories = mysql.fetch_all_categories();
             categoriesDictionary = new Dictionary<string, int>();
             foreach (DataRow row in categories.Rows)
@@ -115,18 +111,15 @@ namespace Kitchen_staff_app
                 categoriesDictionary.Add(name, id);
 
             }
-            //use image from resources named default
+            //use image from resources named default_img
             previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
-            //CreateTouchKeyboard();
         }
 
         private void Finalize_prod_Click(object sender, EventArgs e)
         {
-            mysql mysql = new mysql();
-            //this.Hide();
             string name = Product_name.Text;
             string price = Product_price.Text.Replace(',', '.');
-            string cost = Product_cost.Text.Replace(',', '.'); ;
+            string cost = Product_cost.Text.Replace(',', '.');
             int categoryId = categoriesDictionary[(string)categoryBox.SelectedItem];
 
 
@@ -148,11 +141,8 @@ namespace Kitchen_staff_app
                 { "is_promotional", is_promotional.Checked }
             };
             mysql.insert("Products", data);
-
-            //Main main = new Main();
-            // main.Show();
         }
-        #endregion
+        
         #region event handlers
         private void btnUpload_Click(object sender, EventArgs e)
         {
@@ -170,6 +160,6 @@ namespace Kitchen_staff_app
         }
 
         #endregion
-
+        #endregion
     }
 }

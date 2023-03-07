@@ -11,7 +11,7 @@ using MySqlConnector;
 
 namespace Kitchen_staff_app
 {
-    //todo obfuscate
+    
     public partial class remove_prod : Form
     {
         public remove_prod()
@@ -28,8 +28,7 @@ namespace Kitchen_staff_app
 
         private void confirm_rem_Click(object sender, EventArgs e)
         {
-            string id = comboBox1.SelectedValue.ToString();
-            //mysql.delete("DELETE FROM Products WHERE id = " + id);
+            string? id = comboBox1.SelectedValue.ToString();
             // create a list of parameters
             List<MySqlParameter> parameters = new List<MySqlParameter>
             {

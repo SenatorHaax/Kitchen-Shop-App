@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Kitchen_staff_app
 {
-    //todo obfuscate
+    
     public partial class edit_prod : Form
     {
         private Control lastFocusedControl;
@@ -32,10 +32,10 @@ namespace Kitchen_staff_app
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            string name = ProdName.Text;
-            string price = ProdPrice.Text;
-            string cost = ProdCost.Text;
-            string id = comboBox1.SelectedValue.ToString();
+            string? name = ProdName.Text;
+            string? price = ProdPrice.Text;
+            string? cost = ProdCost.Text;
+            string? id = comboBox1.SelectedValue.ToString();
 
             
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
@@ -88,7 +88,8 @@ namespace Kitchen_staff_app
                 {
                     previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 }
-
+                //dispose of unsused image
+                previewPictureBox.Image.Dispose();
             }
             
         }
@@ -165,12 +166,10 @@ namespace Kitchen_staff_app
             if (control is TextBoxBase textBox)
             {
                 textBox.Enter += TextBox_Enter;
-                //textBox.Leave += TextBox_Leave;
             }
             else if (control is ComboBox comboBox)
             {
                 comboBox.Enter += TextBox_Enter;
-                //comboBox.Leave += ComboBox_Leave;
             }
 
             // Recursively loop through all child controls

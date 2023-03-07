@@ -15,12 +15,12 @@ namespace Kitchen_Shop_App
 {
     public partial class create_cat : Form
     {
-        private byte[] imageData;
-        private Control lastFocusedControl;
+        private byte[] ?imageData;
+        private Control ?lastFocusedControl;
         public create_cat()
         {
             InitializeComponent();
-            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+            previewPictureBox.Image = Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
             CreateTouchKeyboard();
         }
         
@@ -41,7 +41,6 @@ namespace Kitchen_Shop_App
 
         private void Finalize_prod_Click_1(object sender, EventArgs e)
         {
-            mysql mysql = new mysql();
             this.Hide();
             string name = Category_name.Text;
 
@@ -82,6 +81,7 @@ namespace Kitchen_Shop_App
                 {
                     textBox.Text += button.Text;
                 }
+                //something is always last focus if button is first thing you click the main window was focused
                 lastFocusedControl.Focus();
             }
         }
@@ -139,12 +139,11 @@ namespace Kitchen_Shop_App
             if (control is TextBoxBase textBox)
             {
                 textBox.Enter += TextBox_Enter;
-                //textBox.Leave += TextBox_Leave;
+                
             }
             else if (control is ComboBox comboBox)
             {
                 comboBox.Enter += TextBox_Enter;
-                //comboBox.Leave += ComboBox_Leave;
             }
             
             // Recursively loop through all child controls
