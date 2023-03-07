@@ -93,8 +93,8 @@ namespace Kitchen_staff_app
         }
 
         #region create prod
-        private byte[] ?imageData;
-        private Control ?lastFocusedControl;
+        private byte[]? imageData;
+        private Control? lastFocusedControl;
 
         //explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
         private Dictionary<string, int> categoriesDictionary;
