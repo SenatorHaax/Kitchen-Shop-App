@@ -54,12 +54,6 @@ namespace Kitchen_Shop_App
             backButton.Click += new EventHandler(back_button_click);
             topPanel.Controls.Add(backButton);
 
-            //TODO: please for the love of god remember to remove this before delivery
-            //TODO: please for the love of god remember to remove this before delivery
-            //TODO: please for the love of god remember to remove this before delivery
-            //TODO: please for the love of god remember to remove this before delivery
-            //TODO: please for the love of god remember to remove this before delivery
-
             Button shutdownButton = new Button();
             shutdownButton.Text = "Shutdown";
             shutdownButton.Location = new Point(100, 10);
