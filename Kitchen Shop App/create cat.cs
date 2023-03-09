@@ -15,16 +15,16 @@ namespace Kitchen_Shop_App
 {
     public partial class create_cat : Form
     {
-        private byte[] ?imageData;
-        private Control ?lastFocusedControl;
+        private byte[]? imageData;
+        private Control? lastFocusedControl;
         public create_cat()
         {
             InitializeComponent();
             previewPictureBox.Image = Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
             CreateTouchKeyboard();
         }
-        
-        private void btnUpload_Click(object sender, EventArgs e)
+
+        private void btnUpload_Click(object? sender, EventArgs? e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe, *.jfif; *.png";
@@ -39,19 +39,19 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void Finalize_prod_Click_1(object sender, EventArgs e)
+        private void Finalize_prod_Click_1(object? sender, EventArgs? e)
         {
             this.Hide();
             string name = Category_name.Text;
 
-            
+
             if (string.IsNullOrEmpty(name))
             {
                 MessageBox.Show("name has to be filled to create a category.");
                 return;
             }
 
-            
+
             // create dictionary with data to insert
             var data = new Dictionary<string, object>
             {
@@ -66,7 +66,7 @@ namespace Kitchen_Shop_App
             main.Show();
         }
 
-        private void TouchKeyboardButton_Click(object sender, EventArgs e)
+        private void TouchKeyboardButton_Click(object? sender, EventArgs? e)
         {
             var button = (Button)sender;
             var textBox = lastFocusedControl;
@@ -139,13 +139,13 @@ namespace Kitchen_Shop_App
             if (control is TextBoxBase textBox)
             {
                 textBox.Enter += TextBox_Enter;
-                
+
             }
             else if (control is ComboBox comboBox)
             {
                 comboBox.Enter += TextBox_Enter;
             }
-            
+
             // Recursively loop through all child controls
             foreach (Control childControl in control.Controls)
             {
@@ -153,13 +153,13 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void TextBox_Enter(object sender, EventArgs e)
+        private void TextBox_Enter(object? sender, EventArgs? e)
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object? sender, EventArgs? e)
         {
             this.Hide();
             Main main = new Main();

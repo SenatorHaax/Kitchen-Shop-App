@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Kitchen_staff_app
 {
-    
+
     public partial class Main : Form
     {
         public Main()
@@ -11,27 +11,28 @@ namespace Kitchen_staff_app
             InitializeComponent();
         }
 
-        private void Create_Prod_button(object sender, EventArgs e)
+        private void Create_Prod_button(object? sender, EventArgs? e)
         {
             create_prod();
+            panel2.Visible = false;
             panel1.Visible = true;
         }
 
-        private void Remove_Product_Click(object sender, EventArgs e)
+        private void Remove_Product_Click(object? sender, EventArgs? e)
         {
             remove_prod Rprod = new remove_prod();
             Rprod.Show();
             this.Close();
         }
 
-        private void Edit_Product_Click(object sender, EventArgs e)
+        private void Edit_Product_Click(object? sender, EventArgs? e)
         {
             edit_prod Eprod = new edit_prod();
             Eprod.Show();//wutdafuq
             this.Close();
         }
 
-        private void soldStatBtn_Click(object sender, EventArgs e)
+        private void soldStatBtn_Click(object? sender, EventArgs? e)
         {
             stats statWindow = new stats();
             statWindow.Show();
@@ -39,7 +40,7 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void profChartBtn_Click(object sender, EventArgs e)
+        private void profChartBtn_Click(object? sender, EventArgs? e)
         {
             stats statWindow = new stats();
             statWindow.Show();
@@ -47,7 +48,7 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void busyHoursBtn_Click(object sender, EventArgs e)
+        private void busyHoursBtn_Click(object? sender, EventArgs? e)
         {
             stats statWindow = new stats();
             statWindow.Show();
@@ -55,7 +56,7 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void button7_Click(object? sender, EventArgs? e)
         {
             categorized_shop.hasExecuted = false;
 
@@ -69,7 +70,7 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void genStats_Click(object sender, EventArgs e)
+        private void genStats_Click(object? sender, EventArgs? e)
         {
             stats statWindow = new stats();
             statWindow.Show();
@@ -77,14 +78,16 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void Create_Category_Click(object sender, EventArgs e)
+        private void Create_Category_Click(object? sender, EventArgs? e)
         {
-            create_cat Ccat = new create_cat();
-            Ccat.Show();
-            this.Close();
+            //create_cat Ccat = new create_cat();
+            //Ccat.Show();
+            //this.Close();
+            panel1.Visible = false;
+            panel2.Visible = true;
         }
 
-        private void donebtn_Click(object sender, EventArgs e)
+        private void donebtn_Click(object? sender, EventArgs? e)
         {
             this.Close();
             categorized_shop.hasExecuted = false;
@@ -115,7 +118,7 @@ namespace Kitchen_staff_app
             previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
 
-        private void Finalize_prod_Click(object sender, EventArgs e)
+        private void Finalize_prod_Click(object? sender, EventArgs? e)
         {
             string name = Product_name.Text;
             string price = Product_price.Text.Replace(',', '.');
@@ -142,9 +145,9 @@ namespace Kitchen_staff_app
             };
             mysql.insert("Products", data);
         }
-        
+
         #region event handlers
-        private void btnUpload_Click(object sender, EventArgs e)
+        private void btnUpload_Click(object? sender, EventArgs? e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
@@ -161,5 +164,51 @@ namespace Kitchen_staff_app
 
         #endregion
         #endregion
+        //finalize creating category
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            string name = Category_name.Text;
+
+
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("name has to be filled to create a category.");
+                return;
+            }
+
+
+            // create dictionary with data to insert
+            var data = new Dictionary<string, object>
+            {
+                { "Name", name },
+                { "image", imageData }
+            };
+
+            // insert data into the table
+            mysql.insert("categories", data);
+            Category_name.Text = "";
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe, *.jfif; *.png";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                imageData = File.ReadAllBytes(openFileDialog.FileName);
+                using (MemoryStream memoryStream = new MemoryStream(imageData))
+                {
+                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+            }
+        }
     }
 }

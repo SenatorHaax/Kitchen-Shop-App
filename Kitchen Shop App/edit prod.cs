@@ -23,14 +23,14 @@ namespace Kitchen_staff_app
             CreateTouchKeyboard();
         }
 
-        private void Cancel_button_Click(object sender, EventArgs e)
+        private void Cancel_button_Click(object? sender, EventArgs? e)
         {
             this.Hide();
             Main main = new Main();
             main.Show();
         }
 
-        private void UpdateButton_Click(object sender, EventArgs e)
+        private void UpdateButton_Click(object? sender, EventArgs? e)
         {
             string? name = ProdName.Text;
             string? price = ProdPrice.Text;
@@ -57,7 +57,7 @@ namespace Kitchen_staff_app
             mysql.update("Products", $"id = {id}", fields);
         }
         //todo: rename this pls wtf it is combobox not button
-        private void UpdateButton_Update(object sender, EventArgs e)
+        private void UpdateButton_Update(object? sender, EventArgs? e)
         {
             if (comboBox1.DisplayMember != "")
             {
@@ -94,7 +94,7 @@ namespace Kitchen_staff_app
             
         }
         #region keyboard
-        private void TouchKeyboardButton_Click(object sender, EventArgs e)
+        private void TouchKeyboardButton_Click(object? sender, EventArgs? e)
         {
             var button = (Button)sender;
             var textBox = lastFocusedControl;
@@ -179,7 +179,7 @@ namespace Kitchen_staff_app
             }
         }
 
-        private void TextBox_Enter(object sender, EventArgs e)
+        private void TextBox_Enter(object? sender, EventArgs? e)
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;

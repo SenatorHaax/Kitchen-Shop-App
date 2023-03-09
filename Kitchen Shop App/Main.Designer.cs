@@ -58,11 +58,20 @@
             label2 = new Label();
             Product_name = new TextBox();
             label1 = new Label();
+            panel2 = new Panel();
+            button1 = new Button();
+            pictureBox1 = new PictureBox();
+            button2 = new Button();
+            button3 = new Button();
+            Category_name = new TextBox();
+            label6 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)previewPictureBox).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -364,12 +373,82 @@
             label1.TabIndex = 1;
             label1.Text = "Product Navn";
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(button1);
+            panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(button2);
+            panel2.Controls.Add(button3);
+            panel2.Controls.Add(Category_name);
+            panel2.Controls.Add(label6);
+            panel2.Location = new Point(440, 2);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(223, 260);
+            panel2.TabIndex = 6;
+            panel2.Visible = false;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(145, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 4;
+            button1.Text = "Cancel";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(58, 74);
+            pictureBox1.MinimumSize = new Size(100, 100);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 100);
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(48, 200);
+            button2.Name = "button2";
+            button2.Size = new Size(123, 23);
+            button2.TabIndex = 7;
+            button2.Text = "Upload image";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(48, 229);
+            button3.Name = "button3";
+            button3.Size = new Size(123, 23);
+            button3.TabIndex = 4;
+            button3.Text = "Create Category";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // Category_name
+            // 
+            Category_name.Location = new Point(101, 32);
+            Category_name.Name = "Category_name";
+            Category_name.Size = new Size(100, 23);
+            Category_name.TabIndex = 0;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(3, 35);
+            label6.Name = "label6";
+            label6.Size = new Size(55, 15);
+            label6.TabIndex = 1;
+            label6.Text = "Category";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             ControlBox = false;
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(donebtn);
             Controls.Add(groupBox3);
@@ -384,6 +463,9 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)previewPictureBox).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -419,5 +501,12 @@
         private Label label2;
         private TextBox Product_name;
         private Label label1;
+        private Panel panel2;
+        private Button button1;
+        private PictureBox pictureBox1;
+        private Button button2;
+        private Button button3;
+        private TextBox Category_name;
+        private Label label6;
     }
 }

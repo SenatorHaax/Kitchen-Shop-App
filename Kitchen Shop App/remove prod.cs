@@ -19,14 +19,14 @@ namespace Kitchen_staff_app
             InitializeComponent();
         }
 
-        private void remove_prod_Load(object sender, EventArgs e)
+        private void remove_prod_Load(object? sender, EventArgs? e)
         {
             comboBox1.DataSource = mysql.fetch_all_products();
             comboBox1.DisplayMember = "name";
             comboBox1.ValueMember="id";
         }
 
-        private void confirm_rem_Click(object sender, EventArgs e)
+        private void confirm_rem_Click(object? sender, EventArgs? e)
         {
             string? id = comboBox1.SelectedValue.ToString();
             // create a list of parameters
@@ -42,7 +42,7 @@ namespace Kitchen_staff_app
             main.Show();
         }
 
-        private void Cancel_button_Click(object sender, EventArgs e)
+        private void Cancel_button_Click(object? sender, EventArgs? e)
         {
             this.Hide();
             Main main = new Main();

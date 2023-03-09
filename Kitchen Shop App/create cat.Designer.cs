@@ -28,98 +28,97 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.previewPictureBox = new System.Windows.Forms.PictureBox();
-            this.btnUpload = new System.Windows.Forms.Button();
-            this.Finalize_prod = new System.Windows.Forms.Button();
-            this.Category_name = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
-            this.SuspendLayout();
+            panel1 = new Panel();
+            button1 = new Button();
+            previewPictureBox = new PictureBox();
+            btnUpload = new Button();
+            Finalize_prod = new Button();
+            Category_name = new TextBox();
+            label1 = new Label();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)previewPictureBox).BeginInit();
+            SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.previewPictureBox);
-            this.panel1.Controls.Add(this.btnUpload);
-            this.panel1.Controls.Add(this.Finalize_prod);
-            this.panel1.Controls.Add(this.Category_name);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(13, 31);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(223, 260);
-            this.panel1.TabIndex = 3;
-            // 
-            // previewPictureBox
-            // 
-            this.previewPictureBox.Location = new System.Drawing.Point(58, 74);
-            this.previewPictureBox.MinimumSize = new System.Drawing.Size(100, 100);
-            this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.Size = new System.Drawing.Size(100, 100);
-            this.previewPictureBox.TabIndex = 8;
-            this.previewPictureBox.TabStop = false;
-            // 
-            // btnUpload
-            // 
-            this.btnUpload.Location = new System.Drawing.Point(48, 200);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(123, 23);
-            this.btnUpload.TabIndex = 7;
-            this.btnUpload.Text = "Upload image";
-            this.btnUpload.UseVisualStyleBackColor = true;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
-            // 
-            // Finalize_prod
-            // 
-            this.Finalize_prod.Location = new System.Drawing.Point(48, 229);
-            this.Finalize_prod.Name = "Finalize_prod";
-            this.Finalize_prod.Size = new System.Drawing.Size(123, 23);
-            this.Finalize_prod.TabIndex = 4;
-            this.Finalize_prod.Text = "Create Category";
-            this.Finalize_prod.UseVisualStyleBackColor = true;
-            this.Finalize_prod.Click += new System.EventHandler(this.Finalize_prod_Click_1);
-            // 
-            // Category_name
-            // 
-            this.Category_name.Location = new System.Drawing.Point(101, 32);
-            this.Category_name.Name = "Category_name";
-            this.Category_name.Size = new System.Drawing.Size(100, 23);
-            this.Category_name.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Category";
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(previewPictureBox);
+            panel1.Controls.Add(btnUpload);
+            panel1.Controls.Add(Finalize_prod);
+            panel1.Controls.Add(Category_name);
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(13, 31);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(223, 260);
+            panel1.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(145, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Location = new Point(145, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 4;
+            button1.Text = "Cancel";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // previewPictureBox
+            // 
+            previewPictureBox.Location = new Point(58, 74);
+            previewPictureBox.MinimumSize = new Size(100, 100);
+            previewPictureBox.Name = "previewPictureBox";
+            previewPictureBox.Size = new Size(100, 100);
+            previewPictureBox.TabIndex = 8;
+            previewPictureBox.TabStop = false;
+            // 
+            // btnUpload
+            // 
+            btnUpload.Location = new Point(48, 200);
+            btnUpload.Name = "btnUpload";
+            btnUpload.Size = new Size(123, 23);
+            btnUpload.TabIndex = 7;
+            btnUpload.Text = "Upload image";
+            btnUpload.UseVisualStyleBackColor = true;
+            btnUpload.Click += btnUpload_Click;
+            // 
+            // Finalize_prod
+            // 
+            Finalize_prod.Location = new Point(48, 229);
+            Finalize_prod.Name = "Finalize_prod";
+            Finalize_prod.Size = new Size(123, 23);
+            Finalize_prod.TabIndex = 4;
+            Finalize_prod.Text = "Create Category";
+            Finalize_prod.UseVisualStyleBackColor = true;
+            Finalize_prod.Click += Finalize_prod_Click_1;
+            // 
+            // Category_name
+            // 
+            Category_name.Location = new Point(101, 32);
+            Category_name.Name = "Category_name";
+            Category_name.Size = new Size(100, 23);
+            Category_name.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(3, 35);
+            label1.Name = "label1";
+            label1.Size = new Size(55, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Category";
             // 
             // create_cat
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 385);
-            this.Controls.Add(this.panel1);
-            this.Name = "create_cat";
-            this.Text = "create_cat";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(248, 385);
+            Controls.Add(panel1);
+            Name = "create_cat";
+            Text = "create_cat";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)previewPictureBox).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace Kitchen_Shop_App
         Label price = new Label();
 
 
-        public static float total_price;
+        public static float? total_price;
         public static bool hasExecuted = false;
         public static categorized_shop? instance;
         #endregion
@@ -82,7 +82,7 @@ namespace Kitchen_Shop_App
         }
         #endregion
         #region main methods
-        private void categorized_shop_Load(object sender, EventArgs e)
+        private void categorized_shop_Load(object? sender, EventArgs? e)
         {
             int x = 10; // Starting x coordinate of the first button
             int y = 10; // Starting y coordinate of the first button
@@ -205,7 +205,7 @@ namespace Kitchen_Shop_App
         #endregion
         #region Event Handlers
 
-        private void categorized_shop_Resize(object sender, EventArgs e)
+        private void categorized_shop_Resize(object? sender, EventArgs? e)
         {
             int x = 10;
             int y = 10;
@@ -226,16 +226,14 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void product_button_click(object sender, EventArgs e)
+        private void product_button_click(object? sender, EventArgs? e)
         {
-            Button btn = (Button)sender;
+            Button? btn = (Button)sender;
             string? productId = btn.Tag.ToString();
             string? productName = mysql.fetch_product_by_id(productId).Rows[0]["Name"].ToString();
             int productCount = 1;
             Label lbl = new Label();
             Button decrementButton = new Button();
-
-
 
             // check if a label for the product already exists
             // check if a row for the product already exists in the DataTable
@@ -301,7 +299,7 @@ namespace Kitchen_Shop_App
 
         }
 
-        private void decrement_button_click(object sender, EventArgs e)
+        private void decrement_button_click(object? sender, EventArgs? e)
         {
             Button btn = (Button)sender;
             string productId = btn.Tag.ToString();
@@ -376,12 +374,12 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void shutdown_button_Click(object sender, EventArgs e)
+        private void shutdown_button_Click(object? sender, EventArgs? e)
         {
             Application.Exit();
         }
 
-        private void back_button_click(object sender, EventArgs e)
+        private void back_button_click(object? sender, EventArgs? e)
         {
             Button btn = (Button)sender;
             switch (btn.Tag)
@@ -398,7 +396,7 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void category_button_click(object sender, EventArgs e)
+        private void category_button_click(object? sender, EventArgs? e)
         {
             Button clickedButton = (Button)sender;
             string? id = clickedButton.Tag.ToString();
@@ -412,7 +410,7 @@ namespace Kitchen_Shop_App
             generate_product_panel(this, categoryData);
         }
 
-        private void purchase_button_click(object? sender, EventArgs e)
+        private void purchase_button_click(object? sender, EventArgs? e)
         {
             //todo make purchase logic preferably with paypal/stripe
 
@@ -469,7 +467,7 @@ namespace Kitchen_Shop_App
             purchaseButton.Enabled = false;
 
         }
-        private void adminPass_TextChanged(object sender, EventArgs e)
+        private void adminPass_TextChanged(object? sender, EventArgs? e)
         {
             //should probably move this pass having hardcoded directly here not be safe but for now ok
             if (textBox1.Text == "ihazadmin")
@@ -485,7 +483,7 @@ namespace Kitchen_Shop_App
             }
         }
 
-        private void categorized_shop_KeyDown(object sender, KeyEventArgs e)
+        private void categorized_shop_KeyDown(object? sender, KeyEventArgs? e)
         {
             if (e.Alt && e.KeyCode == Keys.P && e.Control && !hasExecuted)
             {

@@ -37,7 +37,7 @@ namespace Kitchen_staff_app
             CreateTouchKeyboard();
         }
 
-        private void Finalize_prod_Click(object sender, EventArgs e)
+        private void Finalize_prod_Click(object? sender, EventArgs? e)
         {
             this.Hide();
             string name = Product_name.Text;
@@ -69,7 +69,7 @@ namespace Kitchen_staff_app
             main.Show();
         }
         #region event handlers
-private void btnUpload_Click(object sender, EventArgs e)
+private void btnUpload_Click(object? sender, EventArgs? e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
@@ -83,7 +83,7 @@ private void btnUpload_Click(object sender, EventArgs e)
                 }
             }
         }
-        private void Cancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object? sender, EventArgs? e)
         {
             this.Hide();
             Main main = new Main();
@@ -93,7 +93,7 @@ private void btnUpload_Click(object sender, EventArgs e)
         #endregion
 
         #region keyboard
-        private void TouchKeyboardButton_Click(object sender, EventArgs e)
+        private void TouchKeyboardButton_Click(object? sender, EventArgs? e)
         {
             var button = (Button)sender;
             var textBox = lastFocusedControl;
@@ -175,7 +175,7 @@ private void btnUpload_Click(object sender, EventArgs e)
             }
         }
         
-        private void TextBox_Enter(object sender, EventArgs e)
+        private void TextBox_Enter(object? sender, EventArgs? e)
         {
             // Store the currently focused control in the lastFocusedControl variable
             lastFocusedControl = (Control)sender;
