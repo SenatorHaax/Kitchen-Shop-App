@@ -14,6 +14,7 @@ namespace Kitchen_staff_app
         private void Create_Prod_button(object? sender, EventArgs? e)
         {
             create_prod();
+            ProductPanel.Visible = false;
             panel2.Visible = false;
             panel1.Visible = true;
         }
@@ -27,9 +28,15 @@ namespace Kitchen_staff_app
 
         private void Edit_Product_Click(object? sender, EventArgs? e)
         {
-            edit_prod Eprod = new edit_prod();
-            Eprod.Show();//wutdafuq
-            this.Close();
+            //edit_prod Eprod = new edit_prod();
+            //Eprod.Show();//wutdafuq
+            //this.Close();
+            panel1.Visible = false;
+            panel2.Visible = false;
+            ProductPanel.Visible = true;
+            comboBox1.DataSource = mysql.fetch_all_products();
+            comboBox1.DisplayMember = "name";
+            comboBox1.ValueMember = "id";
         }
 
         private void soldStatBtn_Click(object? sender, EventArgs? e)
@@ -61,10 +68,8 @@ namespace Kitchen_staff_app
             categorized_shop.hasExecuted = false;
 
             edit_prod Eprod = new edit_prod();
-            create_prod Cprod = new create_prod();
             remove_prod Rprod = new remove_prod();
             Eprod.Close();
-            Cprod.Close();
             Rprod.Close();
             categorized_shop.instance.Close();
             this.Close();
@@ -80,11 +85,9 @@ namespace Kitchen_staff_app
 
         private void Create_Category_Click(object? sender, EventArgs? e)
         {
-            //create_cat Ccat = new create_cat();
-            //Ccat.Show();
-            //this.Close();
             panel1.Visible = false;
             panel2.Visible = true;
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
 
         private void donebtn_Click(object? sender, EventArgs? e)
@@ -191,11 +194,6 @@ namespace Kitchen_staff_app
             previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            panel2.Visible = false;
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -208,6 +206,76 @@ namespace Kitchen_staff_app
                 {
                     previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
                 }
+            }
+        }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            string? name = ProdName.Text;
+            string? price = ProdPrice.Text;
+            string? cost = ProdCost.Text;
+            string? id = comboBox1.SelectedValue.ToString();
+
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
+            {
+                MessageBox.Show("name, price and cost has to be filled to update a product.");
+                return;
+            }
+
+
+            Dictionary<string, object> fields = new Dictionary<string, object>
+            {
+                { "name", name },
+                { "price", price },
+                { "cost_price", cost },
+                { "expiry_date", expiry_date.Value },
+                {  "is_promotional", is_promotional.Checked }
+            };
+
+            mysql.update("Products", $"id = {id}", fields);
+            //empty all fields
+            ProdName.Text = "";
+            ProdPrice.Text = "";
+            ProdCost.Text = "";
+            expiry_date.Value = DateTime.Now;
+            is_promotional.Checked = false;
+
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.DisplayMember != "")
+            {
+                DataTable dt = mysql.fetch_product_by_id(comboBox1.SelectedValue.ToString());
+                ProdName.Text = dt.Rows[0]["name"].ToString();
+                ProdPrice.Text = dt.Rows[0]["sale_price"].ToString();
+                ProdCost.Text = dt.Rows[0]["Cost_price"].ToString();
+                expiry_date.Value = (dt.Rows[0]["expiry_date"] != DBNull.Value)
+                    ? (DateTime)dt.Rows[0]["expiry_date"]
+                    : DateTime.Now;
+                is_promotional.Checked = (dt.Rows[0]["is_promotional"] != DBNull.Value) ? (bool)dt.Rows[0]["is_promotional"] : false;
+                try
+                {
+                    if (dt.Rows[0]["image"] != DBNull.Value)
+                    {
+                        // convert the blob data to an image object
+                        byte[] imageBytes = (byte[])dt.Rows[0]["image"];
+                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        {
+                            Image img = Image.FromStream(ms);
+
+                            // display the image in the picture box
+                            previewPictureBox.Image = img.GetThumbnailImage(previewPictureBox.Width, previewPictureBox.Height, null, IntPtr.Zero);
+                        }
+                    }
+                }
+                catch
+                {
+                    previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+                //dispose of unsused image
+                previewPictureBox.Image.Dispose();
             }
         }
     }

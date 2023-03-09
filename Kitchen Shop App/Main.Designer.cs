@@ -59,12 +59,25 @@
             Product_name = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
-            button1 = new Button();
             pictureBox1 = new PictureBox();
             button2 = new Button();
             button3 = new Button();
             Category_name = new TextBox();
             label6 = new Label();
+            ProductPanel = new Panel();
+            label7 = new Label();
+            checkBox1 = new CheckBox();
+            pictureBox2 = new PictureBox();
+            label8 = new Label();
+            expiry_date = new DateTimePicker();
+            UpdateButton = new Button();
+            ProdCost = new TextBox();
+            label9 = new Label();
+            ProdPrice = new TextBox();
+            label10 = new Label();
+            ProdName = new TextBox();
+            label11 = new Label();
+            comboBox1 = new ComboBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -72,6 +85,8 @@
             ((System.ComponentModel.ISupportInitialize)previewPictureBox).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ProductPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -375,7 +390,6 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(button1);
             panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(button2);
             panel2.Controls.Add(button3);
@@ -386,16 +400,6 @@
             panel2.Size = new Size(223, 260);
             panel2.TabIndex = 6;
             panel2.Visible = false;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(145, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 4;
-            button1.Text = "Cancel";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // pictureBox1
             // 
@@ -442,12 +446,143 @@
             label6.TabIndex = 1;
             label6.Text = "Category";
             // 
+            // ProductPanel
+            // 
+            ProductPanel.Controls.Add(label7);
+            ProductPanel.Controls.Add(checkBox1);
+            ProductPanel.Controls.Add(pictureBox2);
+            ProductPanel.Controls.Add(label8);
+            ProductPanel.Controls.Add(expiry_date);
+            ProductPanel.Controls.Add(UpdateButton);
+            ProductPanel.Controls.Add(ProdCost);
+            ProductPanel.Controls.Add(label9);
+            ProductPanel.Controls.Add(ProdPrice);
+            ProductPanel.Controls.Add(label10);
+            ProductPanel.Controls.Add(ProdName);
+            ProductPanel.Controls.Add(label11);
+            ProductPanel.Location = new Point(409, 33);
+            ProductPanel.Name = "ProductPanel";
+            ProductPanel.Size = new Size(264, 290);
+            ProductPanel.TabIndex = 8;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(3, 130);
+            label7.Name = "label7";
+            label7.Size = new Size(132, 15);
+            label7.TabIndex = 15;
+            label7.Text = "Is Product Promotional:";
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(223, 130);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(15, 14);
+            checkBox1.TabIndex = 14;
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Location = new Point(80, 158);
+            pictureBox2.MinimumSize = new Size(100, 100);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(100, 100);
+            pictureBox2.TabIndex = 9;
+            pictureBox2.TabStop = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(3, 107);
+            label8.Name = "label8";
+            label8.Size = new Size(75, 15);
+            label8.TabIndex = 5;
+            label8.Text = "Expiery Date:";
+            // 
+            // expiry_date
+            // 
+            expiry_date.Location = new Point(127, 101);
+            expiry_date.Name = "expiry_date";
+            expiry_date.Size = new Size(134, 23);
+            expiry_date.TabIndex = 6;
+            // 
+            // UpdateButton
+            // 
+            UpdateButton.Location = new Point(94, 264);
+            UpdateButton.Name = "UpdateButton";
+            UpdateButton.Size = new Size(75, 23);
+            UpdateButton.TabIndex = 5;
+            UpdateButton.Text = "Update";
+            UpdateButton.UseVisualStyleBackColor = true;
+            UpdateButton.Click += UpdateButton_Click;
+            // 
+            // ProdCost
+            // 
+            ProdCost.Location = new Point(161, 72);
+            ProdCost.Name = "ProdCost";
+            ProdCost.Size = new Size(100, 23);
+            ProdCost.TabIndex = 5;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(3, 75);
+            label9.Name = "label9";
+            label9.Size = new Size(79, 15);
+            label9.TabIndex = 4;
+            label9.Text = "Product Cost:";
+            // 
+            // ProdPrice
+            // 
+            ProdPrice.Location = new Point(161, 43);
+            ProdPrice.Name = "ProdPrice";
+            ProdPrice.Size = new Size(100, 23);
+            ProdPrice.TabIndex = 3;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(3, 46);
+            label10.Name = "label10";
+            label10.Size = new Size(81, 15);
+            label10.TabIndex = 2;
+            label10.Text = "Product Price:";
+            // 
+            // ProdName
+            // 
+            ProdName.Location = new Point(161, 14);
+            ProdName.Name = "ProdName";
+            ProdName.Size = new Size(100, 23);
+            ProdName.TabIndex = 1;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(3, 17);
+            label11.Name = "label11";
+            label11.Size = new Size(87, 15);
+            label11.TabIndex = 0;
+            label11.Text = "Product Name:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(409, 4);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 7;
+            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             ControlBox = false;
+            Controls.Add(ProductPanel);
+            Controls.Add(comboBox1);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(donebtn);
@@ -466,6 +601,9 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ProductPanel.ResumeLayout(false);
+            ProductPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -502,11 +640,24 @@
         private TextBox Product_name;
         private Label label1;
         private Panel panel2;
-        private Button button1;
         private PictureBox pictureBox1;
         private Button button2;
         private Button button3;
         private TextBox Category_name;
         private Label label6;
+        private Panel ProductPanel;
+        private Label label7;
+        private CheckBox checkBox1;
+        private PictureBox pictureBox2;
+        private Label label8;
+        private DateTimePicker expiry_date;
+        private Button UpdateButton;
+        private TextBox ProdCost;
+        private Label label9;
+        private TextBox ProdPrice;
+        private Label label10;
+        private TextBox ProdName;
+        private Label label11;
+        private ComboBox comboBox1;
     }
 }
