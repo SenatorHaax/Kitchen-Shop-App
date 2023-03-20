@@ -66,6 +66,7 @@
             label6 = new Label();
             ProductPanel = new Panel();
             label7 = new Label();
+            comboBox1 = new ComboBox();
             checkBox1 = new CheckBox();
             pictureBox2 = new PictureBox();
             label8 = new Label();
@@ -77,7 +78,9 @@
             label10 = new Label();
             ProdName = new TextBox();
             label11 = new Label();
-            comboBox1 = new ComboBox();
+            panel3 = new Panel();
+            confirm_rem = new Button();
+            comboBox2 = new ComboBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -87,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ProductPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -225,6 +229,7 @@
             Remove_Category.TabIndex = 1;
             Remove_Category.Text = "Remove Category";
             Remove_Category.UseVisualStyleBackColor = true;
+            Remove_Category.Click += Remove_Category_Click;
             // 
             // donebtn
             // 
@@ -395,7 +400,7 @@
             panel2.Controls.Add(button3);
             panel2.Controls.Add(Category_name);
             panel2.Controls.Add(label6);
-            panel2.Location = new Point(440, 2);
+            panel2.Location = new Point(437, 1);
             panel2.Name = "panel2";
             panel2.Size = new Size(223, 260);
             panel2.TabIndex = 6;
@@ -449,6 +454,7 @@
             // ProductPanel
             // 
             ProductPanel.Controls.Add(label7);
+            ProductPanel.Controls.Add(comboBox1);
             ProductPanel.Controls.Add(checkBox1);
             ProductPanel.Controls.Add(pictureBox2);
             ProductPanel.Controls.Add(label8);
@@ -460,24 +466,34 @@
             ProductPanel.Controls.Add(label10);
             ProductPanel.Controls.Add(ProdName);
             ProductPanel.Controls.Add(label11);
-            ProductPanel.Location = new Point(409, 33);
+            ProductPanel.Location = new Point(419, 33);
             ProductPanel.Name = "ProductPanel";
-            ProductPanel.Size = new Size(264, 290);
+            ProductPanel.Size = new Size(264, 343);
             ProductPanel.TabIndex = 8;
+            ProductPanel.Visible = false;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(3, 130);
+            label7.Location = new Point(6, 158);
             label7.Name = "label7";
             label7.Size = new Size(132, 15);
             label7.TabIndex = 15;
             label7.Text = "Is Product Promotional:";
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(0, 4);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 7;
+            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
+            // 
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(223, 130);
+            checkBox1.Location = new Point(226, 158);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(15, 14);
             checkBox1.TabIndex = 14;
@@ -485,7 +501,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(80, 158);
+            pictureBox2.Location = new Point(74, 199);
             pictureBox2.MinimumSize = new Size(100, 100);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(100, 100);
@@ -495,7 +511,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(3, 107);
+            label8.Location = new Point(6, 135);
             label8.Name = "label8";
             label8.Size = new Size(75, 15);
             label8.TabIndex = 5;
@@ -503,14 +519,14 @@
             // 
             // expiry_date
             // 
-            expiry_date.Location = new Point(127, 101);
+            expiry_date.Location = new Point(130, 129);
             expiry_date.Name = "expiry_date";
             expiry_date.Size = new Size(134, 23);
             expiry_date.TabIndex = 6;
             // 
             // UpdateButton
             // 
-            UpdateButton.Location = new Point(94, 264);
+            UpdateButton.Location = new Point(89, 305);
             UpdateButton.Name = "UpdateButton";
             UpdateButton.Size = new Size(75, 23);
             UpdateButton.TabIndex = 5;
@@ -520,7 +536,7 @@
             // 
             // ProdCost
             // 
-            ProdCost.Location = new Point(161, 72);
+            ProdCost.Location = new Point(164, 100);
             ProdCost.Name = "ProdCost";
             ProdCost.Size = new Size(100, 23);
             ProdCost.TabIndex = 5;
@@ -528,7 +544,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(3, 75);
+            label9.Location = new Point(6, 103);
             label9.Name = "label9";
             label9.Size = new Size(79, 15);
             label9.TabIndex = 4;
@@ -536,7 +552,7 @@
             // 
             // ProdPrice
             // 
-            ProdPrice.Location = new Point(161, 43);
+            ProdPrice.Location = new Point(164, 71);
             ProdPrice.Name = "ProdPrice";
             ProdPrice.Size = new Size(100, 23);
             ProdPrice.TabIndex = 3;
@@ -544,7 +560,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(3, 46);
+            label10.Location = new Point(6, 74);
             label10.Name = "label10";
             label10.Size = new Size(81, 15);
             label10.TabIndex = 2;
@@ -552,7 +568,7 @@
             // 
             // ProdName
             // 
-            ProdName.Location = new Point(161, 14);
+            ProdName.Location = new Point(164, 42);
             ProdName.Name = "ProdName";
             ProdName.Size = new Size(100, 23);
             ProdName.TabIndex = 1;
@@ -560,20 +576,39 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(3, 17);
+            label11.Location = new Point(6, 45);
             label11.Name = "label11";
             label11.Size = new Size(87, 15);
             label11.TabIndex = 0;
             label11.Text = "Product Name:";
             // 
-            // comboBox1
+            // panel3
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(409, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 7;
-            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
+            panel3.Controls.Add(confirm_rem);
+            panel3.Controls.Add(comboBox2);
+            panel3.Location = new Point(422, 12);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(200, 100);
+            panel3.TabIndex = 9;
+            panel3.Visible = false;
+            // 
+            // confirm_rem
+            // 
+            confirm_rem.Location = new Point(63, 63);
+            confirm_rem.Name = "confirm_rem";
+            confirm_rem.Size = new Size(75, 23);
+            confirm_rem.TabIndex = 4;
+            confirm_rem.Text = "Confirm Removal";
+            confirm_rem.UseVisualStyleBackColor = true;
+            confirm_rem.Click += confirm_rem_Click;
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(22, 14);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(156, 23);
+            comboBox2.TabIndex = 3;
             // 
             // Main
             // 
@@ -581,8 +616,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             ControlBox = false;
+            Controls.Add(panel3);
             Controls.Add(ProductPanel);
-            Controls.Add(comboBox1);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(donebtn);
@@ -604,6 +639,7 @@
             ProductPanel.ResumeLayout(false);
             ProductPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -659,5 +695,8 @@
         private TextBox ProdName;
         private Label label11;
         private ComboBox comboBox1;
+        private Panel panel3;
+        private Button confirm_rem;
+        private ComboBox comboBox2;
     }
 }

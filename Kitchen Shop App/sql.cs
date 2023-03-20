@@ -170,7 +170,7 @@ namespace Kitchen_staff_app
         /// </summary>
         /// <param name="id">The ID of the product to fetch.</param>
         /// <returns>A DataTable containing the product with the specified ID.</returns>
-        public static DataTable fetch_product_by_id(string? id)
+        public static DataTable fetch_product_by_id(string id)
         {
             //open connection
             con.Open();
