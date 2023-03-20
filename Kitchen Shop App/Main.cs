@@ -15,40 +15,33 @@ namespace Kitchen_staff_app
         private void Create_Prod_button(object? sender, EventArgs? e)
         {
             create_prod();
-            ProductPanel.Visible = false;
-            panel2.Visible = false;
-            panel1.Visible = true;
-            panel3.Visible = false;
-
+            editProductPanel.Visible = false;
+            createProductPanel.Visible = true;
+            removeProductPanel.Visible = false;
+            createCategoryPanel.Visible = false;
         }
 
         private void Remove_Product_Click(object? sender, EventArgs? e)
         {
-            comboBox2.DataSource = mysql.fetch_all_products();
-            comboBox2.DisplayMember = "name";
-            comboBox2.ValueMember = "id";
-            panel1.Visible = false;
-            panel2.Visible = false;
-            ProductPanel.Visible = false;
-            panel3.Visible = true;
-            //remove_prod Rprod = new remove_prod();
-            //Rprod.Show();
-            //this.Close();
+            removeProductComboBox.DataSource = mysql.fetch_all_products();
+            removeProductComboBox.DisplayMember = "name";
+            removeProductComboBox.ValueMember = "id";
+            createProductPanel.Visible = false;
+            editProductPanel.Visible = false;
+            removeProductPanel.Visible = true;
+            createCategoryPanel.Visible = false;
         }
 
         private void Edit_Product_Click(object? sender, EventArgs? e)
         {
-            //edit_prod Eprod = new edit_prod();
-            //Eprod.Show();//wutdafuq
-            //this.Close();
-            panel1.Visible = false;
-            panel2.Visible = false;
-            panel3.Visible = false;
-            comboBox1.DataSource = mysql.fetch_all_products();
-            comboBox1.DisplayMember = "name";
-            comboBox1.ValueMember = "id";
-            ProductPanel.Visible = true;
-
+            editProductComboBox.DataSource = mysql.fetch_all_products();
+            editProductComboBox.DisplayMember = "name";
+            editProductComboBox.ValueMember = "id";
+            pictureBox2.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+            createProductPanel.Visible = false;
+            removeProductPanel.Visible = false;
+            editProductPanel.Visible = true;
+            createCategoryPanel.Visible = false;
         }
 
         private void soldStatBtn_Click(object? sender, EventArgs? e)
@@ -75,14 +68,10 @@ namespace Kitchen_staff_app
             this.Close();
         }
 
-        private void button7_Click(object? sender, EventArgs? e)
+        private void panikButton(object? sender, EventArgs? e)
         {
             categorized_shop.hasExecuted = false;
 
-            edit_prod Eprod = new edit_prod();
-            remove_prod Rprod = new remove_prod();
-            Eprod.Close();
-            Rprod.Close();
             categorized_shop.instance.Close();
             this.Close();
         }
@@ -97,12 +86,12 @@ namespace Kitchen_staff_app
 
         private void Create_Category_Click(object? sender, EventArgs? e)
         {
-            ProductPanel.Visible = false;
-            panel1.Visible = false;
-            panel2.Visible = true;
-            panel3.Visible = false;
+            editProductPanel.Visible = false;
+            createProductPanel.Visible = false;
+            removeProductPanel.Visible = false;
+            createCategoryPanel.Visible = true;
+                        pictureBox1.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
 
-            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
 
         private void donebtn_Click(object? sender, EventArgs? e)
@@ -163,8 +152,6 @@ namespace Kitchen_staff_app
             };
             mysql.insert("Products", data);
         }
-
-        #region event handlers
         private void btnUpload_Click(object? sender, EventArgs? e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -179,10 +166,6 @@ namespace Kitchen_staff_app
                 }
             }
         }
-
-        #endregion
-        #endregion
-        //finalize creating category
         private void button3_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -229,7 +212,7 @@ namespace Kitchen_staff_app
             string? name = ProdName.Text;
             string? price = ProdPrice.Text;
             string? cost = ProdCost.Text;
-            string? id = comboBox1.SelectedValue.ToString();
+            string? id = editProductComboBox.SelectedValue.ToString();
 
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
@@ -262,7 +245,7 @@ namespace Kitchen_staff_app
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
 
-            DataTable dt = mysql.fetch_product_by_id(comboBox1.SelectedValue.ToString());
+            DataTable dt = mysql.fetch_product_by_id(editProductComboBox.SelectedValue.ToString());
             //if dt not null or empty
             if (dt.Rows.Count > 0)
             {
@@ -299,16 +282,9 @@ namespace Kitchen_staff_app
 
         }
 
-        //private void remove_prod_Load(object? sender, EventArgs? e)
-        //{
-        //    comboBox1.DataSource = mysql.fetch_all_products();
-        //    comboBox1.DisplayMember = "name";
-        //    comboBox1.ValueMember = "id";
-        //}
-
         private void confirm_rem_Click(object? sender, EventArgs? e)
         {
-            string? id = comboBox2.SelectedValue.ToString();
+            string? id = removeProductComboBox.SelectedValue.ToString();
             // create a list of parameters
             List<MySqlParameter> parameters = new List<MySqlParameter>
             {
@@ -317,18 +293,17 @@ namespace Kitchen_staff_app
 
             // call the delete function
             mysql.delete("Products", "id = @id", parameters);
-            //this.Hide();
-            //Main main = new Main();
-            //main.Show();
         }
 
         private void Remove_Category_Click(object sender, EventArgs e)
         {
-            panel3.Visible = false;
-            panel1.Visible = false;
-            panel2.Visible = false;
-            ProductPanel.Visible = false;
+            createProductPanel.Visible = false;
+            editProductPanel.Visible = false;
+            removeProductPanel.Visible = false;
+            createCategoryPanel.Visible = false;
+
 
         }
+
     }
 }

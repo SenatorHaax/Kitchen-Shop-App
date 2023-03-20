@@ -42,7 +42,7 @@
             Create_Category = new Button();
             Remove_Category = new Button();
             donebtn = new Button();
-            panel1 = new Panel();
+            createProductPanel = new Panel();
             label5 = new Label();
             is_promotional = new CheckBox();
             label4 = new Label();
@@ -58,15 +58,15 @@
             label2 = new Label();
             Product_name = new TextBox();
             label1 = new Label();
-            panel2 = new Panel();
+            createCategoryPanel = new Panel();
             pictureBox1 = new PictureBox();
             button2 = new Button();
             button3 = new Button();
             Category_name = new TextBox();
             label6 = new Label();
-            ProductPanel = new Panel();
+            editProductPanel = new Panel();
             label7 = new Label();
-            comboBox1 = new ComboBox();
+            editProductComboBox = new ComboBox();
             checkBox1 = new CheckBox();
             pictureBox2 = new PictureBox();
             label8 = new Label();
@@ -78,19 +78,19 @@
             label10 = new Label();
             ProdName = new TextBox();
             label11 = new Label();
-            panel3 = new Panel();
+            removeProductPanel = new Panel();
             confirm_rem = new Button();
-            comboBox2 = new ComboBox();
+            removeProductComboBox = new ComboBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
-            panel1.SuspendLayout();
+            createProductPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)previewPictureBox).BeginInit();
-            panel2.SuspendLayout();
+            createCategoryPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ProductPanel.SuspendLayout();
+            editProductPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            panel3.SuspendLayout();
+            removeProductPanel.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -113,7 +113,7 @@
             Create_Product.TabIndex = 2;
             Create_Product.Text = "Create Product";
             Create_Product.UseVisualStyleBackColor = true;
-            Create_Product.Click += Create_Prod_button;
+            //Create_Product.Click += Create_Prod_button;
             // 
             // Remove_Product
             // 
@@ -197,7 +197,7 @@
             button7.TabIndex = 3;
             button7.Text = "PANIK";
             button7.UseVisualStyleBackColor = false;
-            button7.Click += button7_Click;
+            button7.Click += panikButton;
             // 
             // groupBox3
             // 
@@ -242,28 +242,28 @@
             donebtn.UseVisualStyleBackColor = false;
             donebtn.Click += donebtn_Click;
             // 
-            // panel1
+            // createProductPanel
             // 
-            panel1.Controls.Add(label5);
-            panel1.Controls.Add(is_promotional);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(exp_date);
-            panel1.Controls.Add(previewPictureBox);
-            panel1.Controls.Add(categoryLabel);
-            panel1.Controls.Add(categoryBox);
-            panel1.Controls.Add(btnUpload);
-            panel1.Controls.Add(Product_cost);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(Finalize_prod);
-            panel1.Controls.Add(Product_price);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(Product_name);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(440, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(223, 393);
-            panel1.TabIndex = 5;
-            panel1.Visible = false;
+            createProductPanel.Controls.Add(label5);
+            createProductPanel.Controls.Add(is_promotional);
+            createProductPanel.Controls.Add(label4);
+            createProductPanel.Controls.Add(exp_date);
+            createProductPanel.Controls.Add(previewPictureBox);
+            createProductPanel.Controls.Add(categoryLabel);
+            createProductPanel.Controls.Add(categoryBox);
+            createProductPanel.Controls.Add(btnUpload);
+            createProductPanel.Controls.Add(Product_cost);
+            createProductPanel.Controls.Add(label3);
+            createProductPanel.Controls.Add(Finalize_prod);
+            createProductPanel.Controls.Add(Product_price);
+            createProductPanel.Controls.Add(label2);
+            createProductPanel.Controls.Add(Product_name);
+            createProductPanel.Controls.Add(label1);
+            createProductPanel.Location = new Point(440, 12);
+            createProductPanel.Name = "createProductPanel";
+            createProductPanel.Size = new Size(223, 393);
+            createProductPanel.TabIndex = 5;
+            createProductPanel.Visible = false;
             // 
             // label5
             // 
@@ -393,18 +393,18 @@
             label1.TabIndex = 1;
             label1.Text = "Product Navn";
             // 
-            // panel2
+            // createCategoryPanel
             // 
-            panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(button2);
-            panel2.Controls.Add(button3);
-            panel2.Controls.Add(Category_name);
-            panel2.Controls.Add(label6);
-            panel2.Location = new Point(437, 1);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(223, 260);
-            panel2.TabIndex = 6;
-            panel2.Visible = false;
+            createCategoryPanel.Controls.Add(pictureBox1);
+            createCategoryPanel.Controls.Add(button2);
+            createCategoryPanel.Controls.Add(button3);
+            createCategoryPanel.Controls.Add(Category_name);
+            createCategoryPanel.Controls.Add(label6);
+            createCategoryPanel.Location = new Point(437, 1);
+            createCategoryPanel.Name = "createCategoryPanel";
+            createCategoryPanel.Size = new Size(223, 260);
+            createCategoryPanel.TabIndex = 6;
+            createCategoryPanel.Visible = false;
             // 
             // pictureBox1
             // 
@@ -451,26 +451,26 @@
             label6.TabIndex = 1;
             label6.Text = "Category";
             // 
-            // ProductPanel
+            // editProductPanel
             // 
-            ProductPanel.Controls.Add(label7);
-            ProductPanel.Controls.Add(comboBox1);
-            ProductPanel.Controls.Add(checkBox1);
-            ProductPanel.Controls.Add(pictureBox2);
-            ProductPanel.Controls.Add(label8);
-            ProductPanel.Controls.Add(expiry_date);
-            ProductPanel.Controls.Add(UpdateButton);
-            ProductPanel.Controls.Add(ProdCost);
-            ProductPanel.Controls.Add(label9);
-            ProductPanel.Controls.Add(ProdPrice);
-            ProductPanel.Controls.Add(label10);
-            ProductPanel.Controls.Add(ProdName);
-            ProductPanel.Controls.Add(label11);
-            ProductPanel.Location = new Point(419, 33);
-            ProductPanel.Name = "ProductPanel";
-            ProductPanel.Size = new Size(264, 343);
-            ProductPanel.TabIndex = 8;
-            ProductPanel.Visible = false;
+            editProductPanel.Controls.Add(label7);
+            editProductPanel.Controls.Add(editProductComboBox);
+            editProductPanel.Controls.Add(checkBox1);
+            editProductPanel.Controls.Add(pictureBox2);
+            editProductPanel.Controls.Add(label8);
+            editProductPanel.Controls.Add(expiry_date);
+            editProductPanel.Controls.Add(UpdateButton);
+            editProductPanel.Controls.Add(ProdCost);
+            editProductPanel.Controls.Add(label9);
+            editProductPanel.Controls.Add(ProdPrice);
+            editProductPanel.Controls.Add(label10);
+            editProductPanel.Controls.Add(ProdName);
+            editProductPanel.Controls.Add(label11);
+            editProductPanel.Location = new Point(693, 33);
+            editProductPanel.Name = "editProductPanel";
+            editProductPanel.Size = new Size(264, 343);
+            editProductPanel.TabIndex = 8;
+            editProductPanel.Visible = false;
             // 
             // label7
             // 
@@ -481,14 +481,14 @@
             label7.TabIndex = 15;
             label7.Text = "Is Product Promotional:";
             // 
-            // comboBox1
+            // editProductComboBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(0, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 7;
-            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
+            editProductComboBox.FormattingEnabled = true;
+            editProductComboBox.Location = new Point(0, 4);
+            editProductComboBox.Name = "editProductComboBox";
+            editProductComboBox.Size = new Size(121, 23);
+            editProductComboBox.TabIndex = 7;
+            editProductComboBox.SelectedValueChanged += comboBox1_SelectedValueChanged;
             // 
             // checkBox1
             // 
@@ -582,15 +582,15 @@
             label11.TabIndex = 0;
             label11.Text = "Product Name:";
             // 
-            // panel3
+            // removeProductPanel
             // 
-            panel3.Controls.Add(confirm_rem);
-            panel3.Controls.Add(comboBox2);
-            panel3.Location = new Point(422, 12);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(200, 100);
-            panel3.TabIndex = 9;
-            panel3.Visible = false;
+            removeProductPanel.Controls.Add(confirm_rem);
+            removeProductPanel.Controls.Add(removeProductComboBox);
+            removeProductPanel.Location = new Point(422, 12);
+            removeProductPanel.Name = "removeProductPanel";
+            removeProductPanel.Size = new Size(200, 100);
+            removeProductPanel.TabIndex = 9;
+            removeProductPanel.Visible = false;
             // 
             // confirm_rem
             // 
@@ -602,13 +602,13 @@
             confirm_rem.UseVisualStyleBackColor = true;
             confirm_rem.Click += confirm_rem_Click;
             // 
-            // comboBox2
+            // removeProductComboBox
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(22, 14);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(156, 23);
-            comboBox2.TabIndex = 3;
+            removeProductComboBox.FormattingEnabled = true;
+            removeProductComboBox.Location = new Point(22, 14);
+            removeProductComboBox.Name = "removeProductComboBox";
+            removeProductComboBox.Size = new Size(156, 23);
+            removeProductComboBox.TabIndex = 3;
             // 
             // Main
             // 
@@ -616,10 +616,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             ControlBox = false;
-            Controls.Add(panel3);
-            Controls.Add(ProductPanel);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(removeProductPanel);
+            Controls.Add(editProductPanel);
+            Controls.Add(createCategoryPanel);
+            Controls.Add(createProductPanel);
             Controls.Add(donebtn);
             Controls.Add(groupBox3);
             Controls.Add(button7);
@@ -630,16 +630,16 @@
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            createProductPanel.ResumeLayout(false);
+            createProductPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)previewPictureBox).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            createCategoryPanel.ResumeLayout(false);
+            createCategoryPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ProductPanel.ResumeLayout(false);
-            ProductPanel.PerformLayout();
+            editProductPanel.ResumeLayout(false);
+            editProductPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            panel3.ResumeLayout(false);
+            removeProductPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -659,7 +659,7 @@
         private Button Remove_Category;
         private Button genStats;
         private Button donebtn;
-        private Panel panel1;
+        private Panel createProductPanel;
         private Label label5;
         private CheckBox is_promotional;
         private Label label4;
@@ -675,13 +675,13 @@
         private Label label2;
         private TextBox Product_name;
         private Label label1;
-        private Panel panel2;
+        private Panel createCategoryPanel;
         private PictureBox pictureBox1;
         private Button button2;
         private Button button3;
         private TextBox Category_name;
         private Label label6;
-        private Panel ProductPanel;
+        private Panel editProductPanel;
         private Label label7;
         private CheckBox checkBox1;
         private PictureBox pictureBox2;
@@ -694,9 +694,9 @@
         private Label label10;
         private TextBox ProdName;
         private Label label11;
-        private ComboBox comboBox1;
-        private Panel panel3;
+        private ComboBox editProductComboBox;
+        private Panel removeProductPanel;
         private Button confirm_rem;
-        private ComboBox comboBox2;
+        private ComboBox removeProductComboBox;
     }
 }

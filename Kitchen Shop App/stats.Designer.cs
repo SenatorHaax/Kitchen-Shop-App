@@ -165,11 +165,11 @@
             this.Back.UseVisualStyleBackColor = true;
             this.Back.Click += new System.EventHandler(this.Back_Click);
             // 
-            // panel1
+            // createProductPanel
             // 
             this.panel1.Controls.Add(this.chart1);
             this.panel1.Location = new System.Drawing.Point(12, 63);
-            this.panel1.Name = "panel1";
+            this.panel1.Name = "createProductPanel";
             this.panel1.Size = new System.Drawing.Size(776, 375);
             this.panel1.TabIndex = 2;
             this.panel1.Visible = false;
