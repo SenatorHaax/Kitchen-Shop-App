@@ -221,7 +221,6 @@
             // 
             // Remove_Category
             // 
-            Remove_Category.Enabled = false;
             Remove_Category.Location = new Point(6, 22);
             Remove_Category.Name = "Remove_Category";
             Remove_Category.Size = new Size(95, 59);
@@ -239,7 +238,7 @@
             donebtn.TabIndex = 4;
             donebtn.Text = "Done";
             donebtn.UseVisualStyleBackColor = false;
-            donebtn.Click += donebtn_Click;
+            donebtn.Click += exit_Admin_Panel_Click;
             // 
             // createProductPanel
             // 
@@ -422,7 +421,7 @@
             button2.TabIndex = 7;
             button2.Text = "Upload image";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            button2.Click += upload_Image_Click;
             // 
             // button3
             // 
@@ -432,7 +431,7 @@
             button3.TabIndex = 4;
             button3.Text = "Create Category";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            button3.Click += finalize_Create_Category_Click;
             // 
             // Category_name
             // 

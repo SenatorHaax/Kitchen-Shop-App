@@ -9,8 +9,8 @@ namespace Kitchen_staff_app
     {
         #region parameters
         private byte[]? imageData;
-        //explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
-        private Dictionary<string, int> categoriesDictionary;
+        private Dictionary<string, int> categoriesDictionary;//explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
+        private bool isDeletingFromProducts = true; // flag to indicate whether deleting from Products or Categories table
 
         #endregion
         public Main()
@@ -27,15 +27,28 @@ namespace Kitchen_staff_app
             createCategoryPanel.Visible = false;
         }
 
+        //private void Remove_Product_Click(object? sender, EventArgs? e)
+        //{
+        //    removeProductComboBox.DataSource = mysql.fetch_all_products();
+        //    removeProductComboBox.DisplayMember = "name";
+        //    removeProductComboBox.ValueMember = "id";
+        //    createProductPanel.Visible = false;
+        //    editProductPanel.Visible = false;
+        //    removeProductPanel.Visible = true;
+        //    createCategoryPanel.Visible = false;
+        //}
+
         private void Remove_Product_Click(object? sender, EventArgs? e)
         {
             removeProductComboBox.DataSource = mysql.fetch_all_products();
             removeProductComboBox.DisplayMember = "name";
             removeProductComboBox.ValueMember = "id";
+
             createProductPanel.Visible = false;
             editProductPanel.Visible = false;
             removeProductPanel.Visible = true;
             createCategoryPanel.Visible = false;
+            isDeletingFromProducts = true; // set the flag to indicate deleting from Products table
         }
 
         private void Edit_Product_Click(object? sender, EventArgs? e)
@@ -62,13 +75,26 @@ namespace Kitchen_staff_app
 
         private void Remove_Category_Click(object sender, EventArgs e)
         {
+            removeProductComboBox.DataSource = mysql.fetch_all_categories();
+            removeProductComboBox.DisplayMember = "name";
+            removeProductComboBox.ValueMember = "id";
+
             createProductPanel.Visible = false;
             editProductPanel.Visible = false;
-            removeProductPanel.Visible = false;
+            removeProductPanel.Visible = true;
             createCategoryPanel.Visible = false;
-
-
+            isDeletingFromProducts = false; // set the flag to indicate deleting from Categories table
         }
+
+        //private void Remove_Category_Click(object sender, EventArgs e)
+        //{
+        //    createProductPanel.Visible = false;
+        //    editProductPanel.Visible = false;
+        //    removeProductPanel.Visible = false;
+        //    createCategoryPanel.Visible = false;
+        //
+        //
+        //}
 
         private void soldStatBtn_Click(object? sender, EventArgs? e)
         {
@@ -109,7 +135,8 @@ namespace Kitchen_staff_app
             statWindow.pickStat(0);
             this.Close();
         }
-        private void donebtn_Click(object? sender, EventArgs? e)
+
+        private void exit_Admin_Panel_Click(object? sender, EventArgs? e)
         {
             this.Close();
             categorized_shop.hasExecuted = false;
@@ -182,17 +209,30 @@ namespace Kitchen_staff_app
         #endregion
 
         #region remove product
+
         private void confirm_rem_Click(object? sender, EventArgs? e)
         {
             string? id = removeProductComboBox.SelectedValue.ToString();
             // create a list of parameters
             List<MySqlParameter> parameters = new List<MySqlParameter>
-            {
-                new MySqlParameter("@id", id)
-            };
+    {
+        new MySqlParameter("@id", id)
+    };
 
-            // call the delete function
-            mysql.delete("Products", "id = @id", parameters);
+            // call the delete function with the appropriate table name
+            if (isDeletingFromProducts)
+            {
+                mysql.delete("Products", "id = @id", parameters);
+                removeProductComboBox.DataSource = mysql.fetch_all_products();
+            }
+            else
+            {
+                mysql.delete("Categories", "id = @id", parameters);
+                removeProductComboBox.DataSource = mysql.fetch_all_categories();
+            }
+
+            removeProductComboBox.DisplayMember = "name";
+            removeProductComboBox.ValueMember = "id";
         }
 
         #endregion
@@ -211,7 +251,7 @@ namespace Kitchen_staff_app
                 expiry_date.Value = (dt.Rows[0]["expiry_date"] != DBNull.Value)
                     ? (DateTime)dt.Rows[0]["expiry_date"]
                     : DateTime.Now;
-                is_promotional.Checked = (dt.Rows[0]["is_promotional"] != DBNull.Value) ? (bool)dt.Rows[0]["is_promotional"] : false;
+                is_promotional.Checked = (dt.Rows[0]["is_promotional"] != DBNull.Value) && (bool)dt.Rows[0]["is_promotional"];
                 try
                 {
                     if (dt.Rows[0]["image"] != DBNull.Value)
@@ -220,10 +260,8 @@ namespace Kitchen_staff_app
                         byte[] imageBytes = (byte[])dt.Rows[0]["image"];
                         using (MemoryStream ms = new MemoryStream(imageBytes))
                         {
-                            Image img = Image.FromStream(ms);
-
                             // display the image in the picture box
-                            previewPictureBox.Image = img.GetThumbnailImage(previewPictureBox.Width, previewPictureBox.Height, null, IntPtr.Zero);
+                            previewPictureBox.Image = Image.FromStream(ms).GetThumbnailImage(previewPictureBox.Width, previewPictureBox.Height, null, IntPtr.Zero);
                         }
                     }
                 }
@@ -237,7 +275,7 @@ namespace Kitchen_staff_app
 
 
         }
-        
+
         private void UpdateButton_Click(object sender, EventArgs e)
         {
             string? name = ProdName.Text;
@@ -276,9 +314,8 @@ namespace Kitchen_staff_app
         #endregion
 
         #region create category
-        private void button3_Click(object sender, EventArgs e)
+        private void finalize_Create_Category_Click(object sender, EventArgs e)
         {
-            this.Hide();
             string name = Category_name.Text;
 
 
@@ -298,10 +335,11 @@ namespace Kitchen_staff_app
 
             // insert data into the table
             mysql.insert("categories", data);
+
             Category_name.Text = "";
             previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void upload_Image_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe, *.jfif; *.png";
@@ -317,7 +355,7 @@ namespace Kitchen_staff_app
         }
 
         #endregion
-        
+
 
     }
 }
