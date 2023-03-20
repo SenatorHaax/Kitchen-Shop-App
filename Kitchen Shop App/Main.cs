@@ -7,11 +7,17 @@ namespace Kitchen_staff_app
 
     public partial class Main : Form
     {
+        #region parameters
+        private byte[]? imageData;
+        //explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
+        private Dictionary<string, int> categoriesDictionary;
+
+        #endregion
         public Main()
         {
             InitializeComponent();
         }
-
+        #region main window
         private void Create_Prod_button(object? sender, EventArgs? e)
         {
             create_prod();
@@ -42,6 +48,26 @@ namespace Kitchen_staff_app
             removeProductPanel.Visible = false;
             editProductPanel.Visible = true;
             createCategoryPanel.Visible = false;
+        }
+
+        private void Create_Category_Click(object? sender, EventArgs? e)
+        {
+            editProductPanel.Visible = false;
+            createProductPanel.Visible = false;
+            removeProductPanel.Visible = false;
+            createCategoryPanel.Visible = true;
+            pictureBox1.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+
+        }
+
+        private void Remove_Category_Click(object sender, EventArgs e)
+        {
+            createProductPanel.Visible = false;
+            editProductPanel.Visible = false;
+            removeProductPanel.Visible = false;
+            createCategoryPanel.Visible = false;
+
+
         }
 
         private void soldStatBtn_Click(object? sender, EventArgs? e)
@@ -83,17 +109,6 @@ namespace Kitchen_staff_app
             statWindow.pickStat(0);
             this.Close();
         }
-
-        private void Create_Category_Click(object? sender, EventArgs? e)
-        {
-            editProductPanel.Visible = false;
-            createProductPanel.Visible = false;
-            removeProductPanel.Visible = false;
-            createCategoryPanel.Visible = true;
-                        pictureBox1.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
-
-        }
-
         private void donebtn_Click(object? sender, EventArgs? e)
         {
             this.Close();
@@ -102,12 +117,10 @@ namespace Kitchen_staff_app
             categorized_shop.show_form();
         }
 
-        #region create prod
-        private byte[]? imageData;
-        private Control? lastFocusedControl;
+        #endregion
 
-        //explain this FFS its important edit1:(should probably have written a small description for it edit2:(figure it out agian plox))
-        private Dictionary<string, int> categoriesDictionary;
+        #region create product
+        #region custom methods
         public void create_prod()
         {
             DataTable categories = mysql.fetch_all_categories();
@@ -124,7 +137,7 @@ namespace Kitchen_staff_app
             //use image from resources named default_img
             previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
-
+        #endregion
         private void Finalize_prod_Click(object? sender, EventArgs? e)
         {
             string name = Product_name.Text;
@@ -166,82 +179,25 @@ namespace Kitchen_staff_app
                 }
             }
         }
-        private void button3_Click(object sender, EventArgs e)
+        #endregion
+
+        #region remove product
+        private void confirm_rem_Click(object? sender, EventArgs? e)
         {
-            this.Hide();
-            string name = Category_name.Text;
-
-
-            if (string.IsNullOrEmpty(name))
+            string? id = removeProductComboBox.SelectedValue.ToString();
+            // create a list of parameters
+            List<MySqlParameter> parameters = new List<MySqlParameter>
             {
-                MessageBox.Show("name has to be filled to create a category.");
-                return;
-            }
-
-
-            // create dictionary with data to insert
-            var data = new Dictionary<string, object>
-            {
-                { "Name", name },
-                { "image", imageData }
+                new MySqlParameter("@id", id)
             };
 
-            // insert data into the table
-            mysql.insert("categories", data);
-            Category_name.Text = "";
-            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
+            // call the delete function
+            mysql.delete("Products", "id = @id", parameters);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe, *.jfif; *.png";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                imageData = File.ReadAllBytes(openFileDialog.FileName);
-                using (MemoryStream memoryStream = new MemoryStream(imageData))
-                {
-                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
-                }
-            }
-        }
+        #endregion
 
-        private void UpdateButton_Click(object sender, EventArgs e)
-        {
-            string? name = ProdName.Text;
-            string? price = ProdPrice.Text;
-            string? cost = ProdCost.Text;
-            string? id = editProductComboBox.SelectedValue.ToString();
-
-
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
-            {
-                MessageBox.Show("name, price and cost has to be filled to update a product.");
-                return;
-            }
-
-
-            Dictionary<string, object> fields = new Dictionary<string, object>
-            {
-                { "name", name },
-                { "sale_price", price },
-                { "cost_price", cost },
-                { "expiry_date", expiry_date.Value },
-                {  "is_promotional", is_promotional.Checked }
-            };
-
-            mysql.update("Products", $"id = {id}", fields);
-
-            //empty all fields
-            ProdName.Text = "";
-            ProdPrice.Text = "";
-            ProdCost.Text = "";
-            expiry_date.Value = DateTime.Now;
-            is_promotional.Checked = false;
-
-        }
-
+        #region edit product
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
 
@@ -281,29 +237,87 @@ namespace Kitchen_staff_app
 
 
         }
-
-        private void confirm_rem_Click(object? sender, EventArgs? e)
+        
+        private void UpdateButton_Click(object sender, EventArgs e)
         {
-            string? id = removeProductComboBox.SelectedValue.ToString();
-            // create a list of parameters
-            List<MySqlParameter> parameters = new List<MySqlParameter>
+            string? name = ProdName.Text;
+            string? price = ProdPrice.Text;
+            string? cost = ProdCost.Text;
+            string? id = editProductComboBox.SelectedValue.ToString();
+
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(cost))
             {
-                new MySqlParameter("@id", id)
+                MessageBox.Show("name, price and cost has to be filled to update a product.");
+                return;
+            }
+
+
+            Dictionary<string, object> fields = new Dictionary<string, object>
+            {
+                { "name", name },
+                { "sale_price", price },
+                { "cost_price", cost },
+                { "expiry_date", expiry_date.Value },
+                {  "is_promotional", is_promotional.Checked }
             };
 
-            // call the delete function
-            mysql.delete("Products", "id = @id", parameters);
+            mysql.update("Products", $"id = {id}", fields);
+
+            //empty all fields
+            ProdName.Text = "";
+            ProdPrice.Text = "";
+            ProdCost.Text = "";
+            expiry_date.Value = DateTime.Now;
+            is_promotional.Checked = false;
+
         }
 
-        private void Remove_Category_Click(object sender, EventArgs e)
+        #endregion
+
+        #region create category
+        private void button3_Click(object sender, EventArgs e)
         {
-            createProductPanel.Visible = false;
-            editProductPanel.Visible = false;
-            removeProductPanel.Visible = false;
-            createCategoryPanel.Visible = false;
+            this.Hide();
+            string name = Category_name.Text;
 
 
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("name has to be filled to create a category.");
+                return;
+            }
+
+
+            // create dictionary with data to insert
+            var data = new Dictionary<string, object>
+            {
+                { "Name", name },
+                { "image", imageData }
+            };
+
+            // insert data into the table
+            mysql.insert("categories", data);
+            Category_name.Text = "";
+            previewPictureBox.Image = Kitchen_Shop_App.Properties.Resources.default_img.GetThumbnailImage(100, 100, null, IntPtr.Zero);
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe, *.jfif; *.png";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                imageData = File.ReadAllBytes(openFileDialog.FileName);
+                using (MemoryStream memoryStream = new MemoryStream(imageData))
+                {
+                    previewPictureBox.Image = Image.FromStream(memoryStream).GetThumbnailImage(100, 100, null, IntPtr.Zero);
+                }
+            }
+        }
+
+        #endregion
+        
 
     }
 }

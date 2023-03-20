@@ -113,7 +113,6 @@
             Create_Product.TabIndex = 2;
             Create_Product.Text = "Create Product";
             Create_Product.UseVisualStyleBackColor = true;
-            //Create_Product.Click += Create_Prod_button;
             // 
             // Remove_Product
             // 
@@ -466,7 +465,7 @@
             editProductPanel.Controls.Add(label10);
             editProductPanel.Controls.Add(ProdName);
             editProductPanel.Controls.Add(label11);
-            editProductPanel.Location = new Point(693, 33);
+            editProductPanel.Location = new Point(425, 4);
             editProductPanel.Name = "editProductPanel";
             editProductPanel.Size = new Size(264, 343);
             editProductPanel.TabIndex = 8;
